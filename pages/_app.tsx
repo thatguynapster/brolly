@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 
 /** Global css */
 import '../styles/globals.css'
+import '../public/css/scrollbar.css'
 
 /** dependency styles */
 import 'react-toastify/dist/ReactToastify.css'

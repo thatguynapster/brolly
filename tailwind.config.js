@@ -1,11 +1,12 @@
 module.exports = {
+  mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         primary: {
-          main: '#2f3344',
+          main: '#FBC02D',
           dark: '#141414'
         },
         background: '#F5F5F5',
@@ -55,13 +56,17 @@ module.exports = {
         full: '9999px',
         large: '12px',
       },
-      fontFamily: {},
+      fontFamily: {
+        'headings': 'Rajdhani',
+        'paragraphs': 'Arial'
+      },
       fontSize: {
         '3xs': '0.5rem',
         '2xs': '0.625rem',
         xs: '0.75rem',
         sm: '0.875rem',
         base: '16px',
+        md: '1.125rem',
         lg: '1.25rem',
         xl: '1.375rem',
         '2xl': '1.5rem',
@@ -74,7 +79,17 @@ module.exports = {
       transitionProperty: {
         'height': 'height',
         'spacing': 'margin, padding'
+      },
+      keyframes: {
+        swell: {
+          '0%, 100%': { transform: 'scale(1.1)' },
+          '50%': { transform: 'scale(1)' },
+        }
+      },
+      animation: {
+        swell: 'swell 3.5s ease-in-out infinite',
       }
+
     },
   },
   variants: {
@@ -84,8 +99,5 @@ module.exports = {
     },
     transitionProperty: ['responsive', 'motion-safe', 'motion-reduce']
   },
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/forms')
-  ],
+  plugins: [],
 }
