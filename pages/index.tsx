@@ -50,7 +50,7 @@ const Home: NextPage = () => {
               {/* </div> */}
               <div className="flex flex-col justify-center">
                 <h4 className="font-headings font-semibold text-2xl">100% digital</h4>
-                <p className="text-[#848484] text-base leading-tight">
+                <p className="text-[#848484] font-paragraphs text-base leading-tight">
                   No boring paperwork, <br /> everythinghappens online.
                 </p>
               </div>
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
               {/* </div> */}
               <div className="flex flex-col justify-center">
                 <h4 className="font-headings font-semibold text-2xl">100% digital</h4>
-                <p className="text-[#848484] text-base leading-tight">
+                <p className="text-[#848484] font-paragraphs text-base leading-tight">
                   Simple contracts, no tricks, <br /> claims paid at lightning speed.
                 </p>
               </div>
@@ -74,7 +74,7 @@ const Home: NextPage = () => {
               {/* </div> */}
               <div className="flex flex-col justify-center">
                 <h4 className="font-headings font-semibold text-2xl">100% digital</h4>
-                <p className="text-[#848484] text-base leading-tight">
+                <p className="text-[#848484] font-paragraphs text-base leading-tight">
                   If 12am is your best <br /> time, we’re here for you.
                 </p>
               </div>
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
         {/* END features */}
 
         {/* should stick to bottom of page in mobile */}
-        <div className="fixed bottom-0 left-0 right-0">
+        <div className="fixed bottom-0 left-0 right-0 md:hidden">
           <a
             href="#"
             className="w-1/2 whitespace-nowrap inline-flex items-center justify-center px-4 py-6 border border-transparent text-base font-medium bg-primary-main"
