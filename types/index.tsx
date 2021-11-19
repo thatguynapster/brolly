@@ -25,4 +25,23 @@ export interface IFormGroupProps {
   onValueChanged: Function;
   onFocusOut: Function;
   autofocus?: boolean;
+  min?: number | string;
+  max?: number | string;
+}
+
+export interface IListBoxProps {
+  className?: string;
+  label?: string;
+  id: string;
+  values: {
+    name: string;
+    value: string;
+    id: string;
+  }[];
+  selected?: {
+    name: string;
+    value: string;
+    id: string;
+  };
+  onValueChange: (ev: { name: string; value: string; id: string }) => void;
 }

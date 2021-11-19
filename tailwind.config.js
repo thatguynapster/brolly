@@ -7,8 +7,9 @@ module.exports = {
       colors: {
         primary: {
           main: '#FBC02D',
-          dark: '#141414'
+          surface: '#FFF6E5'
         },
+        dark: '#141414',
         background: '#F5F5F5',
         danger: {
           main: '#FF3D3D',
