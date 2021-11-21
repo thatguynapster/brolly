@@ -2,7 +2,7 @@
   "name": "dark-slab",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 5800",
+    "dev": "rm -rf .next/ && next dev -p 5800",
     "devwin": "next -p 5800",
     "build": "next build",
     "start": "next start",

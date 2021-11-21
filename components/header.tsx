@@ -1,4 +1,5 @@
 import React, { FC, Fragment } from "react";
+import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
@@ -9,9 +10,9 @@ const Header: FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <a href="/">
+              <Link href="/">
                 <img className="h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
-              </a>
+              </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-border">
@@ -22,9 +23,9 @@ const Header: FC = () => {
 
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-8">
               <nav className="hidden md:flex space-x-10">
-                <a href="/who-we-are" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                  Who we are
-                </a>
+                <Link href="/who-we-are">
+                  <span className="text-base font-medium text-gray-500 hover:text-gray-900"> Who we are</span>
+                </Link>
               </nav>
 
               <div className="">
@@ -59,9 +60,9 @@ const Header: FC = () => {
               <div className="pt-5 pb-6 px-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <a href="/">
+                    <Link href="/">
                       <img className="h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
-                    </a>
+                    </Link>
                   </div>
                   <div className="-mr-2">
                     <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-border">
