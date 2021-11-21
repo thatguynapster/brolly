@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <HeadFile title={`${SEOConfig.title}`} />
+      <HeadFile title={SEOConfig.title} />
       <Header />
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}

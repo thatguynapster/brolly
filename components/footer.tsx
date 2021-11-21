@@ -4,7 +4,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row space-y-16 md:space-y-0">
         <div className="w-full md:w-2/3 text-white flex flex-col space-y-10">
           <div className="space-y-3">
-            <img className="w-1/4 md:w-1/12" src="/img/logo-footer.svg" alt="Logo Footer" />
+            <a href="/">
+              <img className="w-1/4 md:w-1/12" src="/img/logo-footer.svg" alt="Logo Footer" />
+            </a>
             <p className="flex flex-wrap items-start space-x-6">
               <a className="mr-3" href="#">
                 Who we are
