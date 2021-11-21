@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { FC, Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 
-export default function Header() {
+const Header: FC = () => {
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
       <Popover className="relative bg-white">
@@ -104,4 +104,6 @@ export default function Header() {
       </Popover>
     </header>
   );
-}
+};
+
+export default Header;

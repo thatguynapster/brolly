@@ -1,6 +1,8 @@
-export default function Footer() {
+import { FC } from "react";
+
+const Footer: FC<{ pagename: string }> = ({ pagename }) => {
   return (
-    <footer className="bg-dark px-7 py-16 mb-[74px] md:mb-0">
+    <footer className={`bg-dark px-7 py-16 ${pagename !== "privacy" ? "mb-[74px] " : ""}md:mb-0`}>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row space-y-16 md:space-y-0">
         <div className="w-full md:w-2/3 text-white flex flex-col space-y-10">
           <div className="space-y-3">
@@ -64,6 +66,24 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      {/* should stick to bottom of page in mobile */}
+      <div className="fixed bottom-0 left-0 right-0 md:hidden">
+        <a
+          href="#"
+          className="w-1/2 whitespace-nowrap inline-flex items-center justify-center px-4 py-6 border border-transparent text-base font-medium bg-primary-main"
+        >
+          Get a Quote
+        </a>
+        <a
+          href="#"
+          className="w-1/2 whitespace-nowrap inline-flex items-center justify-center px-4 py-6 border border-transparent text-base font-medium bg-background"
+        >
+          24/7 support
+        </a>
+      </div>
     </footer>
   );
-}
+};
+
+export default Footer;
