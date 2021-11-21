@@ -1,21 +1,11 @@
-import { useState } from "react";
 import type { NextPage } from "next";
-import Image from "next/image";
-import FormGroup from "../components/form-group";
 import HeadFile from "../components/head-file";
 import { SEOConfig } from "../configs/global_variables";
 
-import { KeyIcon, MailIcon } from "@heroicons/react/outline";
 import Header from "../components/header";
-import { useMediaQuery } from "react-responsive";
-import ListBox from "../components/list-box";
-import Instagram from "../public/icons/instagram.svg";
 import Footer from "../components/footer";
 
 const About: NextPage = () => {
-  const isDesktopOrLaptop = useMediaQuery({ minWidth: 768 });
-  const isTabletOrMobile = useMediaQuery({ maxWidth: 767 });
-
   return (
     <>
       <HeadFile title={SEOConfig.title} />
@@ -31,9 +21,9 @@ const About: NextPage = () => {
             <div className="md:absolute left-0 bottom-[-182px] md:w-5/12 w-full bg-primary-main px-5 py-6 flex flex-col items-center md:items-start justify-center space-y-4">
               <p className="text-center md:text-left text-white text-xs md:text-md">
                 We believe insurance is a force for good in the world. Just like you, we believe insurance service
-                delivery has some real catching up to do in Africa. We've been around the world and seen insurance work
-                differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can make
-                insurance work as we desire.
+                delivery has some real catching up to do in Africa. We&apos;ve been around the world and seen insurance
+                work differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can
+                make insurance work as we desire.
               </p>
               <button className="whitespace-nowrap text-base font-medium text-primary-main bg-dark py-4 px-6 border-0 shadow-sm">
                 Join us
