@@ -9,6 +9,8 @@ import { KeyIcon, MailIcon } from "@heroicons/react/outline";
 import Header from "../components/header";
 import { useMediaQuery } from "react-responsive";
 import ListBox from "../components/list-box";
+import Instagram from "../public/icons/instagram.svg";
+import Footer from "../components/footer";
 
 const Home: NextPage = () => {
   const isDesktopOrLaptop = useMediaQuery({ minWidth: 768 });
@@ -18,7 +20,7 @@ const Home: NextPage = () => {
     <>
       <HeadFile title={`${SEOConfig.title}`} />
       <Header />
-      <main className="bg-white flex flex-col justify-center items-center mb-[74px] md:mb-0">
+      <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-80px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
           <div className="w-full md:w-1/2 flex-col space-y-4">
@@ -132,7 +134,7 @@ const Home: NextPage = () => {
                   type="number"
                   id="vehicleValue"
                   placeholder="Current value of your car (in GHS)"
-                  className="bg-[#101d490d] rounded-none border-none placeholder-[#848484]"
+                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
                     console.log(ev);
                   }}
@@ -142,7 +144,7 @@ const Home: NextPage = () => {
                 />
 
                 <ListBox
-                  className="bg-[#101d490d] border-none"
+                  className="bg-[#101d490d] border-none rounded-[0px]"
                   id="vehicle_type_of_use"
                   values={[
                     {
@@ -171,7 +173,7 @@ const Home: NextPage = () => {
                   min={1}
                   id="passengerCount"
                   placeholder="Number of passengers"
-                  className="bg-[#101d490d] rounded-none border-none placeholder-[#848484]"
+                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
                     console.log(ev);
                   }}
@@ -184,7 +186,7 @@ const Home: NextPage = () => {
                   type="tel"
                   id="whatsappNumber"
                   placeholder="Whatsapp number"
-                  className="bg-[#101d490d] rounded-none border-none placeholder-[#848484]"
+                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
                     console.log(ev);
                   }}
@@ -197,6 +199,85 @@ const Home: NextPage = () => {
                   Submit
                 </button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-10 md:space-y-8">
+          <h2 className="text-center text-[30px] md:text-6xl font-headings font-bold md:leading-[61px]">
+            Join our waitlist and be <br className="flex md:hidden" /> pampered
+          </h2>
+          <p className=" max-w-2xl text-center md:text-left font-paragraphs text-[#848484] text-xs md:text-md leading-[14px] md:leading-[21px]">
+            No need to empty your bank account. Live life fully, pay your insurance monthly, get claims paid at
+            lightning speed.
+          </p>
+
+          <div className="flex w-full max-w-sm">
+            <FormGroup
+              type="tel"
+              id="waitlistInput"
+              placeholder="Whatsapp number"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              onValueChanged={(ev: any) => {
+                console.log(ev);
+              }}
+              onFocusOut={(ev: any) => {
+                console.log(ev);
+              }}
+            />
+            <button className="bg-primary-main px-4">Subscribe</button>
+          </div>
+
+          <div className="w-full flex flex-col md:flex-row bg-primary-main pt-5 pb-14 md:pb-5 px-4 md:px-8 rounded-md md:items-center">
+            <img
+              className="w-11/12 md:w-1/4 mx-auto"
+              src="/img/someone-deserves-brolly.svg"
+              alt="Image for Know someone who deserves the Brolly experience?"
+            />
+
+            <div className="space-y-6 md:space-y-4">
+              <h2 className="text-center md:text-left text-[30px] md:text-6xl font-headings font-bold leading-[32px] md:leading-[61px]">
+                Know someone who deserves the Brolly experience?
+              </h2>
+
+              <p className="text-center md:text-left font-paragraphs text-white text-sm md:text-md leading-[14px] md:leading-[21px]">
+                Bring your loved ones to Brolly and earn cool cash. It’s that simple.
+              </p>
+
+              <p className="text-center md:text-left font-paragraphs font-semibold text-sm md:text-md leading-[14px] md:leading-[21px] underline">
+                Join Brolly Referral Network.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-end justify-around md:items-center md:space-x-24 flex flex-col space-y-14 md:flex-row md:space-y-0">
+          <img className="mx-auto md:w-2/3" src="/img/think-different.svg" alt="Switch to Brolly" />
+
+          <div className="flex flex-col space-y-6 md:space-y-10 w-full md:w-3/4">
+            <h2 className="font-headings font-bold text-center md:text-left text-2xl md:text-6xl leading-[32px] md:leading-[61px]">
+              Got blue hair with an <br /> awesome brain? Join our <br /> team
+            </h2>
+
+            <div className="space-y-4 md:space-y-6">
+              <p className="text-center md:text-left text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
+                We’re hiring the most incredible customer-obsessed team <br className="flex md:hidden" /> to re-write{" "}
+                <br className="hidden md:flex" />
+                the insurance script in Africa. Errm...our pecks <br className="flex md:hidden" /> include 1 full day to{" "}
+                <br className="hidden md:flex" />
+                yourself every month to do anything <br className="flex md:hidden" /> you choose to make an impact{" "}
+                <br className="hidden md:flex" /> in your world.
+              </p>
+
+              <p className="text-center md:text-left text-[#848484] font-bold font-paragraphs text-xs md:text-base leading-tight">
+                Forget boring cv, tell us what we’re missing by not <br className="flex md:hidden" /> having you{" "}
+                <br className="hidden md:flex" /> on our team.
+              </p>
+            </div>
+
+            <div className="flex flex-row justify-center md:justify-start items-center md:items-start space-x-4 text-black">
+              <img className="w-5" src="/icons/message.svg" alt="Message" />
+              <p className="text-center md:text-left font-semibold font-headings text-md">team@brollyinsurance.com</p>
             </div>
           </div>
         </section>
@@ -217,6 +298,8 @@ const Home: NextPage = () => {
           </a>
         </div>
       </main>
+
+      <Footer />
     </>
   );
 };
