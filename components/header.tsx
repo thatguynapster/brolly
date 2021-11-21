@@ -74,8 +74,8 @@ const Header: FC = () => {
                 <div className="mt-6">
                   <nav className="grid gap-y-8">
                     <a
-                      key={"item.name"}
-                      href={"item.href"}
+                      key={"about"}
+                      href={"/who-we-are"}
                       className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
                     >
                       <span className="ml-3 text-base font-medium text-gray-900">Who we are</span>
