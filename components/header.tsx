@@ -10,8 +10,10 @@ const Header: FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link href="/">
-                <img className="h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
+              <Link href="/" passHref>
+                <a>
+                  <img className="cursor-pointer h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
+                </a>
               </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -23,8 +25,8 @@ const Header: FC = () => {
 
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-8">
               <nav className="hidden md:flex space-x-10">
-                <Link href="/who-we-are">
-                  <span className="text-base font-medium text-gray-500 hover:text-gray-900"> Who we are</span>
+                <Link href="/who-we-are" passHref>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">Who we are</a>
                 </Link>
               </nav>
 
@@ -60,7 +62,7 @@ const Header: FC = () => {
               <div className="pt-5 pb-6 px-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <Link href="/">
+                    <Link href="/" passHref>
                       <img className="h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
                     </Link>
                   </div>
@@ -73,13 +75,11 @@ const Header: FC = () => {
                 </div>
                 <div className="mt-6">
                   <nav className="grid gap-y-8">
-                    <a
-                      key={"about"}
-                      href={"/who-we-are"}
-                      className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
-                    >
-                      <span className="ml-3 text-base font-medium text-gray-900">Who we are</span>
-                    </a>
+                    <Link href="/who-we-are">
+                      <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 ml-3 text-base font-medium text-gray-900">
+                        Who we are
+                      </span>
+                    </Link>
                   </nav>
                 </div>
               </div>
