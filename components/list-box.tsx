@@ -23,7 +23,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
       >
         <div className="relative mt-1">
           <Listbox.Button
-            className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white rounded-lg border-solid border border-swooveGray-background-pressed cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
+            className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white border-solid border border-swooveGray-background-pressed cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
           >
             <span className="block truncate capitalize">{selectedValue.value}</span>
             <span className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
@@ -31,7 +31,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
             </span>
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <Listbox.Options className="z-10 absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="z-10 absolute w-full py-1 mt-1 overflow-auto text-base bg-white shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {values.map(
                 (value, valueIdx) => (
                   console.log(value),

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { NextPage } from "next";
+import Link from "next/link";
 import FormGroup from "../components/form-group";
 import HeadFile from "../components/head-file";
 import { SEOConfig } from "../configs/global_variables";
@@ -45,11 +46,11 @@ const Home: NextPage = () => {
           </h2>
 
           <div className="w-full grid grid-cols-1 md:grid-cols-3 md:space-x-8 space-y-8 md:space-y-0">
-            <div className="flex flex-col md:flex-row justify-center items-center space-x-8 space-y-4">
+            <div className="flex flex-col justify-center items-center space-x-8 space-y-4">
               {/* <div className="w-1/3"> */}
               <img src="/img/100-digital.svg" alt="100% digital" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-2xl leading-[20px] md:leading-[31px]">
                   100% digital
                 </h4>
@@ -59,11 +60,11 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-center space-x-8 space-y-4">
+            <div className="flex flex-col justify-center items-center space-x-8 space-y-4">
               {/* <div className="w-1/3"> */}
               <img src="/img/fair-contract.svg" alt="Fair Contract" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-2xl leading-[20px] md:leading-[31px]">
                   Fair contract
                 </h4>
@@ -73,11 +74,11 @@ const Home: NextPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-center space-x-8 space-y-4">
+            <div className="flex flex-col justify-center items-center space-x-8 space-y-4">
               {/* <div className="w-1/3"> */}
               <img src="/img/open-247.svg" alt="Open 24/7, 365" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-2xl leading-[20px] md:leading-[31px]">
                   Open 24/7, 365
                 </h4>
@@ -144,7 +145,7 @@ const Home: NextPage = () => {
                 />
 
                 <ListBox
-                  className="bg-[#101d490d] border-none rounded-[0px]"
+                  className="bg-[#101d490d] border-none"
                   id="vehicle_type_of_use"
                   values={[
                     {
@@ -275,9 +276,11 @@ const Home: NextPage = () => {
               </p>
             </div>
 
-            <div className="flex flex-row justify-center md:justify-start items-center md:items-start space-x-4 text-black">
+            <div className="flex flex-row justify-center md:justify-start items-center space-x-4 text-black">
               <img className="w-5" src="/icons/message.svg" alt="Message" />
-              <p className="text-center md:text-left font-semibold font-headings text-md">team@brollyinsurance.com</p>
+              <Link href="mailto:team@brollyinsurance.com">
+                <p className="text-center md:text-left font-semibold font-headings text-md cursor-pointer">team@brollyinsurance.com</p>
+              </Link>
             </div>
           </div>
         </section>

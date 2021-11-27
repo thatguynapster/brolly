@@ -33,33 +33,33 @@ const HowItWorks: NextPage = () => {
           </h2>
 
           <div className="w-full grid grid-cols-1 md:grid-cols-3 md:space-x-8 space-y-8 md:space-y-0">
-            <div className="flex flex-col md:flex-row justify-center items-center md:space-x-8">
+            <div className="flex flex-col justify-center items-center md:space-x-8">
               {/* <div className="w-1/3"> */}
               <img src="/img/mobile-login.svg" alt="Signup" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-xl leading-[20px] md:leading-[31px]">
                   Sign up
                 </h4>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-center md:space-x-8">
+            <div className="flex flex-col justify-center items-center md:space-x-8">
               {/* <div className="w-1/3"> */}
               <img src="/img/share-link.svg" alt="Share Link" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-xl leading-[20px] md:leading-[31px]">
                   Send your SHARE CODE to your loved ones
                 </h4>
               </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center items-center md:space-x-8">
+            <div className="flex flex-col justify-center items-center md:space-x-8">
               {/* <div className="w-1/3"> */}
               <img src="/img/bank-note.svg" alt="Open 24/7, 365" />
               {/* </div> */}
-              <div className="flex flex-col justify-center text-center md:text-left">
+              <div className="flex flex-col justify-center text-center">
                 <h4 className="font-headings font-semibold text-base md:text-xl leading-[20px] md:leading-[31px]">
                   Your loved ones use your code/link to insure, you get ghs100, they get ghs100, CASH!!*
                 </h4>

@@ -42,7 +42,7 @@ const Header: FC = () => {
                 </a>
                 <a
                   href="#"
-                  className="whitespace-nowrap inline-flex items-center justify-center py-4 px-6 border border-transparent shadow-sm text-base font-medium bg-background"
+                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-4 px-6 border-0 shadow-sm"
                 >
                   24/7 support
                 </a>
@@ -60,7 +60,7 @@ const Header: FC = () => {
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
         >
-          <Popover.Panel focus className="absolute top-0 inset-x-0 transition transform origin-top-right md:hidden">
+          <Popover.Panel focus className="z-50 absolute top-0 inset-x-0 transition transform origin-top-right md:hidden">
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
               <div className="pt-5 pb-6 px-5">
                 <div className="flex items-center justify-between">

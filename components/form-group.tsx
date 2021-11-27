@@ -31,10 +31,10 @@ export const FormGroup: FC<IFormGroupProps> = ({
         </label>
       )}
 
-      <div className={`flex flex-row items-center justify-center ${disabled && "bg-gray-100"} rounded-lg relative`}>
+      <div className={`flex flex-row items-center justify-center ${disabled && "bg-gray-100"} relative`}>
         {prependIcon && (
           <span
-            className={`absolute left-0 rounded-l-lg flex items-center justify-center w-12 h-full p-4 ${prependIconContainerClass}`}
+            className={`absolute left-0 flex items-center justify-center w-12 h-full p-4 ${prependIconContainerClass}`}
             onClick={onPrependClicked}
           >
             {prependIcon}
@@ -48,7 +48,7 @@ export const FormGroup: FC<IFormGroupProps> = ({
             prependIcon ? "pl-14" : " "
           }outline-none border-gray-200${
             appendIcon ? "pr-14" : " "
-          }rounded-lg py-3 px-4${disabled ? "border-none text-gray-900" : " "}text-sm${
+          }py-3 px-4${disabled ? "border-none text-gray-900" : " "}text-sm${
             failedValidation ? "border-danger-main" : " "
           }w-full${passValidation ? "border-success-main" : " "}focus:ring-2 ${className}`}
           value={value}
@@ -66,7 +66,7 @@ export const FormGroup: FC<IFormGroupProps> = ({
 
         {appendIcon && (
           <span
-            className={`absolute right-0 rounded-r-lg flex items-center justify-center w-12 h-full p-4 group ${appendIconContainerClass}`}
+            className={`absolute right-0 flex items-center justify-center w-12 h-full p-4 group ${appendIconContainerClass}`}
             onClick={onAppendClicked}
           >
             {appendIcon}

@@ -19,7 +19,7 @@ const About: NextPage = () => {
           <div className="md:relative w-full bg-primary-surface h-[361px] md:h-[552px] px-7 md:px-0 pt-7 md:pt-3 space-y-4 md:items-center md:flex md:flex-col">
             <img className="w-full md:px-7 max-w-3xl" src="/img/coworking.svg" alt="Main Illustration" />
             <div className="md:absolute left-0 bottom-[-182px] md:w-5/12 w-full bg-primary-main px-5 py-6 flex flex-col items-center md:items-start justify-center space-y-4">
-              <p className="text-center md:text-left text-white text-xs md:text-md">
+              <p className="text-center md:text-left text-dark text-xs md:text-md">
                 We believe insurance is a force for good in the world. Just like you, we believe insurance service
                 delivery has some real catching up to do in Africa. We&apos;ve been around the world and seen insurance
                 work differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can
@@ -55,25 +55,25 @@ const About: NextPage = () => {
         </section>
 
         <section className="w-full max-w-7xl mx-auto px-24 mb-14 flex flex-col items-center justify-center">
-          <div className="flex flex-col md:flex-row">
-            <div className="border border-[#E0E0E0] px-16 py-12">
-              <img className="w-full" src="/icons/instagram-dark.svg" alt="Connect on Instagram" />
+          <div className="flex flex-row">
+            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+              <img className="w-6 md:w-16" src="/icons/instagram-dark.svg" alt="Connect on Instagram" />
             </div>
 
-            <div className="border border-[#E0E0E0] px-16 py-12">
-              <img className="w-full" src="/icons/twitter-dark.svg" alt="Connect on Twitter" />
+            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+              <img className="w-6 md:w-16" src="/icons/twitter-dark.svg" alt="Connect on Twitter" />
             </div>
 
-            <div className="border border-[#E0E0E0] px-16 py-12">
-              <img className="w-full" src="/icons/facebook-dark.svg" alt="Connect on Facebook" />
+            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+              <img className="w-6 md:w-16" src="/icons/facebook-dark.svg" alt="Connect on Facebook" />
             </div>
 
-            <div className="border border-[#E0E0E0] px-16 py-12">
-              <img className="w-full" src="/icons/linkedin-dark.svg" alt="Connect on LinkedIn" />
+            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+              <img className="w-6 md:w-16" src="/icons/linkedin-dark.svg" alt="Connect on LinkedIn" />
             </div>
 
-            <div className="border border-[#E0E0E0] px-16 py-12">
-              <img className="w-full" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
+            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+              <img className="w-6 md:w-16" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
             </div>
           </div>
         </section>
