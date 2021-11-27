@@ -71,7 +71,7 @@ const HowItWorks: NextPage = () => {
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-center justify-center">
           <div className="flex flex-col space-y-4 md:space-y-9 items-center">
             <h2 className="font-headings font-semibold text-center text-2xl md:text-6xl leading-[32px] md:leading-[61px]">
-              It's that Simple! No IFs, No BUTs.
+              It&apos;s that Simple! No IFs, No BUTs.
             </h2>
 
             <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm">
