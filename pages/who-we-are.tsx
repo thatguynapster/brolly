@@ -47,7 +47,7 @@ const About: NextPage = () => {
             </p>
 
             <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm">
-              Connectwith us
+              Connect with us
             </button>
           </div>
 

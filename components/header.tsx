@@ -28,6 +28,9 @@ const Header: FC = () => {
                 <Link href="/who-we-are" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">Who we are</a>
                 </Link>
+                <Link href="/how-it-works" passHref>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">How it works</a>
+                </Link>
               </nav>
 
               <div className="">
@@ -78,6 +81,11 @@ const Header: FC = () => {
                     <Link href="/who-we-are">
                       <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 ml-3 text-base font-medium text-gray-900">
                         Who we are
+                      </span>
+                    </Link>
+                    <Link href="/how-it-works">
+                      <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 ml-3 text-base font-medium text-gray-900">
+                        How it works
                       </span>
                     </Link>
                   </nav>
