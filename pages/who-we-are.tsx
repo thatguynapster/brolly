@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import HeadFile from "../components/head-file";
 import { SEOConfig } from "../configs/global_variables";
 
@@ -56,25 +57,45 @@ const About: NextPage = () => {
 
         <section className="w-full max-w-7xl mx-auto px-24 mb-14 flex flex-col items-center justify-center">
           <div className="flex flex-row">
-            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
-              <img className="w-6 md:w-16" src="/icons/instagram-dark.svg" alt="Connect on Instagram" />
-            </div>
+            <Link href="https://instagram.com/brolly_insure" passHref>
+              <a target="_blank">
+                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/instagram-dark.svg" alt="Connect on Instagram" />
+                </div>
+              </a>
+            </Link>
 
-            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
-              <img className="w-6 md:w-16" src="/icons/twitter-dark.svg" alt="Connect on Twitter" />
-            </div>
+            <Link href="https://twitter.com/Brolly_insure">
+              <a target="_blank">
+                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/twitter-dark.svg" alt="Connect on Twitter" />
+                </div>
+              </a>
+            </Link>
 
-            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
-              <img className="w-6 md:w-16" src="/icons/facebook-dark.svg" alt="Connect on Facebook" />
-            </div>
+            <Link href="https://www.facebook.com/Brolly.insure/">
+              <a target="_blank">
+                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/facebook-dark.svg" alt="Connect on Facebook" />
+                </div>
+              </a>
+            </Link>
 
-            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
-              <img className="w-6 md:w-16" src="/icons/linkedin-dark.svg" alt="Connect on LinkedIn" />
-            </div>
+            <Link href="https://www.linkedin.com/company/brolly-insure">
+              <a target="_blank">
+                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/linkedin-dark.svg" alt="Connect on LinkedIn" />
+                </div>
+              </a>
+            </Link>
 
-            <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
-              <img className="w-6 md:w-16" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
-            </div>
+            <Link href="https://vm.tiktok.com/ZM8tP4mVH/">
+              <a target="_blank">
+                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
+                </div>
+              </a>
+            </Link>
           </div>
         </section>
       </main>

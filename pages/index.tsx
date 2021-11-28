@@ -204,29 +204,36 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-10 md:space-y-8">
-          <h2 className="text-center text-[30px] md:text-6xl font-headings font-bold md:leading-[61px]">
-            Join our waitlist and be <br className="flex md:hidden" /> pampered
-          </h2>
-          <p className=" max-w-2xl text-center md:text-left font-paragraphs text-[#848484] text-xs md:text-md leading-[14px] md:leading-[21px]">
-            No need to empty your bank account. Live life fully, pay your insurance monthly, get claims paid at
-            lightning speed.
-          </p>
+        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-16 md:space-y-24">
+          <div className="flex flex-col items-center space-y-12 md:space-y-8">
+            <h2 className="text-center text-[30px] md:text-6xl font-headings font-bold md:leading-[61px] items-center justify-center">
+              Launching in Jan 2022 <img className="w-10 inline-flex" src="/img/ghana.jpg" alt="Ghana" />. Join our
+              waitlist!
+            </h2>
+            <p className=" max-w-2xl text-center font-paragraphs text-[#848484] text-xs md:text-md leading-[14px] md:leading-[21px]">
+              Register your interest to join our take-off 🚀 in January. Guaranteed deals and gifts for first 1000
+              people on our waitlist.
+            </p>
 
-          <div className="flex w-full max-w-sm">
-            <FormGroup
-              type="tel"
-              id="waitlistInput"
-              placeholder="Whatsapp number"
-              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              onValueChanged={(ev: any) => {
-                console.log(ev);
-              }}
-              onFocusOut={(ev: any) => {
-                console.log(ev);
-              }}
-            />
-            <button className="bg-primary-main px-4">Subscribe</button>
+            <Link href="/how-it-works" passHref>
+              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6">How it works</a>
+            </Link>
+
+            <div className="flex w-full max-w-sm">
+              <FormGroup
+                type="tel"
+                id="waitlistInput"
+                placeholder="Whatsapp number"
+                className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+                onValueChanged={(ev: any) => {
+                  console.log(ev);
+                }}
+                onFocusOut={(ev: any) => {
+                  console.log(ev);
+                }}
+              />
+              <button className="bg-primary-main px-4">Subscribe</button>
+            </div>
           </div>
 
           <div className="w-full flex flex-col md:flex-row bg-primary-main pt-5 pb-14 md:pb-5 px-4 md:px-8 rounded-md md:items-center">
@@ -241,7 +248,7 @@ const Home: NextPage = () => {
                 Know someone who deserves the Brolly experience?
               </h2>
 
-              <p className="text-center md:text-left font-paragraphs text-white text-sm md:text-md leading-[14px] md:leading-[21px]">
+              <p className="text-center md:text-left font-paragraphs text-sm md:text-md leading-[14px] md:leading-[21px]">
                 Bring your loved ones to Brolly and earn cool cash. It’s that simple.
               </p>
 
@@ -279,7 +286,9 @@ const Home: NextPage = () => {
             <div className="flex flex-row justify-center md:justify-start items-center space-x-4 text-black">
               <img className="w-5" src="/icons/message.svg" alt="Message" />
               <Link href="mailto:team@brollyinsurance.com">
-                <p className="text-center md:text-left font-semibold font-headings text-md cursor-pointer">team@brollyinsurance.com</p>
+                <p className="text-center md:text-left font-semibold font-headings text-md cursor-pointer">
+                  team@brollyinsurance.com
+                </p>
               </Link>
             </div>
           </div>

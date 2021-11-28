@@ -24,14 +24,14 @@ const Header: FC = () => {
             </div>
 
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-8">
-              <nav className="hidden md:flex space-x-10">
+              {/* <nav className="hidden md:flex space-x-10">
                 <Link href="/who-we-are" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">Who we are</a>
                 </Link>
                 <Link href="/how-it-works" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">How it works</a>
                 </Link>
-              </nav>
+              </nav> */}
 
               <div className="">
                 <a
@@ -62,7 +62,7 @@ const Header: FC = () => {
         >
           <Popover.Panel focus className="z-50 absolute top-0 inset-x-0 transition transform origin-top-right md:hidden">
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-              <div className="pt-5 pb-6 px-5">
+              <div className="pt-5 px-5">
                 <div className="flex items-center justify-between">
                   <div>
                     <Link href="/" passHref>
@@ -76,7 +76,7 @@ const Header: FC = () => {
                     </Popover.Button>
                   </div>
                 </div>
-                <div className="mt-6">
+                {/* <div className="mt-6">
                   <nav className="grid gap-y-8">
                     <Link href="/who-we-are">
                       <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 ml-3 text-base font-medium text-gray-900">
@@ -89,7 +89,7 @@ const Header: FC = () => {
                       </span>
                     </Link>
                   </nav>
-                </div>
+                </div> */}
               </div>
               <div className="py-6 px-5 space-y-6">
                 <div>
