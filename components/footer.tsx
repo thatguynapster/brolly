@@ -65,7 +65,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
             </a>
           </Link>
 
-          <Link href="tel:team@brollyinsurance.com" passHref>
+          <Link href="tel:+233 201 335 141" passHref>
             <a className="flex flex-row items-center space-x-4 text-white">
               <img className="w-5" src="/icons/phone.svg" alt="Message" />
               <p className="font-semibold font-headings text-sm">+233 201 335 141</p>
