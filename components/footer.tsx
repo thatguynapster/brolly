@@ -18,9 +18,11 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
                   Who we are
                 </a>
               </Link>
-              <a className="mr-3" href="/legal?section=faq">
-                FAQs
-              </a>
+              <Link href="/legal?section=faq" passHref>
+                <a className="mr-3" href="#">
+                  FAQs
+                </a>
+              </Link>
             </p>
             <p className="flex flex-wrap items-start space-x-6">
               <Link href="/legal?section=privacy" passHref>
