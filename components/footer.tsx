@@ -18,19 +18,19 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
                   Who we are
                 </a>
               </Link>
-              <a className="mr-3" href="#">
+              <a className="mr-3" href="/legal?section=faq">
                 FAQs
               </a>
             </p>
             <p className="flex flex-wrap items-start space-x-6">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms &amp; Conditions</a>
-              <a className="hidden md:flex" href="#">
+              <a href="/legal?section=privacy">Privacy Policy</a>
+              <a href="/legal?section=tos">Terms &amp; Conditions</a>
+              <a className="hidden md:flex" href="/legal?section=cookies">
                 Cookies Policy
               </a>
             </p>
             <p className="flex flex-wrap items-start justify-between md:hidden">
-              <a href="#">Cookies Policy</a>
+              <a href="/legal?section=cookies">Cookies Policy</a>
             </p>
           </div>
 

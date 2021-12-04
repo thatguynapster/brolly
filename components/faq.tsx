@@ -11,7 +11,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>When is Brolly launching?</span>
@@ -30,7 +30,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How many months can I pay for my insurance?</span>
@@ -49,7 +49,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>My insurance is due in January. Can I register to use the Pay Monthly service now?</span>
@@ -69,7 +69,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will I have full insurance even when I sign up to pay monthly?</span>
@@ -89,7 +89,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will I receive a full claim in case of an accident?</span>
@@ -108,7 +108,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How and where will I pay my monthly installments?</span>
@@ -127,7 +127,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Do I need to come to your office to buy my insurance?</span>
@@ -146,7 +146,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Is Brolly an insurance company?</span>
@@ -165,7 +165,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How do I make a claim for a policy purchased on Brolly?</span>
@@ -187,7 +187,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Is Brolly regulated by the National Insurance Commission?</span>
@@ -205,7 +205,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will the price of my insurance end up higher than if I were to pay outright at inception?</span>
@@ -224,7 +224,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What digital channels does Brolly use in dealing with customers?</span>
@@ -249,7 +249,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What if I prefer to deal through a phone call?</span>
@@ -271,7 +271,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Can I deal with Brolly in-person? </span>
@@ -295,7 +295,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Where is Brolly’s office?</span>
@@ -314,7 +314,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How will I receive my policy document and sticker from Brolly?</span>
@@ -336,7 +336,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What if I miss a monthly installment? Do I remain insured?</span>
@@ -361,7 +361,7 @@ const FAQ: FC = () => {
             <div>
               <Disclosure.Button
                 className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
-                  open ? "bg-primary-surface" : "bg-gray-100"
+                  open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Why should I choose Brolly?</span>

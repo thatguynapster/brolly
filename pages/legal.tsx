@@ -7,17 +7,28 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import { Transition } from "@headlessui/react";
 import FAQ from "../components/faq";
 import TOS from "../components/tos";
+import { getQuery } from "../utils/functions";
 
 const Legal: FC = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
+  interface activeSectionProps {
+    type: "faq" | "tos" | "cookies" | "privacy";
+  }
 
   const [activeSection, setActiveSection] = useState<string>("faq"); // faq | tos | cookies | privacy
   const [nextSection, setNextSection] = useState<string>("");
 
   useEffect(() => {
-    console.log(window.location.origin);
+    console.log(window.location.href);
+    // get page endpoint
+    let endpoint = getQuery("section");
+    console.log(endpoint);
+    if (endpoint && endpoint !== "") {
+      setActiveSection("");
+      setNextSection(endpoint);
+    }
     setBasePath(window.location.origin);
-  }, [basePath]);
+  }, []);
 
   return (
     <>
@@ -156,7 +167,7 @@ const Legal: FC = () => {
           <div className="w-full md:pl-8">
             <Transition
               as={"div"}
-              className="mt-14 md:mt-16 w-full p-4 mx-auto"
+              className="w-full mt-4 md:mt-0 mx-auto"
               show={activeSection === "faq"}
               enter="transform transition ease-out duration-250"
               enterFrom="opacity-10"
@@ -174,7 +185,7 @@ const Legal: FC = () => {
 
             <Transition
               as={"div"}
-              className="mt-14 md:mt-16 w-full p-4 mx-auto"
+              className="w-full mt-4 md:mt-0 mx-auto"
               show={activeSection === "tos"}
               enter="transform transition ease-out duration-250"
               enterFrom="opacity-10"
@@ -192,7 +203,7 @@ const Legal: FC = () => {
 
             <Transition
               as={"div"}
-              className="mt-14 md:mt-16 w-full p-4 mx-auto"
+              className="w-full mt-4 md:mt-0 mx-auto"
               show={activeSection === "privacy"}
               enter="transform transition ease-out duration-250"
               enterFrom="opacity-10"
@@ -210,7 +221,7 @@ const Legal: FC = () => {
 
             <Transition
               as={"div"}
-              className="mt-14 md:mt-16 w-full p-4 mx-auto"
+              className="w-full mt-4 md:mt-0 mx-auto"
               show={activeSection === "cookies"}
               enter="transform transition ease-out duration-250"
               enterFrom="opacity-10"
