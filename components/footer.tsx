@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer: FC<{ pagename: string }> = ({ pagename }) => {
   return (
-    <footer className={`bg-dark px-7 py-16 ${pagename !== "privacy" ? "mb-[74px] " : ""}md:mb-0`}>
+    <footer className={`bg-dark px-7 py-16 mb-[74px] md:mb-0`}>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row space-y-16 md:space-y-0">
         <div className="w-full md:w-2/3 text-white flex flex-col space-y-10">
           <div className="space-y-3">
@@ -47,7 +47,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
                 <img className="w-8 h-8 m-2" src="/icons/twitter.svg" alt="Twitter Link" />
               </a>
             </Link>
-            <Link href="#" passHref>
+            <Link href="https://www.youtube.com/channel/UCQ1mPDIOo2u8Vp8aKOIFd4A" passHref>
               <a target="_blank" className="mr-3">
                 <img className="w-8 h-8 m-2" src="/icons/youtube.svg" alt="Youtube Link" />
               </a>

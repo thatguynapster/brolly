@@ -32,7 +32,7 @@ const HowItWorks: NextPage = () => {
             How It Works
           </h2>
 
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 md:space-x-8 space-y-8 md:space-y-0">
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 space-y-8 md:space-y-0">
             <div className="flex flex-col items-center">
               <div className="w-40 h-40">
                 <img className="w-full" src="/img/mobile-login.svg" alt="Signup" />
@@ -75,7 +75,7 @@ const HowItWorks: NextPage = () => {
             </h2>
 
             <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm">
-              Connect with us
+              Join the network
             </button>
 
             <p className="text-center font-paragraphs text-xs md:text-base leading-tight text-[#848484]">
