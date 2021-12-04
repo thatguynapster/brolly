@@ -23,14 +23,22 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
               </a>
             </p>
             <p className="flex flex-wrap items-start space-x-6">
-              <a href="/legal?section=privacy">Privacy Policy</a>
-              <a href="/legal?section=tos">Terms &amp; Conditions</a>
-              <a className="hidden md:flex" href="/legal?section=cookies">
-                Cookies Policy
-              </a>
+              <Link href="/legal?section=privacy" passHref>
+                <a href="#">Privacy Policy</a>
+              </Link>
+              <Link href="/legal?section=tos" passHref>
+                <a href="#">Terms &amp; Conditions</a>
+              </Link>
+              <Link href="/legal?section=cookies" passHref>
+                <a className="hidden md:flex" href="#">
+                  Cookies Policy
+                </a>
+              </Link>
             </p>
             <p className="flex flex-wrap items-start justify-between md:hidden">
-              <a href="/legal?section=cookies">Cookies Policy</a>
+              <Link href="/legal?section=cookies" passHref>
+                <a href="#">Cookies Policy</a>
+              </Link>
             </p>
           </div>
 
