@@ -166,7 +166,7 @@ const TOS: FC = () => {
           Influencer Marketing.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Complaints &mp; Redress</h2>
+        <h2 className="text-4xl font-bold text-dark text-left">Complaints &amp; Redress</h2>
         <p>
           We delight in delivering unmatched services to everyone who uses our website and who deals with Brolly in any
           way. If we fail to meet your expectations at any point in time, please do not hesitate to reach out to us.

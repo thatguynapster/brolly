@@ -8,6 +8,8 @@ import { Transition } from "@headlessui/react";
 import FAQ from "../components/faq";
 import TOS from "../components/tos";
 import { getQuery } from "../utils/functions";
+import PrivacyPolicy from "../components/privacy-policy";
+import CookiesPolicy from "../components/cookies-policy";
 
 const Legal: FC = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -216,7 +218,7 @@ const Legal: FC = () => {
                 setNextSection("");
               }}
             >
-              <TOS />
+              <PrivacyPolicy />
             </Transition>
 
             <Transition
@@ -234,7 +236,7 @@ const Legal: FC = () => {
                 setNextSection("");
               }}
             >
-              <TOS />
+              <CookiesPolicy />
             </Transition>
           </div>
         </div>
