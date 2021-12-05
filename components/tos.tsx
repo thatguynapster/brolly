@@ -44,7 +44,7 @@ const TOS: FC = () => {
           of the coverage we offer to users of the platform.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Quotes provided on our website</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Quotes provided on our website</h2>
         <p>
           All quotes generated on this Web App are based on information you provided on this Web App or on other
           associated contact channels such as email, phone call, and whatsapp. Quotes do not constitute a contract,
@@ -56,7 +56,7 @@ const TOS: FC = () => {
           All applications for insurance are subject to underwriting review and approval.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Your Contract</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Your Contract</h2>
         <p>
           The contract of insurance purchased on the Brolly website is between yourself and Allianz Insurance Ghana
           Limited. If you choose to pay the price of your insurance on installment, you enter an additional contract for
@@ -66,7 +66,7 @@ const TOS: FC = () => {
           additionally stored in your user account on the Brolly web app.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Paying for your insurance</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Paying for your insurance</h2>
         <p>
           It is a term of use of our web app that you shall pay the price of insurance purchased on the web app whether
           by full outright payment at the time of purchase or through agreed installments. You agree that non-payment of
@@ -74,7 +74,7 @@ const TOS: FC = () => {
           the validity of your contract and may consequently affect your entitlement to make claims on your contract.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Claims</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Claims</h2>
         <p>
           For the avoidance of doubt, a claim refers to a request for compensation or payout on the occurrence of an
           insured risk and/or within the terms of your contract of insurance. Claims made on your contract through the
@@ -83,7 +83,7 @@ const TOS: FC = () => {
           within the General Service Level Agreement which is incorporated into this Terms of Use.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Prohibition of Abuse</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Prohibition of Abuse</h2>
         <p>
           You agree to use the services offered through the Brolly wep app for the intended purposes only. Any use which
           is not in compliance with legal and regulatory provisions may lead to the withdrawal of the rights of use.
@@ -96,7 +96,7 @@ const TOS: FC = () => {
           harmful for Brolly.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Liability and Limitation of Liability</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Liability and Limitation of Liability</h2>
         <p>
           The Content of this web app is not and should not be construed as insurance advice. Reliance on the Site
           Content is solely at your own risk and Brolly disclaims any liability for injury or damages resulting from the
@@ -123,7 +123,7 @@ const TOS: FC = () => {
           for damages are excluded.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Termination</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Termination</h2>
         <p>The user agreement is for an indefinite term.</p>
         <p>
           A User may terminate the user agreement at any time without a period of notice by email to{" "}
@@ -146,14 +146,14 @@ const TOS: FC = () => {
           refrain from a violation of duty in the future.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Data Protection</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Data Protection</h2>
         <p>
           During the use of the Services, Brolly will collect and process personal data. The data processing will be
           effected in accordance with the provisions of the respective applicable data protection laws. Further
           information on this can be found in the privacy policy.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Brolly Network Referral Program</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Brolly Network Referral Program</h2>
         <p>
           “Brolly Network” refers to a programme which enables users of Brolly to invite their friends, family, and
           connections to use the Brolly web app. An activated referral earns the referring users a reward which may be
@@ -166,13 +166,13 @@ const TOS: FC = () => {
           Influencer Marketing.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Complaints &amp; Redress</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Complaints &amp; Redress</h2>
         <p>
           We delight in delivering unmatched services to everyone who uses our website and who deals with Brolly in any
           way. If we fail to meet your expectations at any point in time, please do not hesitate to reach out to us.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Reporting an issue</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Reporting an issue</h2>
         <p>
           Reach out to our Customer Experience Team via whatsapp, email, or phone. Our team will be more than happy to
           help solve the issue.
@@ -193,7 +193,7 @@ const TOS: FC = () => {
           (Weekdays 8am to 6pm)
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Copyright Restrictions</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Copyright Restrictions</h2>
         <p>
           All contents of this web app (including all information, software, text, displays, images and audio) and the
           design, selection and arrangement thereof, are proprietary to Brolly or its licensors and are protected by
@@ -212,7 +212,7 @@ const TOS: FC = () => {
           materials available through this web app.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Disclaimers &amp; Reservation of Rights</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Disclaimers &amp; Reservation of Rights</h2>
         <p>
           The Brolly web app is intended to be available 24 hours a day and 365 days a year. Brolly does not, however,
           undertake to provide uninterrupted availability of the web app. The availability may be limited due to reasons
@@ -232,7 +232,7 @@ const TOS: FC = () => {
           determining the relevant time at which such action was taken.
         </p>
 
-        <h2 className="text-4xl font-bold text-dark text-left">Governing Law</h2>
+        <h2 className="text-xl font-bold text-dark text-left">Governing Law</h2>
         <p>
           All transactions initiated and/or concluded on Brolly are made subject to the provisions of the Electronic
           Transaction Act 2008, Act 772 of Ghana which is available{" "}
