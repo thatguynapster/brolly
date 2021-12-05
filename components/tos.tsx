@@ -138,7 +138,7 @@ const TOS: FC = () => {
         <p>Brolly however reserves the right to an extraordinary termination without notice for a material reason. </p>
         <p>The termination of the user agreement will not affect the existing insurance contracts.</p>
         <p>
-          In the event of material violations of the user's duties and in the event of material reasons to suspect a
+          In the event of material violations of the user&apos;s duties and in the event of material reasons to suspect a
           material violation of duty, Brolly is entitled to block the Services to the user, in particular in the event
           of transmittal of deliberately incorrect or false personal data or details relevant to the insurance contract
           by the user. Brolly will inform the user of the reasons for being blocked by email. Such a blocking will
