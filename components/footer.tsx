@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
+import CookieNotice from "./cookie-notice";
 
 const Footer: FC<{ pagename: string }> = ({ pagename }) => {
   return (
@@ -107,6 +108,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
           24/7 support
         </a>
       </div>
+      <CookieNotice />
     </footer>
   );
 };

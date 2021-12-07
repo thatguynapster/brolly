@@ -26,7 +26,7 @@ const About: NextPage = () => {
                 work differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can
                 make insurance work as we desire.
               </p>
-              <button className="whitespace-nowrap text-base font-medium text-primary-main bg-dark py-4 px-6 border-0 shadow-sm">
+              <button className="whitespace-nowrap text-base font-medium text-white bg-dark py-4 px-6 border-0 shadow-sm">
                 Join us
               </button>
             </div>
@@ -59,7 +59,7 @@ const About: NextPage = () => {
           <div className="flex flex-row">
             <Link href="https://instagram.com/brolly_insure" passHref>
               <a target="_blank">
-                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/instagram-dark.svg" alt="Connect on Instagram" />
                 </div>
               </a>
@@ -67,7 +67,7 @@ const About: NextPage = () => {
 
             <Link href="https://twitter.com/Brolly_insure">
               <a target="_blank">
-                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/twitter-dark.svg" alt="Connect on Twitter" />
                 </div>
               </a>
@@ -75,7 +75,7 @@ const About: NextPage = () => {
 
             <Link href="https://www.facebook.com/Brolly.insure/">
               <a target="_blank">
-                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/facebook-dark.svg" alt="Connect on Facebook" />
                 </div>
               </a>
@@ -83,7 +83,7 @@ const About: NextPage = () => {
 
             <Link href="https://www.linkedin.com/company/brolly-insure">
               <a target="_blank">
-                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/linkedin-dark.svg" alt="Connect on LinkedIn" />
                 </div>
               </a>
@@ -91,7 +91,7 @@ const About: NextPage = () => {
 
             <Link href="https://vm.tiktok.com/ZM8tP4mVH/">
               <a target="_blank">
-                <div className="border border-[#E0E0E0] w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
                 </div>
               </a>

@@ -10,7 +10,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -29,7 +29,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -48,7 +48,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -68,7 +68,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -88,7 +88,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -107,7 +107,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -126,7 +126,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -145,7 +145,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -164,7 +164,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -186,7 +186,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -204,7 +204,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -223,7 +223,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -250,7 +250,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -272,7 +272,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -296,7 +296,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -315,7 +315,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -338,7 +338,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
@@ -365,7 +365,7 @@ const FAQ: FC = () => {
           {({ open }) => (
             <div>
               <Disclosure.Button
-                className={`flex justify-between w-full px-4 py-2 text-base font-medium text-left text-gray-900 ${
+                className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
                 } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >

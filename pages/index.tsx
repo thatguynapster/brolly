@@ -8,6 +8,7 @@ import { SEOConfig } from "../configs/global_variables";
 import Header from "../components/header";
 import ListBox from "../components/list-box";
 import Footer from "../components/footer";
+import CookieNotice from "../components/cookie-notice";
 
 const Home: NextPage = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -24,7 +25,7 @@ const Home: NextPage = () => {
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-80px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
-          <div className="w-full md:w-1/2 flex-col space-y-4">
+          <div className="w-full md:w-1/2 flex flex-col space-y-4">
             <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
               Pay Monthly for <br /> Car Insurance
             </h1>
@@ -32,6 +33,10 @@ const Home: NextPage = () => {
               No need to empty your bank account. Live life fully, pay your insurance monthly, get claims paid at
               lightning speed.
             </p>
+
+            <Link href="/how-it-works" passHref>
+              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max">How it works</a>
+            </Link>
           </div>
           <div className="w-full md:w-1/2 flex justify-center">
             <img className="animate-swell" src="/img/landing-illustration.svg" alt="Main Illustration" />
@@ -113,10 +118,8 @@ const Home: NextPage = () => {
               Switch to Brolly and <br /> get Cash Back
             </h2>
             <p className="text-center md:text-left text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
-              If you stay with the old script, you will keep experiencing the old
-              <br className="hidden md:flex" /> s**t. Switch to Brolly, get Cash Back, and experience our best in
-              <br className="hidden md:flex" />
-              class service.
+              If you stay with the old script, you will keep experiencing the old s**t. Switch to Brolly, get Cash Back,
+              and experience our best in class service.
             </p>
           </div>
         </section>
@@ -131,10 +134,34 @@ const Home: NextPage = () => {
             <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
               <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
               <div className="w-full flex-col space-y-5">
+                <ListBox
+                  className="bg-[#101d490d] border-none"
+                  id="type_of_car"
+                  values={[
+                    {
+                      name: "type_of_car",
+                      value: "Type of Car",
+                      id: "0",
+                    },
+                    {
+                      name: "some_entry",
+                      value: "Some Entry",
+                      id: "1",
+                    },
+                  ]}
+                  selected={{
+                    name: "type_of_car",
+                    value: "Type of Car",
+                    id: "0",
+                  }}
+                  onValueChange={(ev: any) => {
+                    console.log(ev);
+                  }}
+                />
                 <FormGroup
                   type="number"
                   id="vehicleValue"
-                  placeholder="Current value of your car (in GHS)"
+                  placeholder="Current value"
                   className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
                     console.log(ev);
@@ -173,7 +200,7 @@ const Home: NextPage = () => {
                   type="number"
                   min={1}
                   id="passengerCount"
-                  placeholder="Number of passengers"
+                  placeholder="Number of passengers (including driver)"
                   className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
                     console.log(ev);
@@ -192,6 +219,31 @@ const Home: NextPage = () => {
                     console.log(ev);
                   }}
                   onFocusOut={(ev: any) => {
+                    console.log(ev);
+                  }}
+                />
+
+                <ListBox
+                  className="bg-[#101d490d] border-none"
+                  id="number_of_installments"
+                  values={[
+                    {
+                      name: "number_of_installments",
+                      value: "No. of Installments",
+                      id: "0",
+                    },
+                    {
+                      name: "some_entry",
+                      value: "Some Entry",
+                      id: "1",
+                    },
+                  ]}
+                  selected={{
+                    name: "number_of_installments",
+                    value: "No. of Installments",
+                    id: "0",
+                  }}
+                  onValueChange={(ev: any) => {
                     console.log(ev);
                   }}
                 />
@@ -219,7 +271,7 @@ const Home: NextPage = () => {
               <a className="text-base font-medium text-dark bg-primary-main py-4 px-6">How it works</a>
             </Link>
 
-            <div className="flex w-full max-w-sm">
+            <div className="flex flex-row w-full max-w-md">
               <FormGroup
                 type="tel"
                 id="waitlistInput"
@@ -232,7 +284,7 @@ const Home: NextPage = () => {
                   console.log(ev);
                 }}
               />
-              <button className="bg-primary-main px-4">Subscribe</button>
+              <button className="bg-primary-main px-4 font-semibold">Subscribe to Join</button>
             </div>
           </div>
 

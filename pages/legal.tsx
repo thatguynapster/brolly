@@ -37,7 +37,7 @@ const Legal: FC = () => {
       <HeadFile title={SEOConfig.title} canonical={`${basePath}/legal`} />
       <Header />
       <div className="max-w-7xl px-4 sm:px-6 pb-16 mx-auto text-justify">
-        <div className="z-10 flex md:hidden items-center whitespace-nowrap overflow-x-auto  w-full text-gray-900 font-normal text-sm space-x-10">
+        <div className="z-10 flex md:hidden items-center whitespace-nowrap overflow-x-auto scrollbar-gray w-full text-gray-900 font-normal text-sm space-x-6">
           <a
             // key={i}
             href={"_lnk.slug"}
@@ -95,10 +95,10 @@ const Legal: FC = () => {
               activeSection === "cookies" ? "border-b-2 border-primary-main font-semibold text-primary-main" : ""
             } py-2`}
           >
-            Cookies Policy
+            Cookie Policy
           </a>
         </div>
-        <div className="flex md:divide-x-2 md:divide-gray-300">
+        <div className="flex md:divide-x-2 md:divide-gray-100">
           <div className="min-w-[275px] hidden md:flex pr-8 sticky top-0">
             <div className="w-full">
               <nav>
@@ -106,9 +106,9 @@ const Legal: FC = () => {
                   <li
                     className={`${
                       activeSection === "faq"
-                        ? "bg-primary-main text-gray-700"
+                        ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-bold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
                     onClick={() => {
                       setNextSection("faq");
                       setActiveSection("");
@@ -121,9 +121,9 @@ const Legal: FC = () => {
                   <li
                     className={`${
                       activeSection === "tos"
-                        ? "bg-primary-main text-gray-700"
+                        ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-bold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
                     onClick={() => {
                       setNextSection("tos");
                       setActiveSection("");
@@ -136,9 +136,9 @@ const Legal: FC = () => {
                   <li
                     className={`${
                       activeSection === "privacy"
-                        ? "bg-primary-main text-gray-700"
+                        ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-bold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
                     onClick={() => {
                       setNextSection("privacy");
                       setActiveSection("");
@@ -151,9 +151,9 @@ const Legal: FC = () => {
                   <li
                     className={`${
                       activeSection === "cookies"
-                        ? "bg-primary-main text-gray-700"
+                        ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-bold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
                     onClick={() => {
                       setNextSection("cookies");
                       setActiveSection("");
