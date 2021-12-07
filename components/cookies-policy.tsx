@@ -47,7 +47,7 @@ const CookiesPolicy: FC = () => {
 
         <h2 className="text-xl font-bold text-dark text-left">Cookies options</h2>
         <p>
-          If you don't like the idea of cookies or certain types of cookies, you can change your browser's settings to
+          If you don&apos;t like the idea of cookies or certain types of cookies, you can change your browser&apos;s settings to
           delete cookies that have already been set and to not accept new cookies. To learn more about how to do this,
           visit the help pages of your browser. Please note, however, that if you delete cookies or do not accept them,
           you might not be able to use all of the features we offer, you may not be able to store your preferences, and
