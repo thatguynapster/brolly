@@ -226,7 +226,7 @@ const HowItWorks: NextPage = () => {
               <p className="text-center md:text-left text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
                 Insurance cover begins as soon as your installment request is <br className="" /> accepted. A member of
                 our team will guide you to set up the <br className="" /> monthly payment instruction with your bank and
-                we're ready to <br className="" /> get you protected.
+                we&apos;re ready to <br className="" /> get you protected.
               </p>
             </div>
           </div>
