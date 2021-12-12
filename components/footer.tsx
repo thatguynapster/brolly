@@ -13,57 +13,39 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
                 <img className="w-1/4 md:w-1/12" src="/img/logo-footer.svg" alt="Logo Footer" />
               </a>
             </Link>
-            <p className="flex flex-wrap items-start space-x-6">
-              <Link href="/who-we-are" passHref>
-                <a className="mr-3" href="#">
-                  Who we are
-                </a>
-              </Link>
-              <Link href="/legal?section=faq" passHref>
-                <a className="mr-3" href="#">
-                  FAQs
-                </a>
-              </Link>
-            </p>
-            <p className="flex flex-wrap items-start space-x-6">
-              <Link href="/legal?section=privacy" passHref>
-                <a href="#">Privacy Policy</a>
-              </Link>
-              <Link href="/legal?section=tos" passHref>
-                <a href="#">Terms &amp; Conditions</a>
-              </Link>
-              <Link href="/legal?section=cookies" passHref>
-                <a className="hidden md:flex" href="#">
-                  Cookies Policy
-                </a>
-              </Link>
-            </p>
-            <p className="flex flex-wrap items-start justify-between md:hidden">
-              <Link href="/legal?section=cookies" passHref>
-                <a href="#">Cookies Policy</a>
-              </Link>
-            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3">
+              <div className="flex flex-col space-y-6">
+                <Link href="/who-we-are" passHref>
+                  <a className="mr-3" href="#">
+                    Who we are
+                  </a>
+                </Link>
+                <Link href="/network" passHref>
+                  <a href="#">Brolly Network</a>
+                </Link>
+                <Link href="/claims" passHref>
+                  <a href="#">Claims</a>
+                </Link>
+                <Link href="/legal?section=faq" passHref>
+                  <a href="#">FAQs</a>
+                </Link>
+              </div>
+
+              <div className="flex flex-col space-y-6">
+                <Link href="/legal?section=privacy" passHref>
+                  <a href="#">Privay Policy</a>
+                </Link>
+                <Link href="/legal?section=tos" passHref>
+                  <a href="#">Terms &amp; Conditions</a>
+                </Link>
+                <Link href="/legal?section=cookies" passHref>
+                  <a href="#">Cookies Policy</a>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <p className="text-small mt-8"> &copy; 2021 Brolly. All rights reserved</p>
-
-          <div className="flex flex-row space-x-4">
-            <Link href="https://instagram.com/brolly_insure" passHref>
-              <a target="_blank" className="mr-3">
-                <img className="w-8 h-8 m-2" src="/icons/instagram.svg" alt="Instagram Page Link" />
-              </a>
-            </Link>
-            <Link href="https://twitter.com/Brolly_insure" passHref>
-              <a target="_blank" className="mr-3">
-                <img className="w-8 h-8 m-2" src="/icons/twitter.svg" alt="Twitter Link" />
-              </a>
-            </Link>
-            <Link href="https://www.youtube.com/channel/UCQ1mPDIOo2u8Vp8aKOIFd4A" passHref>
-              <a target="_blank" className="mr-3">
-                <img className="w-8 h-8 m-2" src="/icons/youtube.svg" alt="Youtube Link" />
-              </a>
-            </Link>
-          </div>
+          <p className="text-small mt-8 hidden md:flex"> &copy; 2021 Brolly. All rights reserved</p>
         </div>
 
         <div className="w-full md:w-1/3 text-white flex flex-col space-y-6">
@@ -90,6 +72,28 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
               Residential Area. Accra, Ghana
             </p>
           </div>
+
+          <div className="flex flex-row space-x-4">
+            <Link href="https://instagram.com/brolly_insure" passHref>
+              <a target="_blank" className="mr-3">
+                <img className="w-8 h-8 m-2" src="/icons/instagram.svg" alt="Instagram Page Link" />
+              </a>
+            </Link>
+            <Link href="https://twitter.com/Brolly_insure" passHref>
+              <a target="_blank" className="mr-3">
+                <img className="w-8 h-8 m-2" src="/icons/twitter.svg" alt="Twitter Link" />
+              </a>
+            </Link>
+            <Link href="https://www.youtube.com/channel/UCQ1mPDIOo2u8Vp8aKOIFd4A" passHref>
+              <a target="_blank" className="mr-3">
+                <img className="w-8 h-8 m-2" src="/icons/youtube.svg" alt="Youtube Link" />
+              </a>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex flex-row items-center space-x-4 text-white">
+          <p className="text-small md:hidden flex"> &copy; 2021 Brolly. All rights reserved</p>
         </div>
       </div>
 
