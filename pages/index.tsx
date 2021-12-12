@@ -21,7 +21,15 @@ const Home: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}`} />
-      <Header />
+      <Header
+        onGetQuote={() => {
+          console.log("scroll to get quote section");
+          // if (process.browser) {
+          let getQuote = document.getElementById("getQuote");
+          getQuote?.scrollIntoView();
+          // }
+        }}
+      />
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-80px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
@@ -124,7 +132,7 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <section className="w-full my-12 md:my-24 bg-background">
+        <section className="w-full my-12 md:my-24 bg-background" id="getQuote">
           <div className="px-4 pt-14 pb-10 md:pb-0 md:-mb-6 max-w-7xl mx-auto items-center justify-around space-y-4 md:space-y-0 flex flex-col md:flex-row">
             <h2 className="font-headings font-bold text-center md:text-left text-2xl md:text-6xl leading-[32px] md:leading-[61px]">
               Check the monthly <br className="hidden md:flex" /> cost of <br className="flex md:hidden" /> your{" "}
@@ -181,9 +189,39 @@ const Home: NextPage = () => {
                       id: "0",
                     },
                     {
-                      name: "some_entry",
-                      value: "Some Entry",
+                      name: "private_individual",
+                      value: "Private Use (Individul Owned)",
                       id: "1",
+                    },
+                    {
+                      name: "private_company",
+                      value: "Private Use (Company Owned)",
+                      id: "2",
+                    },
+                    {
+                      name: "uber",
+                      value: "Uber",
+                      id: "3",
+                    },
+                    {
+                      name: "taxi",
+                      value: "Taxi",
+                      id: "4",
+                    },
+                    {
+                      name: "hiring_car",
+                      value: "Hiring Car",
+                      id: "5",
+                    },
+                    {
+                      name: "mini_bus",
+                      value: "Mini Bus",
+                      id: "6",
+                    },
+                    {
+                      name: "maxi_bus",
+                      value: "Maxi Bus",
+                      id: "7",
                     },
                   ]}
                   selected={{
@@ -233,9 +271,29 @@ const Home: NextPage = () => {
                       id: "0",
                     },
                     {
-                      name: "some_entry",
-                      value: "Some Entry",
+                      name: "full_payment",
+                      value: "Full Payment",
                       id: "1",
+                    },
+                    {
+                      name: "3_months",
+                      value: "3 months",
+                      id: "2",
+                    },
+                    {
+                      name: "6_months",
+                      value: "6 months",
+                      id: "3",
+                    },
+                    {
+                      name: "9_months",
+                      value: "9 months",
+                      id: "4",
+                    },
+                    {
+                      name: "12_months",
+                      value: "12 months",
+                      id: "5",
                     },
                   ]}
                   selected={{
@@ -248,7 +306,7 @@ const Home: NextPage = () => {
                   }}
                 />
 
-                <button className="w-full whitespace-nowrap text-base font-medium text-white bg-primary-main py-4 px-6 border-0 shadow-sm">
+                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm">
                   Submit
                 </button>
               </div>
@@ -267,24 +325,22 @@ const Home: NextPage = () => {
               people on our waitlist.
             </p>
 
-            <Link href="/how-it-works" passHref>
-              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6">How it works</a>
-            </Link>
-
-            <div className="flex flex-row w-full max-w-md">
-              <FormGroup
-                type="tel"
-                id="waitlistInput"
-                placeholder="Whatsapp number"
-                className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-                onValueChanged={(ev: any) => {
-                  console.log(ev);
-                }}
-                onFocusOut={(ev: any) => {
-                  console.log(ev);
-                }}
-              />
-              <button className="bg-primary-main px-4 font-semibold">Subscribe to Join</button>
+            <div className="grid grid-cols-5 w-full max-w-md">
+              <div className="col-span-3">
+                <FormGroup
+                  type="tel"
+                  id="waitlistInput"
+                  placeholder="Whatsapp number"
+                  className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+                  onValueChanged={(ev: any) => {
+                    console.log(ev);
+                  }}
+                  onFocusOut={(ev: any) => {
+                    console.log(ev);
+                  }}
+                />
+              </div>
+              <button className="col-span-2 bg-primary-main px-4 font-semibold">Subscribe to Join</button>
             </div>
           </div>
 
@@ -330,7 +386,7 @@ const Home: NextPage = () => {
               </p>
 
               <p className="text-center md:text-left text-[#848484] font-bold font-paragraphs text-xs md:text-base leading-tight">
-                Forget boring cv, tell us what we’re missing by not <br className="flex md:hidden" /> having you{" "}
+                Forget boring CV, tell us what we’re missing by not <br className="flex md:hidden" /> having you{" "}
                 <br className="hidden md:flex" /> on our team.
               </p>
             </div>
