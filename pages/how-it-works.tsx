@@ -8,6 +8,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
+import { ArrowRightIcon } from "@heroicons/react/outline";
 
 const HowItWorks: NextPage = () => {
   return (
@@ -206,8 +207,9 @@ const HowItWorks: NextPage = () => {
                   }}
                 />
 
-                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm">
-                  Submit
+                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm flex items-center justify-center space-x-4">
+                  <span>Submit</span>
+                  <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </button>
               </div>
             </div>

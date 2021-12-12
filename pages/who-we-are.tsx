@@ -5,6 +5,8 @@ import { SEOConfig } from "../configs/global_variables";
 
 import Header from "../components/header";
 import Footer from "../components/footer";
+import React from "react";
+import { ArrowRightIcon } from "@heroicons/react/outline";
 
 const About: NextPage = () => {
   return (
@@ -26,8 +28,9 @@ const About: NextPage = () => {
                 work differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can
                 make insurance work as we desire.
               </p>
-              <button className="whitespace-nowrap text-base font-medium text-white bg-dark py-4 px-6 border-0 shadow-sm">
-                Join us
+              <button className="whitespace-nowrap text-base font-medium text-white bg-dark py-4 px-6 border-0 shadow-sm flex items-center justify-center space-x-4">
+                <span> Join us</span>
+                <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
               </button>
             </div>
           </div>
@@ -47,8 +50,9 @@ const About: NextPage = () => {
               Want to know more about us?
             </p>
 
-            <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm">
-              Connect with us
+            <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm items-center justify-center space-x-4">
+              <span>Connect with us</span>
+              <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
             </button>
           </div>
 
@@ -93,6 +97,14 @@ const About: NextPage = () => {
               <a target="_blank">
                 <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
                   <img className="w-6 md:w-16" src="/icons/tiktok-dark.svg" alt="Connect on TikTok" />
+                </div>
+              </a>
+            </Link>
+
+            <Link href="https://www.youtube.com/channel/UCQ1mPDIOo2u8Vp8aKOIFd4A">
+              <a target="_blank">
+                <div className="w-16 md:w-56 h-16 md:h-56 flex items-center justify-center">
+                  <img className="w-6 md:w-16" src="/icons/youtube-dark.svg" alt="Connect on TikTok" />
                 </div>
               </a>
             </Link>

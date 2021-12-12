@@ -73,13 +73,56 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
             </p>
           </div>
 
-          <div className="flex flex-row space-x-4">
-            <Link href="https://instagram.com/brolly_insure" passHref>
-              <a target="_blank" className="mr-3">
-                <img className="w-8 h-8 m-2" src="/icons/instagram.svg" alt="Instagram Page Link" />
-              </a>
-            </Link>
-            <Link href="https://twitter.com/Brolly_insure" passHref>
+          <div className="flex flex-row space-x-2">
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://instagram.com/brolly_insure" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/instagram.svg" alt="Instagram Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://twitter.com/Brolly_insure" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/twitter.svg" alt="Twitter Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://www.facebook.com/Brolly.insure/" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/facebook.svg" alt="Facebook Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://www.linkedin.com/company/brolly-insur" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/linkedin.svg" alt="LinkedIn Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://vm.tiktok.com/ZM8tP4mVH/" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/tiktok.svg" alt="TikTok Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
+              <Link href="https://www.youtube.com/channel/UCQ1mPDIOo2u8Vp8aKOIFd4A" passHref>
+                <a target="_blank">
+                  <img className="" src="/icons/youtube.svg" alt="Youtube Page Link" />
+                </a>
+              </Link>
+            </div>
+
+            {/* <Link href="https://twitter.com/Brolly_insure" passHref>
               <a target="_blank" className="mr-3">
                 <img className="w-8 h-8 m-2" src="/icons/twitter.svg" alt="Twitter Link" />
               </a>
@@ -88,7 +131,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
               <a target="_blank" className="mr-3">
                 <img className="w-8 h-8 m-2" src="/icons/youtube.svg" alt="Youtube Link" />
               </a>
-            </Link>
+            </Link> */}
           </div>
         </div>
 

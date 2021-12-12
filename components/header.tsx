@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
   return (
@@ -44,13 +44,14 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
                 </Link>
               </nav> */}
 
-              <div className="">
+              <div className="flex">
                 <a
                   href="#"
-                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-4 px-6 border-0 shadow-sm"
+                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-4 px-6 border-0 shadow-sm flex items-center space-x-4"
                   onClick={onGetQuote}
                 >
-                  Get a Quote
+                  <span>Get a Quote</span>
+                  <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </a>
                 <a
                   href="#"

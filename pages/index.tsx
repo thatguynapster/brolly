@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Link from "next/link";
 import FormGroup from "../components/form-group";
@@ -9,6 +9,7 @@ import Header from "../components/header";
 import ListBox from "../components/list-box";
 import Footer from "../components/footer";
 import CookieNotice from "../components/cookie-notice";
+import { ArrowRightIcon } from "@heroicons/react/outline";
 
 const Home: NextPage = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -43,7 +44,10 @@ const Home: NextPage = () => {
             </p>
 
             <Link href="/how-it-works" passHref>
-              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max">How it works</a>
+              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max flex items-center space-x-4">
+                <span> How it works</span>
+                <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
+              </a>
             </Link>
           </div>
           <div className="w-full md:w-1/2 flex justify-center">
@@ -306,8 +310,9 @@ const Home: NextPage = () => {
                   }}
                 />
 
-                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm">
-                  Submit
+                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm flex justify-center items-center space-x-4">
+                  <span>Submit</span>
+                  <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </button>
               </div>
             </div>
@@ -325,8 +330,8 @@ const Home: NextPage = () => {
               people on our waitlist.
             </p>
 
-            <div className="grid grid-cols-5 w-full max-w-md">
-              <div className="col-span-3">
+            <div className="grid grid-cols-7 w-full max-w-md">
+              <div className="col-span-4">
                 <FormGroup
                   type="tel"
                   id="waitlistInput"
@@ -340,7 +345,10 @@ const Home: NextPage = () => {
                   }}
                 />
               </div>
-              <button className="col-span-2 bg-primary-main px-4 font-semibold">Subscribe to Join</button>
+              <button className="col-span-3 bg-primary-main px-4 font-semibold flex items-center justify-center space-x-4">
+                <span>Subscribe to Join</span>
+                <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
+              </button>
             </div>
           </div>
 
