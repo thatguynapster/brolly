@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       />
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
-        <section className="h-screen max-w-7xl mx-auto mt-[-80px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
+        <section className="h-screen max-w-7xl mx-auto mt-[-60px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
           <div className="w-full md:w-1/2 flex flex-col space-y-4">
             <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
               Pay Monthly for <br /> Car Insurance
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             </p>
 
             <Link href="/how-it-works" passHref>
-              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max flex items-center space-x-4">
+              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max flex items-center mx-auto md:ml-0 space-x-4">
                 <span> How it works</span>
                 <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
               </a>

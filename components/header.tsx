@@ -12,7 +12,7 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
             <div className="flex flex-row items-center justify-start lg:w-0 lg:flex-1 space-x-10">
               <Link href="/" passHref>
                 <a>
-                  <img className="cursor-pointer h-20 w-auto sm:h-28" src="/img/logo.svg" alt="" />
+                  <img className="cursor-pointer w-auto" src="/img/logo.svg" alt="" />
                 </a>
               </Link>
               <nav className="hidden md:flex space-x-8">

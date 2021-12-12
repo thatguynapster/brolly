@@ -108,7 +108,7 @@ const Legal: FC = () => {
                       activeSection === "faq"
                         ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4`}
                     onClick={() => {
                       setNextSection("faq");
                       setActiveSection("");
@@ -123,7 +123,7 @@ const Legal: FC = () => {
                       activeSection === "tos"
                         ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4`}
                     onClick={() => {
                       setNextSection("tos");
                       setActiveSection("");
@@ -138,7 +138,7 @@ const Legal: FC = () => {
                       activeSection === "privacy"
                         ? "bg-primary-main text-dark"
                         : "bg-white text-gray-400 hover:bg-primary-surface hover:text-gray-700"
-                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4 rounded-md `}
+                    }  py-2 cursor-pointer px-3 font-semibold flex flex-row items-center space-x-4`}
                     onClick={() => {
                       setNextSection("privacy");
                       setActiveSection("");

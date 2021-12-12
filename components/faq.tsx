@@ -12,7 +12,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>When is Brolly launching?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -31,7 +31,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How many months can I pay for my insurance?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -50,7 +50,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>My insurance is due in January. Can I register to use the Pay Monthly service now?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -70,7 +70,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will I have full insurance even when I sign up to pay monthly?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -90,7 +90,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will I receive a full claim in case of an accident?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -109,7 +109,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How and where will I pay my monthly installments?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -128,7 +128,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Do I need to come to your office to buy my insurance?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -147,7 +147,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Is Brolly an insurance company?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -166,7 +166,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How do I make a claim for a policy purchased on Brolly?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -188,7 +188,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Is Brolly regulated by the National Insurance Commission?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -206,7 +206,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Will the price of my insurance end up higher than if I were to pay outright at inception?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -225,7 +225,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What digital channels does Brolly use in dealing with customers?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -252,7 +252,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What if I prefer to deal through a phone call?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -274,7 +274,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Can I deal with Brolly in-person? </span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -298,7 +298,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Where is Brolly’s office?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -317,7 +317,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>How will I receive my policy document and sticker from Brolly?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -340,7 +340,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>What if I miss a monthly installment? Do I remain insured?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
@@ -367,7 +367,7 @@ const FAQ: FC = () => {
               <Disclosure.Button
                 className={`flex items-center justify-between w-full px-4 py-4 text-base font-medium text-left text-gray-900 ${
                   open ? "bg-primary-surface" : "bg-gray-50"
-                } rounded-lg hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
+                } hover:bg-primary-surface focus:outline-none focus-visible:ring focus-visible:ring-primary-border focus-visible:ring-opacity-75`}
               >
                 <span>Why should I choose Brolly?</span>
                 <ChevronUpIcon className={`${open ? "transform rotate-180" : ""} w-5 h-5 text-gray-500`} />
