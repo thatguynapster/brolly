@@ -44,7 +44,7 @@ const Home: NextPage = () => {
             </p>
 
             <Link href="/how-it-works" passHref>
-              <a className="text-base font-medium text-dark bg-primary-main py-4 px-6 w-max flex items-center mx-auto md:ml-0 space-x-4">
+              <a className="text-base font-medium text-dark bg-primary-main py-2 px-4 w-max flex items-center mx-auto md:ml-0 space-x-4">
                 <span> How it works</span>
                 <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
               </a>
@@ -310,7 +310,7 @@ const Home: NextPage = () => {
                   }}
                 />
 
-                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm flex justify-center items-center space-x-4">
+                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4">
                   <span>Submit</span>
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </button>
