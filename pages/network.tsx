@@ -76,13 +76,13 @@ const Network: NextPage = () => {
               It&apos;s that Simple! No IFs, No BUTs.
             </h2>
 
-            <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4">
+            <button className="w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4">
               <span> Join the network</span>
-              <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
             </button>
 
             <p className="text-center font-paragraphs text-xs md:text-base leading-tight text-[#848484]">
-              * Cash rewards for Brolly Network do not apply to policies with annual premium <br /> less that ghs1000.
+              * Cash rewards for Brolly Network do not apply to policies with annual premium
+              <br className="hidden md:flex" /> less than &#8373;1000.
             </p>
           </div>
         </section>
