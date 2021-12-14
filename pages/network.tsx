@@ -76,7 +76,7 @@ const Network: NextPage = () => {
               It&apos;s that Simple! No IFs, No BUTs.
             </h2>
 
-            <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-4 px-6 border-0 shadow-sm items-center justify-center space-x-4">
+            <button className="hidden w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4">
               <span> Join the network</span>
               <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
             </button>

@@ -47,7 +47,7 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
               <div className="flex">
                 <a
                   href="#"
-                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-4 px-6 border-0 shadow-sm flex items-center space-x-4"
+                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4"
                   onClick={onGetQuote}
                 >
                   <span>Get a Quote</span>
@@ -55,7 +55,7 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
                 </a>
                 <a
                   href="#"
-                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-4 px-6 border-0 shadow-sm"
+                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-2 px-4 border-0 shadow-sm"
                 >
                   24/7 support
                 </a>
@@ -116,13 +116,13 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
                 <div>
                   <a
                     href="#"
-                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-4 px-6 border-0 shadow-sm"
+                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm"
                   >
                     Get a Quote
                   </a>
                   <a
                     href="#"
-                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 py-4 px-6 border-0 shadow-sm bg-background"
+                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 py-2 px-4 border-0 shadow-sm bg-background"
                   >
                     24/7 support
                   </a>
