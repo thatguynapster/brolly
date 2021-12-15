@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-60px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
           <div className="w-full md:w-1/2 flex flex-col space-y-4">
-            <h1 className="text-center md:text-left text-[42px] md:text-7xl font-headings font-bold leading-[40px] md:leading-[96px]">
+            <h1 className="text-center md:text-left text-[42px] md:text-7xl font-headings font-bold leading-[40px] md:leading-[80px]">
               Pay Monthly for <br /> Car Insurance
             </h1>
             <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px]">
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
 
         {/* features */}
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-10 md:space-y-20">
-          <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
+          <h2 className="font-headings font-bold text-center text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
             Brolly is insurance built to suit <br className="hidden md:flex" /> your lifestyle
           </h2>
 
