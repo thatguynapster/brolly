@@ -21,8 +21,8 @@ const About: NextPage = () => {
           </h1>
           <div className="md:relative w-full bg-primary-surface h-[361px] md:h-[552px] px-7 md:px-0 pt-7 md:pt-3 space-y-4 md:items-center md:flex md:flex-col">
             <img className="w-full md:px-7 max-w-3xl" src="/img/coworking.svg" alt="Main Illustration" />
-            <div className="md:absolute left-0 bottom-[-182px] md:w-5/12 w-full bg-primary-main px-5 py-6 flex flex-col items-center md:items-start justify-center space-y-4">
-              <p className="text-center md:text-left text-dark text-xs md:text-md">
+            <div className="md:absolute left-0 bottom-[-152px] md:w-5/12 w-full bg-primary-main px-5 py-6 flex flex-col items-center md:items-start justify-center space-y-4">
+              <p className="text-center font-paragraphs text-dark text-base md:text-md leading-[20px] md:leading-[24px]">
                 We believe insurance is a force for good in the world. Just like you, we believe insurance service
                 delivery has some real catching up to do in Africa. We&apos;ve been around the world and seen insurance
                 work differently elsewhere. We keep asking ourselves why it cannot be done in Africa. Together, we can

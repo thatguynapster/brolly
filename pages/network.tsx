@@ -18,7 +18,7 @@ const Network: NextPage = () => {
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
             Join Brolly Network and make <br className="hidden md:flex" /> cool Cash
           </h1>
-          <p className="text-center md:text-left font-paragraphs text-[#848484] text-xs md:text-md leading-[14px] md:leading-[21px]">
+          <p className="text-center font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px]">
             Surely you know someone who is getting a bad haircut with their insurance.{" "}
             <Link href="#" passHref>
               <a className="text-primary-main font-bold">Give them the gift of Brolly.</a>
@@ -80,7 +80,7 @@ const Network: NextPage = () => {
               <span> Join the network</span>
             </button>
 
-            <p className="text-center font-paragraphs text-xs md:text-base leading-tight text-[#848484]">
+            <p className="text-center font-paragraphs text-base leading-tight text-[#848484]">
               * Cash rewards for Brolly Network do not apply to policies with annual premium
               <br className="hidden md:flex" /> less than &#8373;1000.
             </p>
