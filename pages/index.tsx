@@ -379,22 +379,21 @@ const Home: NextPage = () => {
 
           <div className="flex flex-col space-y-6 md:space-y-10 w-full md:w-3/4">
             <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
-              Got blue hair with an <br /> awesome brain? Join our <br /> team
+              Got blue hair with an <br className="hidden md:flex" /> awesome brain? Join our{" "}
+              <br className="hidden md:flex" /> team
             </h2>
 
             <div className="space-y-4 md:space-y-6">
-              <p className="text-center font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px]">
-                We’re hiring the most incredible customer-obsessed team <br className="flex md:hidden" /> to re-write{" "}
-                <br className="hidden md:flex" />
-                the insurance script in Africa. Errm...our pecks <br className="flex md:hidden" /> include 1 full day to{" "}
-                <br className="hidden md:flex" />
-                yourself every month to do anything <br className="flex md:hidden" /> you choose to make an impact{" "}
-                <br className="hidden md:flex" /> in your world.
+              <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px]">
+                We’re hiring the most incredible customer-obsessed team to re-write <br className="hidden md:flex" />
+                the insurance script in Africa. Errm...our pecks include 1 full day to <br className="hidden md:flex" />
+                yourself every month to do anything you choose to make an impact <br className="hidden md:flex" /> in
+                your world.
               </p>
 
-              <p className="text-center font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px] font-bold">
-                Forget boring CV, tell us what we’re missing by not <br className="flex md:hidden" /> having you{" "}
-                <br className="hidden md:flex" /> on our team.
+              <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px] font-bold">
+                Forget boring CV, tell us what we’re missing by not having you <br className="hidden md:flex" /> on our
+                team.
               </p>
             </div>
 
