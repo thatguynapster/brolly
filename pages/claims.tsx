@@ -18,7 +18,7 @@ const Network: NextPage = () => {
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
             No Pranks, No IFs, <br /> No BUTs
           </h1>
-          <p className="text-center md:text-left font-paragraphs text-[#848484] text-xs md:text-md leading-[14px] md:leading-[21px]">
+          <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[18px] md:leading-[21px]">
             Think...a faulty parachute when your flight has an emergency? So why would you accept an insurance contract
             that leaves you headaches?
           </p>
