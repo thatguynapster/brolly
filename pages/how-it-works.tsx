@@ -9,6 +9,7 @@ import Footer from "../components/footer";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
 import { ArrowRightIcon } from "@heroicons/react/outline";
+import CheckPremium from "../components/check-premium";
 
 const HowItWorks: NextPage = () => {
   return (
@@ -16,7 +17,7 @@ const HowItWorks: NextPage = () => {
       <HeadFile title={SEOConfig.title} />
       <Header />
       <main className="bg-white flex flex-col justify-center items-center">
-        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
+        <section className="w-full md:h-screen ms:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
             Pay for your Insurance in <br className="hidden md:flex" /> installments of up to 12 months
           </h1>
@@ -40,7 +41,8 @@ const HowItWorks: NextPage = () => {
               </p>
             </div>
 
-            <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
+            <CheckPremium />
+            {/* <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
               <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
               <div className="w-full flex-col space-y-5">
                 <ListBox
@@ -212,7 +214,7 @@ const HowItWorks: NextPage = () => {
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 

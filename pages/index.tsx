@@ -10,6 +10,7 @@ import ListBox from "../components/list-box";
 import Footer from "../components/footer";
 import CookieNotice from "../components/cookie-notice";
 import { ArrowRightIcon } from "@heroicons/react/outline";
+import CheckPremium from "../components/check-premium";
 
 const Home: NextPage = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -137,7 +138,8 @@ const Home: NextPage = () => {
               <br className="hidden md:flex" /> car insurance
             </h2>
 
-            <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
+            <CheckPremium />
+            {/* <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
               <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
               <div className="w-full flex-col space-y-5">
                 <ListBox
@@ -308,7 +310,7 @@ const Home: NextPage = () => {
                   <span>Submit</span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 

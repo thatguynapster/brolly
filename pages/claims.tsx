@@ -14,11 +14,11 @@ const Network: NextPage = () => {
       <HeadFile title={SEOConfig.title} />
       <Header />
       <main className="bg-white flex flex-col justify-center items-center">
-        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
-          <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
+        <section className="mt-16 justify-center w-full max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
+          <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px] md:leading-[96px]">
             No Pranks, No IFs, <br /> No BUTs
           </h1>
-          <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[18px] md:leading-[21px]">
+          <p className="text-center md:text-left font-paragraphs text-[#848484] text-base md:text-md leading-[20px] md:leading-[24px]">
             Think...a faulty parachute when your flight has an emergency? So why would you accept an insurance contract
             that leaves you headaches?
           </p>
@@ -31,7 +31,7 @@ const Network: NextPage = () => {
           <div className="w-full grid grid-cols-1 md:grid-cols-5 space-y-8 md:space-y-0 md:space-x-11">
             <div className="flex flex-col items-center">
               <div className="flex flex-col justify-center">
-                <h1 className="text-center md:text-left font-headings font-bold text-6xl leading-[53px]">
+                <h1 className="text-center md:text-left font-headings font-bold text-[30px] md:text-6xl leading-[38px] md:leading-[53px]">
                   Here&apos;s how to make a claim on your Brolly Car:
                 </h1>
               </div>
@@ -39,7 +39,7 @@ const Network: NextPage = () => {
 
             <div className="flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 1</h4>
-              <p className="text-base text-[#848484] leading-[27px] font-paragraphs">
+              <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Login to your Brolly account on{" "}
                 <Link href="https://brollyinsurance.com" passHref>
                   <a className="font-bold" href="#">
@@ -58,7 +58,7 @@ const Network: NextPage = () => {
 
             <div className="flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 2</h4>
-              <p className="text-base text-[#848484] leading-[27px] font-paragraphs">
+              <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Provide us details of your incident and the type of claimProvide us details of your incident and the
                 type of claim
               </p>
@@ -66,14 +66,14 @@ const Network: NextPage = () => {
 
             <div className="flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 3</h4>
-              <p className="text-base text-[#848484] leading-[27px] font-paragraphs">
+              <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Upload pictures and videos of the accident vehicle
               </p>
             </div>
 
             <div className="flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 4</h4>
-              <p className="text-base text-[#848484] leading-[27px] font-paragraphs">
+              <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 All done! Your claim is with us.
               </p>
             </div>
@@ -84,12 +84,9 @@ const Network: NextPage = () => {
           <img className="" src="/img/claims-process.svg" alt="Claims Process" />
 
           <div className="flex flex-col space-y-4">
-            <h2 className="font-headings font-bold text-center md:text-left text-2xl md:text-6xl leading-[32px] md:leading-[61px]">
-              Here’s how we process your claim:
-            </h2>
             <h3 className="font-headings font-bold text-2xl">Estimated Time to Settle (ETS)</h3>
             <div className="space-y-9">
-              <p className="text-center md:text-left text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
+              <p className="text-center md:text-left text-[#848484] font-paragraphs text-base leading-tight">
                 This refers to the time it takes us to settle a claim from the time we receive notification complete
                 with all required information and supporting documents. You can find the required documents for
                 different types of claims at the section of thys page titled “Requirements”.
@@ -99,7 +96,7 @@ const Network: NextPage = () => {
                 <p className="bg-primary-surface py-1.5 px-3 text-primary-main">1</p>
                 <div className="flex flex-col">
                   <h3 className="text-2xl font-semibold font-headings">Minor Claims</h3>
-                  <p className="text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
+                  <p className="text-[#848484] font-paragraphs text-base leading-tight">
                     (Claims with estimated cost up to Ghs5000) - 48 Hours
                   </p>
                 </div>
@@ -109,7 +106,7 @@ const Network: NextPage = () => {
                 <p className="bg-primary-surface py-1.5 px-3 text-primary-main">2</p>
                 <div className="flex flex-col">
                   <h3 className="text-2xl font-semibold font-headings">Medium Claims</h3>
-                  <p className="text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
+                  <p className="text-[#848484] font-paragraphs text-base leading-tight">
                     (Claims with estimated cost over Ghs5,000 and up to Ghs20,000) - 7 days
                   </p>
                 </div>
@@ -119,13 +116,13 @@ const Network: NextPage = () => {
                 <p className="bg-primary-surface py-1.5 px-3 text-primary-main">3</p>
                 <div className="flex flex-col">
                   <h3 className="text-2xl font-semibold font-headings">Major Claims</h3>
-                  <p className="text-[#848484] font-paragraphs text-xs md:text-base leading-tight">
+                  <p className="text-[#848484] font-paragraphs text-base leading-tight">
                     (Claims with estimated cost over Ghs20,000) - 7 days
                   </p>
                 </div>
               </div>
 
-              <p className="text-center md:text-left text-[#8d8d8d] font-paragraphs text-xs leading-[14px]">
+              <p className="text-center md:text-left text-[#8d8d8d] font-paragraphs text-base leading-[20px] md:leading-[24px]">
                 ! Please note that the ETS may be affected by the timeliness of your responses to our requests for
                 additional information. In all cases, we will make sure to keep you informed.
               </p>
