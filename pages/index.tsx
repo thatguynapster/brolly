@@ -103,7 +103,7 @@ const Home: NextPage = () => {
         </section>
         {/* END features */}
 
-        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-end justify-around md:space-x-24 flex flex-col-reverse space-y-10 space-y-reverse md:flex-row md:space-y-0">
+        <section className="w-full mt-24 max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-end justify-around md:space-x-24 flex flex-col-reverse space-y-10 space-y-reverse md:flex-row md:space-y-0">
           <div className="flex flex-col space-y-4 md:space-y-0">
             <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
               No pranks with your claims, <br /> get paid at lightning <br /> speed
