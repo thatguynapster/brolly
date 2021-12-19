@@ -25,7 +25,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
           <Listbox.Button
             className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white border-solid border border-swooveGray-background-pressed cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
           >
-            <span className="block truncate capitalize">{selectedValue.value}</span>
+            <span className="block truncate">{selectedValue.value}</span>
             <span className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
               <ChevronDownIcon className="w-5 h-5 text-[#B4B7C3]" aria-hidden="true" />
             </span>

@@ -45,3 +45,9 @@ export interface IListBoxProps {
   };
   onValueChange: (ev: { name: string; value: string; id: string }) => void;
 }
+
+export interface TypeOfUseProps {
+  name: string;
+  value: string;
+  id: string;
+}
