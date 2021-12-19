@@ -32,45 +32,37 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
             <Listbox.Options className="z-10 absolute w-full py-1 mt-1 overflow-auto text-base bg-white shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {values.map(
-                (value, valueIdx) => (
-                  console.log(value),
-                  (
-                    <Listbox.Option
-                      key={valueIdx}
-                      className={({ active }) =>
-                        `${
-                          active ? "text-primary-main bg-primary-surface" : "text-gray-900"
-                        } cursor-default select-none relative py-2 pl-10 pr-4`
-                      }
-                      value={value.value}
-                    >
-                      {({ selected }) => (
-                        console.log(selected),
-                        (
-                          <>
-                            <span
-                              className={`${
-                                selected ? "text-primary-main font-medium" : "font-normal"
-                              } block truncate capitalize`}
-                            >
-                              {value.value}
-                            </span>
-                            {selected ? (
-                              <span
-                                className={`${selected ? "text-primary-main" : "text-gray-600"}
+              {values.map((value, valueIdx) => (
+                <Listbox.Option
+                  key={valueIdx}
+                  className={({ active }) =>
+                    `${
+                      active ? "text-primary-main bg-primary-surface" : "text-gray-900"
+                    } cursor-default select-none relative py-2 pl-10 pr-4`
+                  }
+                  value={value.value}
+                >
+                  {({ selected }) => (
+                    <>
+                      <span
+                        className={`${
+                          selected ? "text-primary-main font-medium" : "font-normal"
+                        } block truncate capitalize`}
+                      >
+                        {value.value}
+                      </span>
+                      {selected ? (
+                        <span
+                          className={`${selected ? "text-primary-main" : "text-gray-600"}
                                 absolute inset-y-0 left-0 flex items-center pl-3`}
-                              >
-                                <CheckIcon className="w-5 h-5" aria-hidden="true" />
-                              </span>
-                            ) : null}
-                          </>
-                        )
-                      )}
-                    </Listbox.Option>
-                  )
-                )
-              )}
+                        >
+                          <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                        </span>
+                      ) : null}
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
             </Listbox.Options>
           </Transition>
         </div>
