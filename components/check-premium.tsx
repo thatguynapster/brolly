@@ -4,6 +4,7 @@ import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
 import { TypeOfUseProps } from "../types";
 import { mkPostReq } from "../utils/functions";
+import checkPremium from "../utils/check-premium";
 
 const CheckPremium: NextPage = () => {
   // premium calculation params
@@ -27,14 +28,19 @@ const CheckPremium: NextPage = () => {
       year_of_registration: yearOfRegistration,
     };
 
-    var premium_check_result = await mkPostReq({
-      endpoint: "/api/checkPremium",
-      method: "post",
-      isJSON: true,
-      data: JSON.stringify(premium_check_data),
-    });
+    let premium_check_result = await checkPremium(premium_check_data);
     console.log(premium_check_result);
+
     setPremiumDue(premium_check_result.total_premium_due);
+
+    // var premium_check_result = await mkPostReq({
+    //   endpoint: "/api/checkPremium",
+    //   method: "post",
+    //   isJSON: true,
+    //   data: JSON.stringify(premium_check_data),
+    // });
+    // console.log(premium_check_result);
+    // setPremiumDue(premium_check_result.total_premium_due);
   };
 
   return (
