@@ -25,6 +25,9 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
                 <Link href="/network" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">Network</a>
                 </Link>
+                <Link href="/claims" passHref>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">Claims</a>
+                </Link>
               </nav>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -105,6 +108,11 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
                     <Link href="/network">
                       <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900">
                         Network
+                      </span>
+                    </Link>
+                    <Link href="/claims">
+                      <span className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50 text-base font-medium text-gray-900">
+                        Claims
                       </span>
                     </Link>
                   </nav>

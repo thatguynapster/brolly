@@ -10,6 +10,7 @@ import ListBox from "../components/list-box";
 import Footer from "../components/footer";
 import CookieNotice from "../components/cookie-notice";
 import { ArrowRightIcon } from "@heroicons/react/outline";
+import CheckPremium from "../components/check-premium";
 
 const Home: NextPage = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -102,7 +103,7 @@ const Home: NextPage = () => {
         </section>
         {/* END features */}
 
-        <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-end justify-around md:space-x-24 flex flex-col-reverse space-y-10 space-y-reverse md:flex-row md:space-y-0">
+        <section className="w-full mt-24 max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-end justify-around md:space-x-24 flex flex-col-reverse space-y-10 space-y-reverse md:flex-row md:space-y-0">
           <div className="flex flex-col space-y-4 md:space-y-0">
             <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
               No pranks with your claims, <br /> get paid at lightning <br /> speed
@@ -137,7 +138,8 @@ const Home: NextPage = () => {
               <br className="hidden md:flex" /> car insurance
             </h2>
 
-            <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
+            <CheckPremium />
+            {/* <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
               <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
               <div className="w-full flex-col space-y-5">
                 <ListBox
@@ -308,7 +310,7 @@ const Home: NextPage = () => {
                   <span>Submit</span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
