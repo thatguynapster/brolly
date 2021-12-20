@@ -2,198 +2,283 @@ import React, { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
+import { TypeOfUseProps } from "../types";
+import { mkPostReq } from "../utils/functions";
+import checkPremium from "../utils/check-premium";
 
 const CheckPremium: NextPage = () => {
   // premium calculation params
-  const [typeOfUse, setTypeOfUse] = useState<string>("");
-  const [premiumRate, setPremiumRate] = useState<number>(5);
 
-  useEffect(() => {
-    console.log(typeOfUse);
-    switch (typeOfUse) {
-      case "private_individual":
-        setPremiumRate(5);
-        break;
-      case "private_company":
-        setPremiumRate(6);
-        break;
-        
-    }
-  }, [typeOfUse]);
+  const [yearOfRegistration, setYearOfRegistration] = useState<any>("");
+  const [vehicleValue, setVehicleValue] = useState<any>("");
+  const [typeOfUse, setTypeOfUse] = useState<string>("");
+  const [passengerCount, setPassengerCount] = useState<number | "">("");
+  const [whatsappNumber, setWhatsappNumber] = useState<string>("");
+  const [installmentCount, setInstallmentCount] = useState<string>("");
+
+  const [premiumDue, setPremiumDue] = useState<string | null>(null);
+
+  const _handleCheckPremium = async () => {
+    let premium_check_data = {
+      installment: installmentCount,
+      passenger_count: Number(passengerCount),
+      type_of_use: typeOfUse,
+      vehicle_value: Number(vehicleValue),
+      whatsapp_number: whatsappNumber,
+      year_of_registration: yearOfRegistration,
+    };
+    console.log(premium_check_data);
+
+    let premium_check_result = await checkPremium(premium_check_data);
+    console.log(premium_check_result);
+
+    setPremiumDue(
+      `${premium_check_result.total_premium_due.toFixed(2)} ${installmentCount === "full_payment" ? "" : "/m"}`
+    );
+  };
 
   return (
     <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
-      <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
-      <div className="w-full flex-col space-y-5">
-        <ListBox
-          className="bg-[#101d490d] border-none"
-          id="type_of_car"
-          values={[
-            {
-              name: "type_of_car",
-              value: "Type of Car",
+      <div className="w-full flex flex-row">
+        <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
+      </div>
+      <form autoComplete="false" className="w-full">
+        <input autoComplete="off" name="hidden" id="hidden" type="text" className="hidden" />
+        <div className="w-full flex-col space-y-5">
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="year_of_registration"
+            values={[
+              {
+                name: "type_of_car",
+                value: "Year of Registration",
+                id: "0",
+              },
+              {
+                name: "2022",
+                value: "2022",
+                id: "1",
+              },
+              {
+                name: "2021",
+                value: "2021",
+                id: "1",
+              },
+              {
+                name: "2020",
+                value: "2020",
+                id: "1",
+              },
+              {
+                name: "2019",
+                value: "2019",
+                id: "1",
+              },
+              {
+                name: "2018",
+                value: "2018",
+                id: "1",
+              },
+              {
+                name: "2017",
+                value: "2017",
+                id: "1",
+              },
+              {
+                name: "before_2017",
+                value: "Before 2017",
+                id: "1",
+              },
+            ]}
+            selected={{
+              name: "year_of_registration",
+              value: "Year of Registration",
               id: "0",
-            },
-            {
-              name: "some_entry",
-              value: "Some Entry",
-              id: "1",
-            },
-          ]}
-          selected={{
-            name: "type_of_car",
-            value: "Type of Car",
-            id: "0",
-          }}
-          onValueChange={(ev: any) => {
-            console.log(ev);
-          }}
-        />
-        <FormGroup
-          type="number"
-          id="vehicleValue"
-          placeholder="Current value"
-          className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-          onValueChanged={(ev: any) => {
-            console.log(ev);
-          }}
-          onFocusOut={(ev: any) => {
-            console.log(ev);
-          }}
-        />
+            }}
+            onValueChange={(_YoR: any) => {
+              console.log(_YoR);
+              setYearOfRegistration(_YoR.name);
+              setPremiumDue(null);
+            }}
+          />
 
-        <ListBox
-          className="bg-[#101d490d] border-none"
-          id="vehicle_type_of_use"
-          values={[
-            {
+          <FormGroup
+            type="number"
+            id="vehicleValue"
+            placeholder="Current value"
+            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+            value={vehicleValue}
+            onValueChanged={(_val: any) => {
+              // console.log(_val.target.value);
+              setVehicleValue(_val.target.value);
+              setPremiumDue(null);
+            }}
+            onFocusOut={(_val: any) => {
+              // console.log(_val.target.value);
+              setVehicleValue(_val.target.value);
+              setPremiumDue(null);
+            }}
+          />
+
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="vehicle_type_of_use"
+            values={[
+              {
+                name: "type_of_use",
+                value: "Type of use",
+                id: "0",
+              },
+              {
+                name: "private_individual",
+                value: "Private Use (Individul Owned)",
+                id: "1",
+              },
+              {
+                name: "private_company",
+                value: "Private Use (Company Owned)",
+                id: "2",
+              },
+              {
+                name: "ride_hail",
+                value: "Uber/Bolt/Yango/Etc",
+                id: "3",
+              },
+              {
+                name: "taxi",
+                value: "Taxi",
+                id: "4",
+              },
+              {
+                name: "hiring_car",
+                value: "Hiring Car",
+                id: "5",
+              },
+              {
+                name: "omni_bus",
+                value: "Omni Bus",
+                id: "6",
+              },
+              {
+                name: "own_goods",
+                value: "Own Goods Carrying Vehicle",
+                id: "7",
+              },
+              {
+                name: "general_cartage",
+                value: "General Cartage",
+                id: "8",
+              },
+            ]}
+            selected={{
               name: "type_of_use",
               value: "Type of use",
               id: "0",
-            },
-            {
-              name: "private_individual",
-              value: "Private Use (Individul Owned)",
-              id: "1",
-            },
-            {
-              name: "private_company",
-              value: "Private Use (Company Owned)",
-              id: "2",
-            },
-            {
-              name: "uber",
-              value: "Uber",
-              id: "3",
-            },
-            {
-              name: "taxi",
-              value: "Taxi",
-              id: "4",
-            },
-            {
-              name: "hiring_car",
-              value: "Hiring Car",
-              id: "5",
-            },
-            {
-              name: "mini_bus",
-              value: "Mini Bus",
-              id: "6",
-            },
-            {
-              name: "maxi_bus",
-              value: "Maxi Bus",
-              id: "7",
-            },
-          ]}
-          selected={{
-            name: "type_of_use",
-            value: "Type of use",
-            id: "0",
-          }}
-          onValueChange={(_type: any) => {
-            console.log(_type);
-            setTypeOfUse(_type.name);
-          }}
-        />
+            }}
+            onValueChange={(_type: any) => {
+              console.log(_type);
+              setTypeOfUse(_type.name);
+              setPremiumDue(null);
+            }}
+          />
 
-        <FormGroup
-          type="number"
-          min={1}
-          id="passengerCount"
-          placeholder="Number of passengers (including driver)"
-          className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-          onValueChanged={(ev: any) => {
-            console.log(ev);
-          }}
-          onFocusOut={(ev: any) => {
-            console.log(ev);
-          }}
-        />
+          <FormGroup
+            type="number"
+            min={1}
+            id="passengerCount"
+            placeholder="Number of passengers (including driver)"
+            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+            value={passengerCount}
+            onValueChanged={(_val: any) => {
+              console.log(_val.target.value);
+              setPassengerCount(_val.target.value);
+              setPremiumDue(null);
+            }}
+            onFocusOut={(_val: any) => {
+              console.log(_val.target.value);
+              setPassengerCount(_val.target.value);
+              setPremiumDue(null);
+            }}
+          />
 
-        <FormGroup
-          type="tel"
-          id="whatsappNumber"
-          placeholder="Whatsapp number"
-          className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-          onValueChanged={(ev: any) => {
-            console.log(ev);
-          }}
-          onFocusOut={(ev: any) => {
-            console.log(ev);
-          }}
-        />
+          <FormGroup
+            type="tel"
+            id="whatsappNumber"
+            placeholder="Whatsapp number"
+            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+            value={whatsappNumber}
+            onValueChanged={(_val: any) => {
+              console.log(_val.target.value);
+              setWhatsappNumber(_val.target.value);
+              setPremiumDue(null);
+            }}
+            onFocusOut={(_val: any) => {
+              console.log(_val.target.value);
+              setWhatsappNumber(_val.target.value);
+              setPremiumDue(null);
+            }}
+          />
 
-        <ListBox
-          className="bg-[#101d490d] border-none"
-          id="number_of_installments"
-          values={[
-            {
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="number_of_installments"
+            values={[
+              {
+                name: "number_of_installments",
+                value: "No. of Installments",
+                id: "0",
+              },
+              {
+                name: "full_payment",
+                value: "Full Payment",
+                id: "1",
+              },
+              {
+                name: "3_months",
+                value: "3 months",
+                id: "2",
+              },
+              {
+                name: "6_months",
+                value: "6 months",
+                id: "3",
+              },
+              {
+                name: "9_months",
+                value: "9 months",
+                id: "4",
+              },
+              {
+                name: "12_months",
+                value: "12 months",
+                id: "5",
+              },
+            ]}
+            selected={{
               name: "number_of_installments",
               value: "No. of Installments",
               id: "0",
-            },
-            {
-              name: "full_payment",
-              value: "Full Payment",
-              id: "1",
-            },
-            {
-              name: "3_months",
-              value: "3 months",
-              id: "2",
-            },
-            {
-              name: "6_months",
-              value: "6 months",
-              id: "3",
-            },
-            {
-              name: "9_months",
-              value: "9 months",
-              id: "4",
-            },
-            {
-              name: "12_months",
-              value: "12 months",
-              id: "5",
-            },
-          ]}
-          selected={{
-            name: "number_of_installments",
-            value: "No. of Installments",
-            id: "0",
-          }}
-          onValueChange={(ev: any) => {
-            console.log(ev);
-          }}
-        />
+            }}
+            onValueChange={(_IstCnt: any) => {
+              console.log(_IstCnt);
+              setInstallmentCount(_IstCnt.name);
+              setPremiumDue(null);
+            }}
+          />
 
-        <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4">
-          <span>Submit</span>
-        </button>
-      </div>
+          {premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>}
+
+          <button
+            className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
+            onClick={(ev) => {
+              ev.preventDefault();
+              _handleCheckPremium();
+            }}
+          >
+            <span>Submit</span>
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

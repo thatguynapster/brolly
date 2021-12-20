@@ -17,7 +17,7 @@ const HowItWorks: NextPage = () => {
       <HeadFile title={SEOConfig.title} />
       <Header />
       <main className="bg-white flex flex-col justify-center items-center">
-        <section className="w-full md:h-screen ms:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
+        <section className="w-full md:h-screen md:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
             Pay for your Insurance in <br className="hidden md:flex" /> installments of up to 12 months
           </h1>

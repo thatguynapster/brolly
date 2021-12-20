@@ -28,8 +28,8 @@ const Network: NextPage = () => {
         </section>
 
         <section className="w-full max-w-7xl mt-24 mx-auto px-8 sm:px-12 my-8 flex flex-col md:flex-row items-center justify-center space-y-10 md:space-y-20">
-          <div className="w-full grid grid-cols-1 md:grid-cols-5 space-y-8 md:space-y-0 md:space-x-11">
-            <div className="flex flex-col items-center">
+          <div className="w-full grid grid-cols-1 md:grid-cols-4 space-y-8 md:space-y-0 md:space-x-11">
+            <div className="flex flex-col items-center col-span-4 mb-8">
               <div className="flex flex-col justify-center">
                 <h1 className="text-center md:text-left font-headings font-bold text-[30px] md:text-6xl leading-[38px] md:leading-[53px]">
                   Here&apos;s how to make a claim on your Brolly Car:
