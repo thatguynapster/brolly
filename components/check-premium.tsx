@@ -16,31 +16,25 @@ const CheckPremium: NextPage = () => {
   const [whatsappNumber, setWhatsappNumber] = useState<string>("");
   const [installmentCount, setInstallmentCount] = useState<string>("");
 
-  const [premiumDue, setPremiumDue] = useState<number>(0);
+  const [premiumDue, setPremiumDue] = useState<string | null>(null);
 
   const _handleCheckPremium = async () => {
     let premium_check_data = {
-      installment_count: installmentCount,
+      installment: installmentCount,
       passenger_count: Number(passengerCount),
       type_of_use: typeOfUse,
       vehicle_value: Number(vehicleValue),
       whatsapp_number: whatsappNumber,
       year_of_registration: yearOfRegistration,
     };
+    console.log(premium_check_data);
 
     let premium_check_result = await checkPremium(premium_check_data);
     console.log(premium_check_result);
 
-    setPremiumDue(premium_check_result.total_premium_due);
-
-    // var premium_check_result = await mkPostReq({
-    //   endpoint: "/api/checkPremium",
-    //   method: "post",
-    //   isJSON: true,
-    //   data: JSON.stringify(premium_check_data),
-    // });
-    // console.log(premium_check_result);
-    // setPremiumDue(premium_check_result.total_premium_due);
+    setPremiumDue(
+      `${premium_check_result.total_premium_due.toFixed(2)} ${installmentCount === "full_payment" ? "" : "/m"}`
+    );
   };
 
   return (
@@ -104,6 +98,7 @@ const CheckPremium: NextPage = () => {
             onValueChange={(_YoR: any) => {
               console.log(_YoR);
               setYearOfRegistration(_YoR.name);
+              setPremiumDue(null);
             }}
           />
 
@@ -116,10 +111,12 @@ const CheckPremium: NextPage = () => {
             onValueChanged={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
+              setPremiumDue(null);
             }}
             onFocusOut={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
+              setPremiumDue(null);
             }}
           />
 
@@ -181,6 +178,7 @@ const CheckPremium: NextPage = () => {
             onValueChange={(_type: any) => {
               console.log(_type);
               setTypeOfUse(_type.name);
+              setPremiumDue(null);
             }}
           />
 
@@ -194,10 +192,12 @@ const CheckPremium: NextPage = () => {
             onValueChanged={(_val: any) => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
+              setPremiumDue(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
+              setPremiumDue(null);
             }}
           />
 
@@ -210,10 +210,12 @@ const CheckPremium: NextPage = () => {
             onValueChanged={(_val: any) => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
+              setPremiumDue(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
+              setPremiumDue(null);
             }}
           />
 
@@ -260,10 +262,11 @@ const CheckPremium: NextPage = () => {
             onValueChange={(_IstCnt: any) => {
               console.log(_IstCnt);
               setInstallmentCount(_IstCnt.name);
+              setPremiumDue(null);
             }}
           />
 
-          {premiumDue > 0 && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue.toFixed(2)}</p>}
+          {premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>}
 
           <button
             className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
