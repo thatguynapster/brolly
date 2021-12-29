@@ -114,6 +114,7 @@ export default async function checkPremium(data: {
       type: 0,
     });
     console.log(monthly_premium);
+    initial_premium = total_premium_due / Number(installment?.split("_")[0]);
     total_premium_due = monthly_premium;
   }
 
