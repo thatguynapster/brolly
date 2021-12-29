@@ -200,6 +200,14 @@ const About: NextPage = () => {
               setPhoneNumber(_val.target.value);
             }}
           />
+          <button
+            className="w-full text-base font-medium text-dark bg-primary-main py-4 px-6 border-0 shadow-sm flex items-center justify-center space-x-4"
+            onClick={() => {
+              setShowWaitlistModal(false);
+            }}
+          >
+            <span> Join</span>
+          </button>
         </div>
       </Modal>
 
