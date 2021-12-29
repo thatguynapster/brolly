@@ -17,7 +17,7 @@ const CheckPremium: NextPage = () => {
   const [installmentCount, setInstallmentCount] = useState<string>("");
 
   const [premiumDue, setPremiumDue] = useState<string | null>(null);
-  const [monthlyPremium, setMonthlyPremium] = useState<string | null>(null);
+  const [initialPremium, setInitialPremium] = useState<string | null>(null);
 
   const _handleCheckPremium = async () => {
     let premium_check_data = {
@@ -33,9 +33,8 @@ const CheckPremium: NextPage = () => {
     let premium_check_result = await checkPremium(premium_check_data);
     console.log(premium_check_result);
 
-    setPremiumDue(
-      `${premium_check_result.total_premium_due.toFixed(2)} ${installmentCount === "full_payment" ? "" : "/m"}`
-    );
+    setPremiumDue(premium_check_result.total_premium_due.toFixed(2));
+    setInitialPremium(premium_check_result.initial_premium.toFixed(2));
   };
 
   return (
@@ -120,7 +119,7 @@ const CheckPremium: NextPage = () => {
               console.log(_YoR);
               setYearOfRegistration(_YoR.name);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -178,7 +177,7 @@ const CheckPremium: NextPage = () => {
               console.log(_YoR);
               setYearOfRegistration(_YoR.name);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -192,13 +191,13 @@ const CheckPremium: NextPage = () => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
             onFocusOut={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -261,7 +260,7 @@ const CheckPremium: NextPage = () => {
               console.log(_type);
               setTypeOfUse(_type.name);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -276,13 +275,13 @@ const CheckPremium: NextPage = () => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -296,13 +295,13 @@ const CheckPremium: NextPage = () => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -350,7 +349,7 @@ const CheckPremium: NextPage = () => {
               console.log(_IstCnt);
               setInstallmentCount(_IstCnt.name);
               setPremiumDue(null);
-              setMonthlyPremium(null);
+              setInitialPremium(null);
             }}
           />
 
@@ -359,10 +358,15 @@ const CheckPremium: NextPage = () => {
             : premiumDue && (
                 <div>
                   <p>
-                    Initial Deposit: <span></span>
+                    Initial Deposit: <span className="font-bold text-lg">&#8373;{initialPremium}</span>
                   </p>
                   <p>
-                    Monthly installment: <span></span>
+                    Monthly installment: <span className="font-bold text-lg">&#8373;{premiumDue}</span>
+                    <span>
+                      {installmentCount === "full_payment"
+                        ? ""
+                        : `/m for ${String(installmentCount).split("_")[0]} months`}
+                    </span>
                   </p>
                 </div>
               )}
