@@ -51,3 +51,9 @@ export interface TypeOfUseProps {
   value: string;
   id: string;
 }
+export interface IModalProps {
+  show: boolean;
+  data?: any;
+  onConfirm: Function;
+  onClose: Function;
+}

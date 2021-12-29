@@ -81,6 +81,8 @@ export default async function checkPremium(data: {
 
   let total_premium_due = base_premium + sum_ncd__fleet_discount + total_tp_premium;
 
+  let initial_premium = 0;
+
   console.log(installment);
   if (installment !== "full_payment") {
     let interest_rate = 0;
@@ -120,6 +122,7 @@ export default async function checkPremium(data: {
     code: 200,
     message: `Premium calculated for ${res_message}`,
     total_premium_due,
+    initial_premium,
   };
 }
 

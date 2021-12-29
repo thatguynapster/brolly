@@ -99,7 +99,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
             </div>
 
             <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
-              <Link href="https://www.linkedin.com/company/brolly-insur" passHref>
+              <Link href="https://www.linkedin.com/company/brolly-insure" passHref>
                 <a target="_blank">
                   <img className="" src="/icons/linkedin.svg" alt="LinkedIn Page Link" />
                 </a>
