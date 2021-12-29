@@ -5,10 +5,12 @@ import ListBox from "../components/list-box";
 import { TypeOfUseProps } from "../types";
 import { mkPostReq } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
+import { toast } from "react-toastify";
 
 const CheckPremium: NextPage = () => {
   // premium calculation params
 
+  const [typeOfCar, setTypeOfCar] = useState<string>("");
   const [yearOfRegistration, setYearOfRegistration] = useState<any>("");
   const [vehicleValue, setVehicleValue] = useState<any>("");
   const [typeOfUse, setTypeOfUse] = useState<string>("");
@@ -20,6 +22,35 @@ const CheckPremium: NextPage = () => {
   const [initialPremium, setInitialPremium] = useState<string | null>(null);
 
   const _handleCheckPremium = async () => {
+    if (typeOfCar === "") {
+      toast.error("Select vehicle type");
+      return;
+    }
+    if (yearOfRegistration === "") {
+      toast.error("Select vehicle's registration year");
+      return;
+    }
+    if (vehicleValue < 1) {
+      toast.error("Enter vehicles current/insured value");
+      return;
+    }
+    if (typeOfUse === "") {
+      toast.error("Select vehicle's type of use");
+      return;
+    }
+    if (passengerCount < 1) {
+      toast.error("Enter the number of passengers your vehicle can take");
+      return;
+    }
+    if (whatsappNumber === "") {
+      toast.error("Please add you whatsapp number");
+      return;
+    }
+    if (installmentCount === "") {
+      toast.error("Select an installment option");
+      return;
+    }
+
     let premium_check_data = {
       installment: installmentCount,
       passenger_count: Number(passengerCount),
@@ -27,6 +58,7 @@ const CheckPremium: NextPage = () => {
       vehicle_value: Number(vehicleValue),
       whatsapp_number: whatsappNumber,
       year_of_registration: yearOfRegistration,
+      type_of_car: typeOfCar,
     };
     console.log(premium_check_data);
 
@@ -50,7 +82,7 @@ const CheckPremium: NextPage = () => {
             id="type_of_car"
             values={[
               {
-                name: "type_of_car",
+                name: "",
                 value: "Type of Car",
                 id: "0",
               },
@@ -111,13 +143,13 @@ const CheckPremium: NextPage = () => {
               },
             ]}
             selected={{
-              name: "type_of_car",
+              name: "",
               value: "Type of Car",
               id: "0",
             }}
-            onValueChange={(_YoR: any) => {
-              console.log(_YoR);
-              setYearOfRegistration(_YoR.name);
+            onValueChange={(_type: any) => {
+              console.log(_type);
+              setTypeOfCar(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
@@ -128,7 +160,7 @@ const CheckPremium: NextPage = () => {
             id="year_of_registration"
             values={[
               {
-                name: "type_of_car",
+                name: "",
                 value: "Year of Registration",
                 id: "0",
               },
@@ -169,7 +201,7 @@ const CheckPremium: NextPage = () => {
               },
             ]}
             selected={{
-              name: "year_of_registration",
+              name: "",
               value: "Year of Registration",
               id: "0",
             }}
@@ -206,7 +238,7 @@ const CheckPremium: NextPage = () => {
             id="vehicle_type_of_use"
             values={[
               {
-                name: "type_of_use",
+                name: "",
                 value: "Type of use",
                 id: "0",
               },
@@ -252,7 +284,7 @@ const CheckPremium: NextPage = () => {
               },
             ]}
             selected={{
-              name: "type_of_use",
+              name: "",
               value: "Type of use",
               id: "0",
             }}
@@ -310,7 +342,7 @@ const CheckPremium: NextPage = () => {
             id="number_of_installments"
             values={[
               {
-                name: "number_of_installments",
+                name: "",
                 value: "No. of Installments",
                 id: "0",
               },
@@ -341,7 +373,7 @@ const CheckPremium: NextPage = () => {
               },
             ]}
             selected={{
-              name: "number_of_installments",
+              name: "",
               value: "No. of Installments",
               id: "0",
             }}
