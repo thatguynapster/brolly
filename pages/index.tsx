@@ -23,16 +23,7 @@ const Home: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}`} />
-      <Header
-        onGetQuote={() => {
-          console.log("scroll to get quote section");
-          if (process.browser) {
-            let getQuote = document.getElementById("getQuote");
-            console.log(getQuote);
-            getQuote?.scrollTo();
-          }
-        }}
-      />
+      <Header />
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-60px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">

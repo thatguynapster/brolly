@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
-const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
+const Header: FC = () => {
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
       <Popover className="relative bg-white">
@@ -49,9 +49,8 @@ const Header: FC<{ onGetQuote?: () => void }> = ({ onGetQuote }) => {
 
               <div className="flex">
                 <a
-                  href="#"
+                  href="#getQuote"
                   className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4"
-                  onClick={onGetQuote}
                 >
                   <span>Get a Quote</span>
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
