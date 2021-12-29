@@ -17,6 +17,7 @@ const CheckPremium: NextPage = () => {
   const [installmentCount, setInstallmentCount] = useState<string>("");
 
   const [premiumDue, setPremiumDue] = useState<string | null>(null);
+  const [monthlyPremium, setMonthlyPremium] = useState<string | null>(null);
 
   const _handleCheckPremium = async () => {
     let premium_check_data = {
@@ -45,6 +46,84 @@ const CheckPremium: NextPage = () => {
       <form autoComplete="false" className="w-full">
         <input autoComplete="off" name="hidden" id="hidden" type="text" className="hidden" />
         <div className="w-full flex-col space-y-5">
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="type_of_car"
+            values={[
+              {
+                name: "type_of_car",
+                value: "Type of Car",
+                id: "0",
+              },
+              {
+                name: "sedan",
+                value: "Saloon/Sedan",
+                id: "1",
+              },
+              {
+                name: "coupe",
+                value: "Coupe",
+                id: "2",
+              },
+              {
+                name: "sports",
+                value: "Sports Car",
+                id: "3",
+              },
+              {
+                name: "station_wagon",
+                value: "Station Wagon",
+                id: "4",
+              },
+              {
+                name: "hatchback",
+                value: "Hatchback",
+                id: "5",
+              },
+              {
+                name: "convertible",
+                value: "Convertible",
+                id: "6",
+              },
+              {
+                name: "pickup",
+                value: "Pickup",
+                id: "7",
+              },
+              {
+                name: "van",
+                value: "Van",
+                id: "8",
+              },
+              {
+                name: "mini_bus",
+                value: "Mini/Small Bus",
+                id: "9",
+              },
+              {
+                name: "maxi_bus",
+                value: "Maxi/Big Bus",
+                id: "10",
+              },
+              {
+                name: "articulated_Truck",
+                value: "Articulated Truck",
+                id: "0",
+              },
+            ]}
+            selected={{
+              name: "type_of_car",
+              value: "Type of Car",
+              id: "0",
+            }}
+            onValueChange={(_YoR: any) => {
+              console.log(_YoR);
+              setYearOfRegistration(_YoR.name);
+              setPremiumDue(null);
+              setMonthlyPremium(null);
+            }}
+          />
+
           <ListBox
             className="bg-[#101d490d] border-none"
             id="year_of_registration"
@@ -99,24 +178,27 @@ const CheckPremium: NextPage = () => {
               console.log(_YoR);
               setYearOfRegistration(_YoR.name);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
           <FormGroup
             type="number"
             id="vehicleValue"
-            placeholder="Current value"
+            placeholder="Current/Insred value (GHS)"
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
             value={vehicleValue}
             onValueChanged={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
             onFocusOut={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
@@ -179,6 +261,7 @@ const CheckPremium: NextPage = () => {
               console.log(_type);
               setTypeOfUse(_type.name);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
@@ -193,11 +276,13 @@ const CheckPremium: NextPage = () => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
@@ -211,11 +296,13 @@ const CheckPremium: NextPage = () => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
             onFocusOut={(_val: any) => {
               console.log(_val.target.value);
               setWhatsappNumber(_val.target.value);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
@@ -263,10 +350,25 @@ const CheckPremium: NextPage = () => {
               console.log(_IstCnt);
               setInstallmentCount(_IstCnt.name);
               setPremiumDue(null);
+              setMonthlyPremium(null);
             }}
           />
 
-          {premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>}
+          {installmentCount === "full_payment"
+            ? premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>
+            : premiumDue && (
+                <div>
+                  <p>
+                    Initial Deposit: <span></span>
+                  </p>
+                  <p>
+                    Monthly installment: <span></span>
+                  </p>
+                </div>
+              )}
+
+          {/* {premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>} */}
+          {/* {monthlyPremium && <p className="w-max mx-auto text-5xl font-bold">&#8373;{monthlyPremium}</p>} */}
 
           <button
             className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
