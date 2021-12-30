@@ -15,7 +15,7 @@ const HowItWorks: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} />
-      <Header />
+      <Header  pagename="how-it-works"/>
       <main className="bg-white flex flex-col justify-center items-center">
         <section className="w-full md:h-screen md:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">

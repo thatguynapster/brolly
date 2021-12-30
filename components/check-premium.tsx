@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
@@ -7,7 +7,7 @@ import { mkPostReq } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
 
-const CheckPremium: NextPage = () => {
+const CheckPremium: FC = () => {
   // premium calculation params
 
   const [typeOfCar, setTypeOfCar] = useState<string>("");
@@ -216,7 +216,7 @@ const CheckPremium: NextPage = () => {
           <FormGroup
             type="number"
             id="vehicleValue"
-            placeholder="Current/Insred value (GHS)"
+            placeholder="Current/Insured value (GHS)"
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
             value={vehicleValue}
             onValueChanged={(_val: any) => {

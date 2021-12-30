@@ -132,7 +132,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
       {/* should stick to bottom of page in mobile */}
       <div className="fixed bottom-0 left-0 right-0 md:hidden">
         <a
-          href="#"
+          href={`${pagename === "home" || pagename === "how-it-works" ? "#getQuote" : "/#getQuote"}`}
           className="w-1/2 whitespace-nowrap inline-flex items-center justify-center p-2 border border-transparent text-base font-medium bg-primary-main"
         >
           Get a Quote

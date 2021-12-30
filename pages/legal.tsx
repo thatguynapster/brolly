@@ -35,7 +35,7 @@ const Legal: FC = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}/legal`} />
-      <Header />
+      <Header pagename="legal" />
       <div className="max-w-7xl mt-16 px-4 sm:px-6 pb-16 mx-auto text-justify">
         <div className="z-10 flex md:hidden items-center whitespace-nowrap overflow-x-auto scrollbar-gray w-full text-gray-900 font-normal text-sm space-x-6">
           <a

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
-const Header: FC = () => {
+const Header: FC<{ pagename: string }> = ({ pagename }) => {
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
       <Popover className="relative bg-white">
@@ -49,7 +49,7 @@ const Header: FC = () => {
 
               <div className="flex">
                 <a
-                  href="#getQuote"
+                  href={`${pagename === "home" || pagename === "how-it-works" ? "#getQuote" : "/#getQuote"}`}
                   className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4"
                 >
                   <span>Get a Quote</span>
