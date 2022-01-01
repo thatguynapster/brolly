@@ -7,14 +7,15 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import React from "react";
 import { ArrowRightIcon } from "@heroicons/react/outline";
+import router from "next/router";
 
 const Network: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} />
-      <Header />
+      <Header pagename="network" />
       <main className="bg-white flex flex-col justify-center items-center">
-        <section className="w-full md:h-screen md:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
+        <section className="w-full md:my-16 md:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
             Join Brolly Network and make <br className="hidden md:flex" /> cool Cash
           </h1>
@@ -76,7 +77,12 @@ const Network: NextPage = () => {
               It&apos;s that Simple! No IFs, No BUTs.
             </h2>
 
-            <button className="w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4">
+            <button
+              className="w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4"
+              onClick={() => {
+                router.push("/#joinWaitlist");
+              }}
+            >
               <span> Join the network</span>
             </button>
 

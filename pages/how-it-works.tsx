@@ -15,7 +15,7 @@ const HowItWorks: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} />
-      <Header />
+      <Header  pagename="how-it-works"/>
       <main className="bg-white flex flex-col justify-center items-center">
         <section className="w-full md:h-screen md:justify-center max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px]md:leading-[96px]">
@@ -26,7 +26,7 @@ const HowItWorks: NextPage = () => {
           </div>
         </section>
 
-        <section className="w-full my-12 md:my-24 bg-background" id="getQuote">
+        <section className="w-full my-12 md:my-0 bg-background" id="getQuote">
           <div className="px-4 pt-14 pb-10 md:pb-0 md:-mb-6 max-w-7xl mx-auto items-center justify-around space-y-4 md:space-y-0 flex flex-col md:flex-row md:space-x-32">
             <div className="flex flex-col space-y-6">
               <h2 className="font-headings font-bold text-center md:text-left text-2xl md:text-6xl leading-[32px] md:leading-[61px]">

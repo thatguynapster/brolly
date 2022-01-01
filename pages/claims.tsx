@@ -12,7 +12,7 @@ const Network: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} />
-      <Header />
+      <Header pagename="claims"/>
       <main className="bg-white flex flex-col justify-center items-center">
         <section className="mt-16 justify-center w-full max-w-7xl mx-auto px-8 sm:px-12 flex flex-col space-y-4">
           <h1 className="text-center md:text-left text-[30px] md:text-7xl font-headings font-bold leading-[38px] md:leading-[96px]">
@@ -27,17 +27,13 @@ const Network: NextPage = () => {
           </div>
         </section>
 
-        <section className="w-full max-w-7xl mt-24 mx-auto px-8 sm:px-12 my-8 flex flex-col md:flex-row items-center justify-center space-y-10 md:space-y-20">
-          <div className="w-full grid grid-cols-1 md:grid-cols-4 space-y-8 md:space-y-0 md:space-x-11">
-            <div className="flex flex-col items-center col-span-4 mb-8">
-              <div className="flex flex-col justify-center">
-                <h1 className="text-center md:text-left font-headings font-bold text-[30px] md:text-6xl leading-[38px] md:leading-[53px]">
-                  Here&apos;s how to make a claim on your Brolly Car:
-                </h1>
-              </div>
-            </div>
+        <section className="w-full max-w-7xl mt-24 mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-10 md:space-y-12">
+          <h1 className="text-center md:text-left font-headings font-bold text-[30px] md:text-6xl leading-[38px] md:leading-[53px]">
+            Here&apos;s how to make a claim on your Brolly Car:
+          </h1>
 
-            <div className="flex flex-col">
+          <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-11">
+            <div className="w-full flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 1</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Login to your Brolly account on{" "}
@@ -56,7 +52,7 @@ const Network: NextPage = () => {
               </p>
             </div>
 
-            <div className="flex flex-col">
+            <div className="w-full flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 2</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Provide us details of your incident and the type of claimProvide us details of your incident and the
@@ -64,20 +60,21 @@ const Network: NextPage = () => {
               </p>
             </div>
 
-            <div className="flex flex-col">
+            <div className="w-full flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 3</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Upload pictures and videos of the accident vehicle
               </p>
             </div>
 
-            <div className="flex flex-col">
+            <div className="w-full flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 4</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 All done! Your claim is with us.
               </p>
             </div>
           </div>
+
         </section>
 
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-12 md:my-24 items-start justify-around md:space-x-24 flex flex-col space-y-14 md:flex-row md:space-y-0">

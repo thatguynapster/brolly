@@ -11,6 +11,8 @@ import Footer from "../components/footer";
 import CookieNotice from "../components/cookie-notice";
 import { ArrowRightIcon } from "@heroicons/react/outline";
 import CheckPremium from "../components/check-premium";
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+import JoinWaitlist from "../components/join-waitlist";
 
 const Home: NextPage = () => {
   const [basePath, setBasePath] = useState<string | null>(null);
@@ -23,16 +25,7 @@ const Home: NextPage = () => {
   return (
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}`} />
-      <Header
-        onGetQuote={() => {
-          console.log("scroll to get quote section");
-          if (process.browser) {
-            let getQuote = document.getElementById("getQuote");
-            console.log(getQuote);
-            getQuote?.scrollTo();
-          }
-        }}
-      />
+      <Header pagename="home" />
       <main className="bg-white flex flex-col justify-center items-center">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-60px] md:mt-[-112px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
@@ -139,183 +132,11 @@ const Home: NextPage = () => {
             </h2>
 
             <CheckPremium />
-            {/* <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
-              <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
-              <div className="w-full flex-col space-y-5">
-                <ListBox
-                  className="bg-[#101d490d] border-none"
-                  id="type_of_car"
-                  values={[
-                    {
-                      name: "type_of_car",
-                      value: "Type of Car",
-                      id: "0",
-                    },
-                    {
-                      name: "some_entry",
-                      value: "Some Entry",
-                      id: "1",
-                    },
-                  ]}
-                  selected={{
-                    name: "type_of_car",
-                    value: "Type of Car",
-                    id: "0",
-                  }}
-                  onValueChange={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-                <FormGroup
-                  type="number"
-                  id="vehicleValue"
-                  placeholder="Current value"
-                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-                  onValueChanged={(ev: any) => {
-                    console.log(ev);
-                  }}
-                  onFocusOut={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-
-                <ListBox
-                  className="bg-[#101d490d] border-none"
-                  id="vehicle_type_of_use"
-                  values={[
-                    {
-                      name: "type_of_use",
-                      value: "Type of use",
-                      id: "0",
-                    },
-                    {
-                      name: "private_individual",
-                      value: "Private Use (Individul Owned)",
-                      id: "1",
-                    },
-                    {
-                      name: "private_company",
-                      value: "Private Use (Company Owned)",
-                      id: "2",
-                    },
-                    {
-                      name: "uber",
-                      value: "Uber",
-                      id: "3",
-                    },
-                    {
-                      name: "taxi",
-                      value: "Taxi",
-                      id: "4",
-                    },
-                    {
-                      name: "hiring_car",
-                      value: "Hiring Car",
-                      id: "5",
-                    },
-                    {
-                      name: "mini_bus",
-                      value: "Mini Bus",
-                      id: "6",
-                    },
-                    {
-                      name: "maxi_bus",
-                      value: "Maxi Bus",
-                      id: "7",
-                    },
-                  ]}
-                  selected={{
-                    name: "type_of_use",
-                    value: "Type of use",
-                    id: "0",
-                  }}
-                  onValueChange={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-
-                <FormGroup
-                  type="number"
-                  min={1}
-                  id="passengerCount"
-                  placeholder="Number of passengers (including driver)"
-                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-                  onValueChanged={(ev: any) => {
-                    console.log(ev);
-                  }}
-                  onFocusOut={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-
-                <FormGroup
-                  type="tel"
-                  id="whatsappNumber"
-                  placeholder="Whatsapp number"
-                  className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-                  onValueChanged={(ev: any) => {
-                    console.log(ev);
-                  }}
-                  onFocusOut={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-
-                <ListBox
-                  className="bg-[#101d490d] border-none"
-                  id="number_of_installments"
-                  values={[
-                    {
-                      name: "number_of_installments",
-                      value: "No. of Installments",
-                      id: "0",
-                    },
-                    {
-                      name: "full_payment",
-                      value: "Full Payment",
-                      id: "1",
-                    },
-                    {
-                      name: "3_months",
-                      value: "3 months",
-                      id: "2",
-                    },
-                    {
-                      name: "6_months",
-                      value: "6 months",
-                      id: "3",
-                    },
-                    {
-                      name: "9_months",
-                      value: "9 months",
-                      id: "4",
-                    },
-                    {
-                      name: "12_months",
-                      value: "12 months",
-                      id: "5",
-                    },
-                  ]}
-                  selected={{
-                    name: "number_of_installments",
-                    value: "No. of Installments",
-                    id: "0",
-                  }}
-                  onValueChange={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-
-                <button className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4">
-                  <span>Submit</span>
-                </button>
-              </div>
-            </div> */}
           </div>
         </section>
 
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-16 md:space-y-24">
-          <div className="flex flex-col items-center space-y-12 md:space-y-8">
+          <div className="flex flex-col items-center space-y-12 md:space-y-8" id="joinWaitlist">
             <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
               Launching in Jan 2022 <img className="w-10 inline-flex" src="/img/ghana.jpg" alt="Ghana" />. Join our
               waitlist!
@@ -324,26 +145,14 @@ const Home: NextPage = () => {
               Register your interest to join our take-off 🚀 in January. Guaranteed deals and gifts for first 1000
               people on our waitlist.
             </p>
-
-            <div className="grid grid-cols-7 w-full max-w-md">
-              <div className="col-span-4">
-                <FormGroup
-                  type="tel"
-                  id="waitlistInput"
-                  placeholder="Whatsapp number"
-                  className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-                  onValueChanged={(ev: any) => {
-                    console.log(ev);
-                  }}
-                  onFocusOut={(ev: any) => {
-                    console.log(ev);
-                  }}
-                />
-              </div>
-              <button className="col-span-3 bg-primary-main px-4 font-semibold flex items-center justify-center space-x-4">
-                <span>Subscribe to Join</span>
-              </button>
-            </div>
+            <MailchimpSubscribe
+              url={`${process.env.NEXT_PUBLIC_MAILCHIMP_URL}?u=${process.env.NEXT_PUBLIC_MAILCHIMP_U}&id=${process.env.NEXT_PUBLIC_MAILCHIMP_ID}`}
+              render={({ subscribe, status, message }) => (
+                <>
+                  <JoinWaitlist status={status} message={message} onValidated={(formData) => subscribe(formData)} />
+                </>
+              )}
+            />
           </div>
 
           <div className="w-full flex flex-col md:flex-row bg-primary-main pt-5 pb-14 md:pb-5 px-4 md:px-8 rounded-md md:items-center">
