@@ -7,6 +7,7 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import React from "react";
 import { ArrowRightIcon } from "@heroicons/react/outline";
+import router from "next/router";
 
 const Network: NextPage = () => {
   return (
@@ -76,7 +77,12 @@ const Network: NextPage = () => {
               It&apos;s that Simple! No IFs, No BUTs.
             </h2>
 
-            <button className="w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4">
+            <button
+              className="w-max md:flex whitespace-nowrap text-base font-medium bg-primary-main py-2 px-4 border-0 shadow-sm items-center justify-center space-x-4"
+              onClick={() => {
+                router.push("/#joinWaitlist");
+              }}
+            >
               <span> Join the network</span>
             </button>
 

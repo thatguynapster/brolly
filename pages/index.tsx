@@ -136,7 +136,7 @@ const Home: NextPage = () => {
         </section>
 
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 my-8 flex flex-col items-center justify-center space-y-16 md:space-y-24">
-          <div className="flex flex-col items-center space-y-12 md:space-y-8">
+          <div className="flex flex-col items-center space-y-12 md:space-y-8" id="joinWaitlist">
             <h2 className="font-headings font-bold text-center md:text-left text-[30px] md:text-6xl leading-[32px] md:leading-[56px]">
               Launching in Jan 2022 <img className="w-10 inline-flex" src="/img/ghana.jpg" alt="Ghana" />. Join our
               waitlist!
@@ -145,36 +145,14 @@ const Home: NextPage = () => {
               Register your interest to join our take-off 🚀 in January. Guaranteed deals and gifts for first 1000
               people on our waitlist.
             </p>
-
-            <>
-              {/* <div className="grid grid-cols-7 w-full max-w-md">
-                <div className="col-span-4">
-                  <FormGroup
-                    type="tel"
-                    id="waitlistInput"
-                    placeholder="Whatsapp number"
-                    className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-                    onValueChanged={(ev: any) => {
-                      console.log(ev);
-                    }}
-                    onFocusOut={(ev: any) => {
-                      console.log(ev);
-                    }}
-                  />
-                </div>
-                <button className="col-span-3 bg-primary-main px-4 font-semibold flex items-center justify-center space-x-4">
-                  <span>Subscribe to Join</span>
-                </button>
-              </div> */}
-              <MailchimpSubscribe
-                url={`https://genhybridsystems.us1.list-manage.com/subscribe/post?u=${process.env.MAILCHIMP_U}&id=${process.env.MAILCHIMP_ID}`}
-                render={({ subscribe, status, message }) => (
-                  <>
-                    <JoinWaitlist status={status} message={message} onValidated={(formData) => subscribe(formData)} />
-                  </>
-                )}
-              />
-            </>
+            <MailchimpSubscribe
+              url={`${process.env.NEXT_PUBLIC_MAILCHIMP_URL}?u=${process.env.NEXT_PUBLIC_MAILCHIMP_U}&id=${process.env.NEXT_PUBLIC_MAILCHIMP_ID}`}
+              render={({ subscribe, status, message }) => (
+                <>
+                  <JoinWaitlist status={status} message={message} onValidated={(formData) => subscribe(formData)} />
+                </>
+              )}
+            />
           </div>
 
           <div className="w-full flex flex-col md:flex-row bg-primary-main pt-5 pb-14 md:pb-5 px-4 md:px-8 rounded-md md:items-center">
