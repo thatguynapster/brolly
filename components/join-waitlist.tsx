@@ -3,6 +3,8 @@ import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import { validateEmail } from "../utils/functions";
 import { toast } from "react-toastify";
+import { Modal } from "./modal";
+import { BadgeCheckIcon, CheckIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 
 const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any) => void }> = ({
   status,
@@ -11,7 +13,9 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
 }) => {
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [buttonText, setButtonText] = useState<string>("Subscribe to Join");
+  const [buttonText, setButtonText] = useState<string>("Join");
+
+  const [formStatus, setFormStatus] = useState<string | null>(status);
 
   async function _handleSubmit() {
     if (!validateEmail(email)) {
@@ -25,36 +29,36 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
 
     onValidated({
       MERGE0: email,
-      MERGE1: phone,
+      MERGE4: phone,
     });
   }
-  console.log(status);
 
   useEffect(() => {
     console.log(status);
+    setFormStatus(status);
     switch (status) {
       case "error":
         toast.error("Failed to join waitlist");
         setButtonText("Failed to join waitlist");
         setTimeout(() => {
-          setButtonText("Subscribe to Join");
+          setButtonText("Join");
         }, 3000);
         break;
       case "success":
         toast.success("Added To Waitlist");
         setButtonText("Added To Waitlist");
         setTimeout(() => {
-          setButtonText("Subscribe to Join");
+          setButtonText("Join");
         }, 3000);
         break;
       default:
-        setButtonText("Subscribe to Join");
+        setButtonText("Join");
     }
   }, [status]);
 
   return (
     <form className="grid grid-cols-7 w-full max-w-md" method="POST">
-      <div className="col-span-5">
+      <div className="col-span-7">
         <FormGroup
           type="email"
           id="waitlistEmailInput"
@@ -87,7 +91,7 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
         />
       </div>
       <button
-        className="col-span-2 bg-primary-main px-4 font-semibold flex items-center justify-center space-x-4"
+        className="col-span-7 bg-primary-main py-3 px-4 font-semibold flex items-center justify-center space-x-4"
         type="submit"
         onClick={(ev) => {
           ev.preventDefault();
@@ -95,11 +99,39 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
         }}
       >
         <span>{buttonText}</span>
-        {/* {status === "sending" && <span>Joining Waitlist...</span>}
-        {status === "error" && <span>Failed to join waitlist</span>}
-        {status === "success" && <span>Subscribe to Join</span>}
-        {status === null && <span>Subscribe to Join</span>} */}
       </button>
+
+      <Modal
+        show={formStatus === "success"}
+        onConfirm={(ev: any) => {
+          console.log(ev);
+        }}
+        onClose={(ev: any) => {
+          console.log(ev);
+          setFormStatus(null);
+        }}
+      >
+        <div className="px-4 py-12 flex flex-col space-y-4 items-center justify-center">
+          <BadgeCheckIcon className="w-20 h-20 text-success-main" />
+          <p className="text-center font-semibold">Added to Waitlist</p>
+        </div>
+      </Modal>
+
+      <Modal
+        show={formStatus === "error"}
+        onConfirm={(ev: any) => {
+          console.log(ev);
+        }}
+        onClose={(ev: any) => {
+          console.log(ev);
+          setFormStatus(null);
+        }}
+      >
+        <div className="px-4 py-12 flex flex-col space-y-4 items-center justify-center">
+          <ExclamationCircleIcon className="w-20 h-20 text-danger-main" />
+          <p className="text-center font-semibold">Failed to join waitlist. Try again</p>
+        </div>
+      </Modal>
     </form>
   );
 };

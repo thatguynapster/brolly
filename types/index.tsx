@@ -54,6 +54,6 @@ export interface TypeOfUseProps {
 export interface IModalProps {
   show: boolean;
   data?: any;
-  onConfirm: Function;
+  onConfirm?: Function;
   onClose: Function;
 }
