@@ -56,4 +56,5 @@ export interface IModalProps {
   data?: any;
   onConfirm?: Function;
   onClose: Function;
+  className?: string;
 }

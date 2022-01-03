@@ -1,9 +1,14 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useState } from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Modal } from "./modal";
+import router from "next/router";
+import CheckPremium from "./check-premium";
 
 const Header: FC<{ pagename: string }> = ({ pagename }) => {
+  const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
+
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
       <Popover className="relative bg-white">
@@ -49,8 +54,14 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
 
               <div className="flex">
                 <a
-                  href={`${pagename === "home" || pagename === "how-it-works" ? "#getQuote" : "/#getQuote"}`}
+                  href="#"
                   className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4"
+                  onClick={(ev: any) => {
+                    ev.preventDefault();
+                    pagename === "home" || pagename === "how-it-works"
+                      ? router.push("#getQuote")
+                      : setShowQuoteForm(true);
+                  }}
                 >
                   <span>Get a Quote</span>
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
@@ -77,7 +88,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
         >
           <Popover.Panel
             focus
-            className="z-50 absolute top-0 inset-x-0 transition transform origin-top-right md:hidden"
+            className="z-30 absolute top-0 inset-x-0 transition transform origin-top-right md:hidden"
           >
             <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white space-y-4">
               <div className="pt-5 px-5">
@@ -122,6 +133,12 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                   <a
                     href="#"
                     className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm"
+                    onClick={(ev: any) => {
+                      ev.preventDefault();
+                      pagename === "home" || pagename === "how-it-works"
+                        ? router.push("#getQuote")
+                        : setShowQuoteForm(true);
+                    }}
                   >
                     Get a Quote
                   </a>
@@ -137,6 +154,22 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
           </Popover.Panel>
         </Transition>
       </Popover>
+
+      <Modal
+        show={showQuoteForm}
+        onClose={(ev: any) => {
+          setShowQuoteForm(false);
+        }}
+        className="z-50"
+      >
+        <XIcon
+          className="absolute top-0 right-0 m-4 w-5 h-5"
+          onClick={() => {
+            setShowQuoteForm(false);
+          }}
+        />
+        <CheckPremium isModal={true} />
+      </Modal>
     </header>
   );
 };

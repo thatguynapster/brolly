@@ -7,7 +7,7 @@ import { mkPostReq } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
 
-const CheckPremium: FC = () => {
+const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
   // premium calculation params
 
   const [typeOfCar, setTypeOfCar] = useState<string>("");
@@ -70,7 +70,11 @@ const CheckPremium: FC = () => {
   };
 
   return (
-    <div className="bg-white w-full max-w-md px-2 md:px-12 py-20 items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20">
+    <div
+      className={`bg-white w-full max-w-md px-2 md:px-12 ${
+        isModal ? "py-10" : "py-20"
+      }  items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20`}
+    >
       <div className="w-full flex flex-row">
         <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
       </div>
