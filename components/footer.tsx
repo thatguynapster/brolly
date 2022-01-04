@@ -1,8 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Link from "next/link";
 import CookieNotice from "./cookie-notice";
+import router from "next/router";
+import { Modal } from "./modal";
+import CheckPremium from "./check-premium";
+import { XIcon } from "@heroicons/react/outline";
 
 const Footer: FC<{ pagename: string }> = ({ pagename }) => {
+  const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
+
   return (
     <footer className={`bg-dark px-7 py-16 mb-[42px] md:mb-0`}>
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row space-y-16 md:space-y-0">
@@ -132,19 +138,40 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
       {/* should stick to bottom of page in mobile */}
       <div className="fixed bottom-0 left-0 right-0 md:hidden">
         <a
-          href={`${pagename === "home" || pagename === "how-it-works" ? "#getQuote" : "/#getQuote"}`}
+          href="#"
           className="w-1/2 whitespace-nowrap inline-flex items-center justify-center p-2 border border-transparent text-base font-medium bg-primary-main"
+          onClick={(ev: any) => {
+            ev.preventDefault();
+            pagename === "home" || pagename === "how-it-works" ? router.push("#getQuote") : setShowQuoteForm(true);
+          }}
         >
           Get a Quote
         </a>
         <a
-          href="#"
+          href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
+          target="_blank"
           className="w-1/2 whitespace-nowrap inline-flex items-center justify-center p-2 border border-transparent text-base font-medium bg-background"
         >
           24/7 support
         </a>
       </div>
       <CookieNotice />
+
+      <Modal
+        show={showQuoteForm}
+        onClose={(ev: any) => {
+          setShowQuoteForm(false);
+        }}
+        className="z-50"
+      >
+        <XIcon
+          className="absolute top-0 right-0 m-4 w-5 h-5"
+          onClick={() => {
+            setShowQuoteForm(false);
+          }}
+        />
+        <CheckPremium isModal={true} />
+      </Modal>
     </footer>
   );
 };
