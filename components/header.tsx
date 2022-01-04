@@ -67,7 +67,9 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </a>
                 <a
-                  href="#"
+                  href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
+                  target="_blank"
+                  rel="noreferrer"
                   className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-2 px-4 border-0 shadow-sm"
                 >
                   24/7 support
@@ -143,7 +145,9 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                     Get a Quote
                   </a>
                   <a
-                    href="#"
+                    href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
+                    target="_blank"
+                    rel="noreferrer"
                     className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 py-2 px-4 border-0 shadow-sm bg-background"
                   >
                     24/7 support
