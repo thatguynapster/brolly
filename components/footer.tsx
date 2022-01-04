@@ -150,6 +150,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
         <a
           href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
           target="_blank"
+          rel="noreferrer"
           className="w-1/2 whitespace-nowrap inline-flex items-center justify-center p-2 border border-transparent text-base font-medium bg-background"
         >
           24/7 support
