@@ -156,7 +156,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
           24/7 support
         </a>
       </div>
-      <CookieNotice />
+      <CookieNotice /> 
 
       <Modal
         show={showQuoteForm}
