@@ -5,6 +5,46 @@ export function getQuery(_query: string) {
   return urlQuery;
 }
 
+// let reqOptions = {
+//     endpoint: '',
+//     queries: '',
+// }
+export async function mkGetReq(reqOptions: {
+  endpoint: string;
+  queries: string;
+  token?: string;
+  appId?: string;
+  extraHeaders?: {}[];
+}) {
+  let url = `${process.env.NEXT_PUBLIC_BASE_URL}${reqOptions.endpoint}?${reqOptions.queries}`;
+  // console.log(url)
+
+  const options: {
+    method: string;
+    cors: string;
+    headers: any;
+  } = {
+    method: "GET",
+    cors: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  reqOptions.token && (options.headers["Authorization"] = `Bearer ${reqOptions.token}`);
+  reqOptions.appId && (options.headers["app-id"] = `${reqOptions.appId}`);
+
+  const request = await fetch(`${reqOptions.endpoint}?${reqOptions.queries ? `&${reqOptions.queries}` : ""}`, options);
+  const results = await request.json();
+
+  return results;
+}
+
+// let payload = {
+//     endpoint: '',
+//     method: '',
+//     token: '',
+//     data: {}
+// }
 export async function mkPostReq(payload: {
   endpoint: string;
   method: string;
@@ -15,6 +55,7 @@ export async function mkPostReq(payload: {
   queries?: string;
 }) {
   var response = {};
+  console.log(payload);
 
   const options: {
     method: string;
@@ -28,7 +69,9 @@ export async function mkPostReq(payload: {
     body: payload.data,
   };
 
-  const request = await fetch(`${payload.endpoint}?${payload.queries ? `&${payload.queries}` : ""}`, options);
+  payload.isJSON && (options.headers["Content-Type"] = "application/json");
+
+  const request = await fetch(`${payload.endpoint}`, options);
   const results = await request.json();
 
   return results;

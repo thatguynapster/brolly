@@ -1,4 +1,34 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode } from "react";
+
+export interface IAuth {
+  GLOBAL_OBJ: IAuthState;
+  AUTH_LOGIN?: (payload: IAuthPayload) => Dispatch<IAuthState>;
+  AUTH_LOGOUT?: () => Dispatch<IAuthState>;
+}
+
+export interface IAuthState {
+  isLoggedIn?: boolean;
+  token?: string;
+  data: any;
+  rememberMe?: boolean;
+}
+
+export interface IAuthAction {
+  type: string;
+  payload?: IAuthPayload;
+}
+
+export interface IAuthPayload {
+  isLoggedIn?: boolean;
+  token?: string;
+  data: any;
+  business?: any;
+  selected_business?: any;
+  selected_business_contact?: any;
+  rememberMe?: boolean;
+  appKey: string;
+  apiKey: string;
+}
 
 export interface IHeaderProps {
   title: string;
