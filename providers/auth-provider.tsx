@@ -2,7 +2,6 @@ import AuthContext from "../context/auth-context";
 import authReducer from "../reducers/auth-reducer";
 import React, { useReducer, useState, useEffect, ReactNode, FC } from "react";
 import Cookie from "js-cookie";
-import Loader from "react-loader";
 import { IAuthPayload } from "../types";
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -71,7 +70,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <Loader loaded={ready}>
       <AuthContext.Provider
         value={{
           GLOBAL_OBJ: state,
@@ -82,7 +80,6 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       >
         {children}
       </AuthContext.Provider>
-    </Loader>
   );
 };
 
