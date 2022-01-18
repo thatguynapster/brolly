@@ -7,6 +7,7 @@ import AuthProvider from "../providers/auth-provider";
 import "../styles/globals.css";
 import "../public/css/index.css";
 import "../public/css/scrollbar.css";
+import '../public/css/intlTelInput.css'
 
 /** dependency styles */
 import "react-toastify/dist/ReactToastify.css";
