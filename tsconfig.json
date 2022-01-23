@@ -25,9 +25,12 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "components/international-input.js"  ],
+    "**/*.tsx",
+    "components/international-input.jsx"
+  ],
   "exclude": [
+    "**/*.js",
+    "**/*.jsx",
     "node_modules"
   ]
 }

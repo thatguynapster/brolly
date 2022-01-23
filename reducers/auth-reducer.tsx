@@ -36,11 +36,6 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
         isLoggedIn: authenticated,
         token: action?.payload && action.payload.token,
         data: JSON.parse(userData).data,
-        business: action?.payload?.business,
-        selected_business: action?.payload?.selected_business,
-        selected_business_contact: action?.payload?.selected_business_contact,
-        apiKey: action?.payload?.apiKey,
-        appKey: action?.payload?.appKey
       }
 
     case 'REFRESH':
@@ -55,11 +50,6 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
         isLoggedIn: action?.payload?.isLoggedIn,
         token: action?.payload?.token,
         data: action?.payload?.data,
-        business: action?.payload?.business,
-        selected_business: action?.payload?.selected_business,
-        selected_business_contact: action?.payload?.selected_business_contact,
-        apiKey: action?.payload?.apiKey,
-        appKey: action?.payload?.appKey
       }
 
     case 'LOGOUT':
@@ -87,11 +77,6 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
         isLoggedIn: false,
         token: '',
         data: null,
-        business: null,
-        selected_business: null,
-        selected_business_contact: null,
-        appKey: null,
-        apiKey: null
       }
     default:
       /** Always return state */

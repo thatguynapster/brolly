@@ -7,16 +7,24 @@ import { mkPostReq } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
 
-const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
+const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?: boolean }> = ({
+  onRequestCover,
+  isModal,
+}) => {
   // premium calculation params
 
+  const [typeOfQuote, setTypeOfQuote] = useState<string>("");
   const [typeOfCar, setTypeOfCar] = useState<string>("");
   const [yearOfRegistration, setYearOfRegistration] = useState<any>("");
   const [vehicleValue, setVehicleValue] = useState<any>("");
   const [typeOfUse, setTypeOfUse] = useState<string>("");
   const [passengerCount, setPassengerCount] = useState<number | "">("");
   const [whatsappNumber, setWhatsappNumber] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [installmentCount, setInstallmentCount] = useState<string>("");
+
+  const [premiumCheckData, setPremiumCheckData] = useState<any>({});
+  const [premiumCheckResponse, setPremiumCheckResponse] = useState<any>({});
 
   const [premiumDue, setPremiumDue] = useState<string | null>(null);
   const [initialPremium, setInitialPremium] = useState<string | null>(null);
@@ -42,31 +50,43 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
       toast.error("Enter the number of passengers your vehicle can take");
       return;
     }
-    if (whatsappNumber === "") {
-      toast.error("Please add you whatsapp number");
-      return;
-    }
+    // if (whatsappNumber === "") {
+    //   toast.error("Please add you whatsapp number");
+    //   return;
+    // }
     if (installmentCount === "") {
       toast.error("Select an installment option");
       return;
     }
 
     let premium_check_data = {
-      installment: installmentCount,
-      passenger_count: Number(passengerCount),
-      type_of_use: typeOfUse,
-      vehicle_value: Number(vehicleValue),
-      whatsapp_number: whatsappNumber,
-      year_of_registration: yearOfRegistration,
-      type_of_car: typeOfCar,
+      noOfInstallments: installmentCount,
+      numOfPassenger: passengerCount,
+      protectionType: "COMPREHENSIVE",
+      registrationYear: yearOfRegistration,
+      vehicleUse: typeOfUse,
+      vehicleValue: vehicleValue,
+      vehicleType: typeOfCar,
     };
+    setPremiumCheckData(premium_check_data);
     console.log(premium_check_data);
 
-    let premium_check_result = await checkPremium(premium_check_data);
+    let premium_check_result = await mkPostReq({
+      endpoint: "/api/quote/getPremium",
+      method: "post",
+      data: premium_check_data,
+      isJSON: true,
+    });
     console.log(premium_check_result);
 
-    setPremiumDue(premium_check_result.total_premium_due.toFixed(2));
-    setInitialPremium(premium_check_result.initial_premium.toFixed(2));
+    if (premium_check_result.message === "ERROR_MESSAGE") {
+      toast.error("Failed to get Quote");
+      return;
+    }
+
+    setPremiumCheckResponse(premium_check_result);
+    setPremiumDue(premium_check_result.monthlyDeposit.toFixed(2));
+    setInitialPremium(premium_check_result.initialDeposit.toFixed(2));
   };
 
   return (
@@ -78,9 +98,59 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
       <div className="w-full flex flex-row">
         <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
       </div>
-      <form autoComplete="false" className="w-full">
+      <form
+        autoComplete="false"
+        className="w-full"
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          _handleCheckPremium();
+        }}
+      >
         <input autoComplete="off" name="hidden" id="hidden" type="text" className="hidden" />
         <div className="w-full flex-col space-y-5">
+          {/* <ListBox
+            className="bg-[#101d490d] border-none"
+            id="type_of_quote"
+            values={[
+              {
+                name: "",
+                value: "Type of Quote",
+                id: "0",
+              },
+              {
+                name: "vehicle",
+                value: "Car/Vehicle",
+                id: "1",
+              },
+              {
+                name: "home",
+                value: "Home",
+                id: "2",
+              },
+              {
+                name: "life",
+                value: "Life",
+                id: "3",
+              },
+              {
+                name: "travel",
+                value: "Travel",
+                id: "4",
+              },
+            ]}
+            selected={{
+              name: "",
+              value: "Type of Quote",
+              id: "0",
+            }}
+            onValueChange={(_type: any) => {
+              console.log(_type);
+              setTypeOfQuote(_type.name);
+              setPremiumDue(null);
+              setInitialPremium(null);
+            }}
+          /> */}
+
           <ListBox
             className="bg-[#101d490d] border-none"
             id="type_of_car"
@@ -91,57 +161,57 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
                 id: "0",
               },
               {
-                name: "sedan",
+                name: "SEDAN",
                 value: "Saloon/Sedan",
                 id: "1",
               },
               {
-                name: "coupe",
+                name: "COUPE",
                 value: "Coupe",
                 id: "2",
               },
               {
-                name: "sports",
+                name: "SPORTS",
                 value: "Sports Car",
                 id: "3",
               },
               {
-                name: "station_wagon",
+                name: "STATION_WAGON",
                 value: "Station Wagon",
                 id: "4",
               },
               {
-                name: "hatchback",
+                name: "HATCHBACK",
                 value: "Hatchback",
                 id: "5",
               },
               {
-                name: "convertible",
+                name: "CONVERTIBLE",
                 value: "Convertible",
                 id: "6",
               },
               {
-                name: "pickup",
+                name: "PICKUP",
                 value: "Pickup",
                 id: "7",
               },
               {
-                name: "van",
+                name: "VAN",
                 value: "Van",
                 id: "8",
               },
               {
-                name: "mini_bus",
+                name: "MINI_BUS",
                 value: "Mini/Small Bus",
                 id: "9",
               },
               {
-                name: "maxi_bus",
+                name: "MAXI_BUS",
                 value: "Maxi/Big Bus",
                 id: "10",
               },
               {
-                name: "articulated_Truck",
+                name: "ARTICULATED_TRUCK",
                 value: "Articulated Truck",
                 id: "0",
               },
@@ -169,37 +239,37 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
                 id: "0",
               },
               {
-                name: "2022",
+                name: "Y2022",
                 value: "2022",
                 id: "1",
               },
               {
-                name: "2021",
+                name: "Y2021",
                 value: "2021",
                 id: "1",
               },
               {
-                name: "2020",
+                name: "Y2020",
                 value: "2020",
                 id: "1",
               },
               {
-                name: "2019",
+                name: "Y2019",
                 value: "2019",
                 id: "1",
               },
               {
-                name: "2018",
+                name: "Y2018",
                 value: "2018",
                 id: "1",
               },
               {
-                name: "2017",
+                name: "Y2017",
                 value: "2017",
                 id: "1",
               },
               {
-                name: "before_2017",
+                name: "BEFORE_2017",
                 value: "Before 2017",
                 id: "1",
               },
@@ -247,44 +317,69 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
                 id: "0",
               },
               {
-                name: "private_individual",
+                name: "PRIVATE_USE_OWN_VEHICLE",
                 value: "Private Use (Individul Owned)",
                 id: "1",
               },
               {
-                name: "private_company",
+                name: "PRIVATE_USE_COMPANY_OWNED",
                 value: "Private Use (Company Owned)",
                 id: "2",
               },
               {
-                name: "ride_hail",
+                name: "UBER_BOLT_TANGO_ETC",
                 value: "Uber/Bolt/Yango/Etc",
                 id: "3",
               },
               {
-                name: "taxi",
+                name: "TAXI",
                 value: "Taxi",
                 id: "4",
               },
               {
-                name: "hiring_car",
+                name: "HIRING_CAR",
                 value: "Hiring Car",
                 id: "5",
               },
               {
-                name: "omni_bus",
+                name: "BUS",
                 value: "Omni Bus",
                 id: "6",
               },
               {
-                name: "own_goods",
+                name: "OWN_GOODS_CARRYING_VEHICLE",
                 value: "Own Goods Carrying Vehicle",
                 id: "7",
               },
               {
-                name: "general_cartage",
-                value: "General Cartage",
+                name: "GENERAL_CARTAGE_ABOVE_3000",
+                value: "General Cartage (Above 3000kg)",
                 id: "8",
+              },
+              {
+                name: "GENERAL_CARTAGE_BELOW_3000",
+                value: "General Cartage (Below 3000kg)",
+                id: "9",
+              },
+              {
+                name: "ARTICULATOR_HEAD",
+                value: "Articulated Truck Head",
+                id: "9",
+              },
+              {
+                name: "SPECIAL_TYPE_SITE",
+                value: "Special Type (Site use only)",
+                id: "9",
+              },
+              {
+                name: "SPECIAL_TYPE_SITE_ROAD",
+                value: "Special Type (Site and Road use)",
+                id: "9",
+              },
+              {
+                name: "TRADE_PLATE",
+                value: "Trade Plate (Personal Use only)",
+                id: "9",
               },
             ]}
             selected={{
@@ -321,7 +416,7 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
             }}
           />
 
-          <FormGroup
+          {/* <FormGroup
             type="tel"
             id="whatsappNumber"
             placeholder="Whatsapp number"
@@ -339,7 +434,27 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
               setPremiumDue(null);
               setInitialPremium(null);
             }}
-          />
+          /> */}
+
+          {/* <FormGroup
+            type="email"
+            id="email"
+            placeholder="Email"
+            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+            value={email}
+            onValueChanged={(_val: any) => {
+              // console.log(_val.target.value);
+              setEmail(_val.target.value);
+              setPremiumDue(null);
+              setInitialPremium(null);
+            }}
+            onFocusOut={(_val: any) => {
+              // console.log(_val.target.value);
+              setEmail(_val.target.value);
+              setPremiumDue(null);
+              setInitialPremium(null);
+            }}
+          /> */}
 
           <ListBox
             className="bg-[#101d490d] border-none"
@@ -351,27 +466,27 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
                 id: "0",
               },
               {
-                name: "full_payment",
+                name: "FULL_PAYMENT",
                 value: "Full Payment",
                 id: "1",
               },
               {
-                name: "3_months",
+                name: "THREE_MONTHS",
                 value: "3 months",
                 id: "2",
               },
               {
-                name: "6_months",
+                name: "SIX_MONTHS",
                 value: "6 months",
                 id: "3",
               },
               {
-                name: "9_months",
+                name: "NINE_MONTHS",
                 value: "9 months",
                 id: "4",
               },
               {
-                name: "12_months",
+                name: "TWELVE_MONTHS",
                 value: "12 months",
                 id: "5",
               },
@@ -410,15 +525,24 @@ const CheckPremium: FC<{ isModal?: boolean }> = ({ isModal }) => {
           {/* {premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>} */}
           {/* {monthlyPremium && <p className="w-max mx-auto text-5xl font-bold">&#8373;{monthlyPremium}</p>} */}
 
-          <button
-            className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
-            onClick={(ev) => {
-              ev.preventDefault();
-              _handleCheckPremium();
-            }}
-          >
-            <span>Submit</span>
-          </button>
+          {premiumDue ? (
+            <button
+              className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
+              onClick={(ev) => {
+                ev.preventDefault();
+                onRequestCover && onRequestCover({ ...premiumCheckData, ...premiumCheckResponse });
+              }}
+            >
+              <span> Request Cover </span>
+            </button>
+          ) : (
+            <button
+              className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
+              type="submit"
+            >
+              <span>Submit</span>
+            </button>
+          )}
         </div>
       </form>
     </div>

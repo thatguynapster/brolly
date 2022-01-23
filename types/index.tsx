@@ -22,17 +22,19 @@ export interface IAuthPayload {
   isLoggedIn?: boolean;
   token?: string;
   data: any;
-  business?: any;
-  selected_business?: any;
-  selected_business_contact?: any;
   rememberMe?: boolean;
-  appKey: string;
-  apiKey: string;
 }
 
 export interface IHeaderProps {
   title: string;
   canonical?: string;
+}
+
+export interface INavbarProps {
+  variant?: string;
+  classNames: string;
+  showSidebar: () => void;
+  onRefresh: () => void;
 }
 
 export interface IFormGroupProps {

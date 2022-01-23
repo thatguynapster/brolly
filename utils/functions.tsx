@@ -55,7 +55,6 @@ export async function mkPostReq(payload: {
   queries?: string;
 }) {
   var response = {};
-  console.log(payload);
 
   const options: {
     method: string;
@@ -66,12 +65,13 @@ export async function mkPostReq(payload: {
     method: payload.method,
     cors: "no-cors",
     headers: {},
-    body: payload.data,
+    body: JSON.stringify(payload.data),
   };
 
   payload.isJSON && (options.headers["Content-Type"] = "application/json");
+  payload.token && (options.headers["Authorization"] = `${payload.token}`);
 
-  const request = await fetch(`${payload.endpoint}`, options);
+  const request = await fetch(`${process.env.NEXT_PUBLIC_API}${payload.endpoint}`, options);
   const results = await request.json();
 
   return results;

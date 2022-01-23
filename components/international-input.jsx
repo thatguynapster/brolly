@@ -35,7 +35,6 @@ function intNumber(options, cb) {
             var phone = window.intlTelInput(document.querySelector(`#${options.name}`), {
                 defaultCountry: [options.defaultCountry || "gh"],
                 initialCountry: options.defaultCountry || "gh",
-                onlyCountries:['gh'],
                 // onlyCountries: ["gh", "dz", "ao", "bj", "bw", "bf", "bi", "cm", "cf", "td", "cd", "cg", "ci", "dj", "eg", "gq", "er", "et", "ga", "gm", "ke", "ls", "lr", "ly", "mw", "ml", "mr", "mu", "ma", "mz", "na", "ne", "ng", "pg", "rw", "sn", "sc", "sl", "so", "za", "ss", "sd", "tz", "tg", "ug", "zm", "zw"],
                 // allowDropdown: true,
                 // separateDialCode: true,
@@ -99,7 +98,7 @@ export default function InternationalInput({ firstLoad, defaultValue, name, defa
     }, []);
 
     return (
-        <>
+        <div className="flex flex-col box-border w-full p-0 font-medium text-xs">
             {label &&
                 <label htmlFor={name} className={label.classNames}>
                     {label.text}
@@ -126,6 +125,6 @@ export default function InternationalInput({ firstLoad, defaultValue, name, defa
                 }}
                 style={{ pointerEvents: disabled ? 'none' : 'auto' }}
             />
-        </>
+        </div>
     )
 }
