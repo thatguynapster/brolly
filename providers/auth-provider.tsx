@@ -44,11 +44,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
             user_mobile: JSON.parse(userSession).data?.user_mobile,
             user_image: JSON.parse(userSession).data?.user_image,
           },
-          business: JSON.parse(userSession).business,
-          selected_business: JSON.parse(userSession).selected_business,
-          selected_business_contact: JSON.parse(userSession).selected_business_contact,
-          apiKey: JSON.parse(userSession).apiKey,
-          appKey: JSON.parse(userSession).appKey,
+          currentPage: "quotes",
         };
 
         refreshFunction(newState);
@@ -70,16 +66,16 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-      <AuthContext.Provider
-        value={{
-          GLOBAL_OBJ: state,
-          AUTH_LOGIN: loginFunction,
-          AUTH_REFRESH: refreshFunction,
-          AUTH_LOGOUT: logoutFunction,
-        }}
-      >
-        {children}
-      </AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        GLOBAL_OBJ: state,
+        AUTH_LOGIN: loginFunction,
+        AUTH_REFRESH: refreshFunction,
+        AUTH_LOGOUT: logoutFunction,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 

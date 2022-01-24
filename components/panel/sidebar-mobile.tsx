@@ -9,15 +9,14 @@ import { DocumentTextIcon, XIcon } from "@heroicons/react/outline";
 const SidebarMobile: FC<{
   show: boolean;
   onClose: () => void;
-  onRefresh: () => void;
-}> = ({ show, onClose, onRefresh }) => {
+}> = ({ show, onClose }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const [activePage, setActivePage] = useState<string>("quotes");
 
   const { GLOBAL_OBJ, AUTH_LOGIN } = useContext(AuthContext);
 
-  const overviewNavList = [
+  const navList = [
     {
       icon: (
         <DocumentTextIcon className={`w-6 h-6 ${activePage === "quotes" ? "text-primary-main" : "text-gray-300"}`} />
@@ -45,10 +44,6 @@ const SidebarMobile: FC<{
   ];
 
   useEffect(() => {
-    console.log(GLOBAL_OBJ);
-  }, [GLOBAL_OBJ]);
-
-  useEffect(() => {
     setOpen(show);
   }, [show]);
 
@@ -56,14 +51,6 @@ const SidebarMobile: FC<{
     console.log(open);
     !open && onClose();
   }, [open]);
-
-  useEffect(() => {
-    let mounted = true;
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -122,13 +109,20 @@ const SidebarMobile: FC<{
                   <div className="box-border py-8 overflow-y-auto mb-auto">
                     {/* Get Started div */}
                     <div className="box-border pt-5 w-2/3">
-                      {overviewNavList.map((_item, i) => {
+                      {navList.map((_item, i) => {
                         return (
                           <div
                             key={i}
                             className={`group box-border flex flex-row items-center cursor-pointer mb-2 py-2 px-4 hover:bg-swooveGray-background ${
                               activePage === _item.page ? "border-primary-main" : "border-transparent"
                             } border-l-4 hover:bg-primary-surface rounded-r-full`}
+                            onClick={() => {
+                              activePage !== _item.page &&
+                                AUTH_LOGIN({
+                                  ...GLOBAL_OBJ,
+                                  currentPage: _item.page,
+                                });
+                            }}
                           >
                             <div className={`${_item.page === activePage ? "text-primary-main" : ""}`}>
                               {_item.icon}

@@ -9,6 +9,8 @@ import "../public/css/index.css";
 import "../public/css/scrollbar.css";
 import '../public/css/intlTelInput.css'
 
+import 'intl-tel-input/build/css/intlTelInput.css';
+
 /** dependency styles */
 import "react-toastify/dist/ReactToastify.css";
 

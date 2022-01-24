@@ -17,11 +17,15 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
   const [showConfPass, setShowConfPass] = useState<boolean>(false);
 
   const [isNewUser, setIsNewUser] = useState<boolean>(false);
+  const [userKey, setUserKey] = useState<string>("");
 
   const [phone, setPhone] = useState<string>("");
   const [phoneValid, setPhoneValid] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const [newPass, setNewPass] = useState<string>("");
+  const [confNewPass, setConfNewPass] = useState<string>("");
 
   const { GLOBAL_OBJ, AUTH_LOGIN } = useContext(AuthContext);
 
@@ -69,6 +73,54 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
         AUTH_LOGIN({
           token: login_response.id_token,
           isLoggedIn: true,
+          currentPage: "quotes",
+        });
+        onLoginComplete("vehicle_verify");
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
+      console.log(error);
+    }
+  };
+
+  const _handleSetPassword = async () => {
+    if (newPass === "") {
+      toast.error("Enter a new password");
+      return;
+    }
+
+    if (confNewPass === "") {
+      toast.error("Confirm your password");
+      return;
+    }
+
+    if (confNewPass !== newPass) {
+      toast.error("Passwords do not match. Recheck and try again");
+      return;
+    }
+
+    console.log({ newPass, confNewPass });
+
+    // hit set password api
+    try {
+      let set_password_response = await mkPostReq({
+        endpoint: `/api/account/reset-password/finish`,
+        method: "post",
+        data: {
+          key: userKey,
+          newPassword: newPass,
+        },
+        isJSON: true,
+      });
+      console.log(set_password_response);
+
+      if (set_password_response.status) {
+        toast.error(set_password_response.title);
+      } else {
+        AUTH_LOGIN({
+          token: set_password_response.id_token,
+          isLoggedIn: true,
+          currentPage: "quotes",
         });
         onLoginComplete("vehicle_verify");
       }
@@ -81,6 +133,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
   useEffect(() => {
     let mounted = true;
     let user_key = getQuery("key");
+    setUserKey(String(user_key));
     console.log(user_key, !(user_key === "" || user_key === null));
     setIsNewUser(!(user_key === "" || user_key === null));
 
@@ -213,7 +266,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
             method="POST"
             onSubmit={(ev: any) => {
               ev.preventDefault();
-              onLoginComplete("vehicle_verify");
+              _handleSetPassword();
             }}
           >
             <input type="hidden" name="remember" defaultValue="true" />
@@ -230,6 +283,9 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                   // required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm"
                   placeholder="New Password"
+                  onChange={(ev) => {
+                    setNewPass(ev.currentTarget.value);
+                  }}
                 />
                 <span
                   className={`absolute right-0 rounded-r-lg flex items-center justify-center w-12 h-full p-4 group cursor-pointer`}
@@ -256,6 +312,9 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                   // required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm"
                   placeholder="Confirm Password"
+                  onChange={(ev) => {
+                    setConfNewPass(ev.currentTarget.value);
+                  }}
                 />
                 <span
                   className={`absolute right-0 rounded-r-lg flex items-center justify-center w-12 h-full p-4 group cursor-pointer`}

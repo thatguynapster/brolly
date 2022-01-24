@@ -74,9 +74,11 @@ const Home: NextPage = () => {
       lastName: lastname,
       makeOfVehicle: `${vehicleMake} - ${vehicleModel}`,
       phoneNumber: whatsappNumber,
+      countryInfoId: 1,
       vehicleType: "<string>",
       vehicleUse: "<string>",
       vehicleValue: "<long>",
+      reference: howYouHeard,
       ...premiumData,
     };
 
@@ -85,7 +87,7 @@ const Home: NextPage = () => {
 
     try {
       let create_insurance_response = await mkPostReq({
-        endpoint: `/api/insurances`,
+        endpoint: `/api/insurances/create`,
         method: "post",
         data: premium_request_data,
         isJSON: true,

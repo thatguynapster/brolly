@@ -11,17 +11,14 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
 
   return (
-    <div className="w-screen h-screen flex flex-row">
-      <Sidebar onPageSwitch={() => {}} />
+    <div className="w-screen h-screen flex flex-row bg-gray-100">
+      <Sidebar />
 
       {isTabletOrMobile && (
         <SidebarMobile
           show={showSidebar}
           onClose={() => {
             setShowSidebar(false);
-          }}
-          onRefresh={() => {
-            onRefresh && onRefresh();
           }}
         />
       )}
@@ -35,8 +32,7 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
           onRefresh && onRefresh();
         }}
       />
-      <div className="md:ml-60 mt-28">
-      {children}</div>
+      <div className="md:ml-60 mt-28 p-6 w-full">{children}</div>
     </div>
   );
 };

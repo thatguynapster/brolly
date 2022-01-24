@@ -4,11 +4,11 @@ import { useMediaQuery } from "react-responsive";
 import AuthContext from "../../context/auth-context";
 
 // function Sidebar() {
-const Sidebar: FC<{ onPageSwitch: () => void }> = ({ onPageSwitch }) => {
+const Sidebar: FC = () => {
   const { GLOBAL_OBJ, AUTH_LOGIN } = useContext(AuthContext);
   const [activePage, setActivePage] = useState<string>("quotes");
 
-  const overviewNavList = [
+  const navList = [
     {
       icon: (
         <DocumentTextIcon className={`w-6 h-6 ${activePage === "quotes" ? "text-primary-main" : "text-gray-300"}`} />
@@ -35,18 +35,6 @@ const Sidebar: FC<{ onPageSwitch: () => void }> = ({ onPageSwitch }) => {
     },
   ];
 
-  useEffect(() => {
-    console.log(GLOBAL_OBJ);
-  }, [GLOBAL_OBJ]);
-
-  useEffect(() => {
-    let mounted = true;
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   return (
     <div className="hidden md:flex flex-col bg-white fixed h-screen w-60 font-sans-Roboto z-10 border-r-2 border-gray-100">
       {/* Businame div */}
@@ -58,13 +46,22 @@ const Sidebar: FC<{ onPageSwitch: () => void }> = ({ onPageSwitch }) => {
       <div className="box-border py-8 overflow-y-auto mb-auto">
         {/* Get Started div */}
         <div className="box-border pt-5 w-2/3">
-          {overviewNavList.map((_item, i) => {
+          {navList.map((_item, i) => {
             return (
               <div
                 key={i}
                 className={`group box-border flex flex-row items-center cursor-pointer mb-2 py-2 px-4 hover:bg-swooveGray-background ${
                   activePage === _item.page ? "border-primary-main" : "border-transparent"
                 } border-l-4 hover:bg-primary-surface rounded-r-full`}
+                onClick={() => {
+                  activePage !== _item.page
+                    ? (setActivePage(_item.page),
+                      AUTH_LOGIN({
+                        ...GLOBAL_OBJ,
+                        currentPage: _item.page,
+                      }))
+                    : "";
+                }}
               >
                 <div className={`${_item.page === activePage ? "text-primary-main" : ""}`}>{_item.icon}</div>
 

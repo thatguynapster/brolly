@@ -22,6 +22,7 @@ export interface IAuthPayload {
   isLoggedIn?: boolean;
   token?: string;
   data: any;
+  currentPage?: string;
   rememberMe?: boolean;
 }
 
