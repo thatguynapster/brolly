@@ -35,11 +35,15 @@ const Home: NextPage = () => {
   const [vehicleModel, setVehicleModel] = useState<string>("");
   const [howYouHeard, setHowYouHeard] = useState<string>("");
 
+  const [dialCode, setDialCode] = useState<string>("");
+
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
-  async function _handlePhoneNumber(field: string, value: string, isValid: boolean) {
+  async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: string) {
     setWhatsappNumberValid(isValid);
     setWhatsappNumber(String(value.split("+").pop()));
+    console.log(dial_code);
+    setDialCode(dial_code);
   }
 
   const _handleCoverRequest = async () => {
@@ -73,7 +77,7 @@ const Home: NextPage = () => {
       firstName: firstname,
       lastName: lastname,
       makeOfVehicle: `${vehicleMake} - ${vehicleModel}`,
-      phoneNumber: whatsappNumber,
+      phoneNumber: whatsappNumber.replace(dialCode, ""),
       countryInfoId: 1,
       vehicleType: "<string>",
       vehicleUse: "<string>",
@@ -377,7 +381,7 @@ const Home: NextPage = () => {
                 defaultCountry={"gh"}
                 onValueChange={_handlePhoneNumber}
                 disabled={false}
-                autoFocus={true}
+                autoFocus={false}
               />
 
               <FormGroup

@@ -12,7 +12,7 @@ export default function InternationalInput({ firstLoad, defaultValue, name, defa
         let phoneInstance = intlTelInput(input, {
             defaultCountry: [defaultCountry || "gh"],
             initialCountry: defaultCountry || "gh",
-            onlyCountries: ['gh'],
+            onlyCountries: ['gh','in'],
             // onlyCountries: ["gh", "dz", "ao", "bj", "bw", "bf", "bi", "cm", "cf", "td", "cd", "cg", "ci", "dj", "eg", "gq", "er", "et", "ga", "gm", "ke", "ls", "lr", "ly", "mw", "ml", "mr", "mu", "ma", "mz", "na", "ne", "ng", "pg", "rw", "sn", "sc", "sl", "so", "za", "ss", "sd", "tz", "tg", "ug", "zm", "zw"],
             // allowDropdown: true,
             // separateDialCode: true,
@@ -55,10 +55,12 @@ export default function InternationalInput({ firstLoad, defaultValue, name, defa
                 }}
                 onBlur={e => {
                     console.log(phone.selectedCountryData)
+                    let dial_code = phone.selectedCountryData.dialCode
+                    console.log(dial_code)
                     setVal(phone?.getNumber().split('+')[1] ?? "");
                     phone?.isValidNumber() ?
-                        (onValueChange(name, phone?.getNumber(), phone?.isValidNumber())) :
-                        (onValueChange(name, e.currentTarget.value, false));
+                        (onValueChange(name, phone?.getNumber(), phone?.isValidNumber(), dial_code)) :
+                        (onValueChange(name, e.currentTarget.value, false, dial_code));
                 }}
                 style={{ pointerEvents: disabled ? 'none' : 'auto' }}
             />

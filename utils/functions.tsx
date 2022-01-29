@@ -16,8 +16,8 @@ export async function mkGetReq(reqOptions: {
   appId?: string;
   extraHeaders?: {}[];
 }) {
-  let url = `${process.env.NEXT_PUBLIC_BASE_URL}${reqOptions.endpoint}?${reqOptions.queries}`;
-  // console.log(url)
+  let url = `${reqOptions.endpoint}${reqOptions.queries ? `?${reqOptions.queries}` : ""}`;
+  console.log(url);
 
   const options: {
     method: string;
@@ -31,9 +31,9 @@ export async function mkGetReq(reqOptions: {
     },
   };
   reqOptions.token && (options.headers["Authorization"] = `Bearer ${reqOptions.token}`);
-  reqOptions.appId && (options.headers["app-id"] = `${reqOptions.appId}`);
 
-  const request = await fetch(`${reqOptions.endpoint}?${reqOptions.queries ? `&${reqOptions.queries}` : ""}`, options);
+  const request = await fetch(`${reqOptions.endpoint}${reqOptions.queries ? `?${reqOptions.queries}` : ""}`, options);
+
   const results = await request.json();
 
   return results;
@@ -81,4 +81,20 @@ export function validateEmail(email: string) {
   var re =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+}
+
+export function openInNewTab(url: string) {
+  // console.log(url);
+  var win = window.open(url, "_blank");
+  win?.focus();
+}
+
+export async function checkPaymentStatus(_ref: string) {
+  let check_payment_response = await mkGetReq({
+    endpoint: `https://api.paystack.co/transaction/verify/${_ref}`,
+    queries: "",
+    token: process.env.NEXT_PUBLIC_PAYSTACK_SECRET,
+  });
+  console.log(check_payment_response);
+  return check_payment_response.data.status;
 }

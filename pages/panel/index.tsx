@@ -1,23 +1,19 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import HeadFile from "../../components/head-file";
 import { SEOConfig } from "../../configs/global_variables";
 
-import { Transition } from "@headlessui/react";
-import Login from "../../components/panel/login";
 import Layout from "../../components/panel/layout";
 import AuthContext from "../../context/auth-context";
 import { useRouter } from "next/router";
 import QuotesView from "../../components/panel/quotes-view";
 
-const Network: NextPage = () => {
+const PanelHome: NextPage = () => {
   const [pageSection, setPageSection] = useState<string>("login"); // login | vehicle_verify | vehicle_details | panel
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   const router = useRouter();
-
-  const _getUserInsurances = () => {};
 
   useEffect(() => {
     let mounted = true;
@@ -30,25 +26,13 @@ const Network: NextPage = () => {
     };
   }, [GLOBAL_OBJ]);
 
-  useEffect(() => {
-    let mounted = true;
-
-    _getUserInsurances();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
   return (
     <>
       <HeadFile title={SEOConfig.title} />
       {/* <Header pagename="claims" /> */}
       <main className={`h-screen flex items-center justify-center`}>
         <Layout onRefresh={() => {}}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <QuotesView show={GLOBAL_OBJ.currentPage === "quotes"} />
-          </div>
+          <QuotesView show={GLOBAL_OBJ.currentPage === "quotes"} />
         </Layout>
 
         {/* verify vehicle details section */}
@@ -260,4 +244,4 @@ const Network: NextPage = () => {
   );
 };
 
-export default Network;
+export default PanelHome;

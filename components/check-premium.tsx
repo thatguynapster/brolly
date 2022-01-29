@@ -65,7 +65,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
       protectionType: "COMPREHENSIVE",
       registrationYear: yearOfRegistration,
       vehicleUse: typeOfUse,
-      vehicleValue: vehicleValue,
+      vehicleInsuredValue: vehicleValue,
       vehicleType: typeOfCar,
     };
     setPremiumCheckData(premium_check_data);
@@ -85,7 +85,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
     }
 
     setPremiumCheckResponse(premium_check_result);
-    setPremiumDue(premium_check_result.monthlyDeposit.toFixed(2));
+    setPremiumDue(premium_check_result.monthlyInstallment.toFixed(2));
     setInitialPremium(premium_check_result.initialDeposit.toFixed(2));
   };
 

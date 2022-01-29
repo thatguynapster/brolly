@@ -60,6 +60,7 @@ export interface IFormGroupProps {
   autofocus?: boolean;
   min?: number | string;
   max?: number | string;
+  editable?: boolean;
 }
 
 export interface IListBoxProps {

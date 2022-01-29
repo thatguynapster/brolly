@@ -21,6 +21,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
 
   const [phone, setPhone] = useState<string>("");
   const [phoneValid, setPhoneValid] = useState<boolean>(false);
+  const [dialCode, setDialCode] = useState<string>("");
   const [otp, setOTP] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -29,29 +30,26 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
 
   const { GLOBAL_OBJ, AUTH_LOGIN } = useContext(AuthContext);
 
-  async function _handlePhoneNumber(field: string, value: string, isValid: boolean) {
+  async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
     setPhoneValid(isValid);
     setPhone(String(value.split("+").pop()));
+    console.log(field, value, isValid, dial_code);
+    setDialCode(dial_code);
   }
 
   const _handleLogin = async () => {
     //check if fields are filled
-    // if (!phoneValid) {
-    //   toast.error("Please provide a valid phone number");
-    //   return;
-    // }
-
-    if (isNewUser && otp === "") {
-      toast.error("Enter otp code");
+    if (!phoneValid) {
+      toast.error("Please provide a valid phone number");
       return;
     }
 
-    if (!isNewUser && password === "") {
+    if (password === "") {
       toast.error("Provide your password");
       return;
     }
 
-    console.log({ phone, otp, password });
+    console.log({ phone: phone.replace(dialCode, ""), otp, password });
 
     //hit login api
     try {
@@ -59,8 +57,8 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
         endpoint: `/api/authenticate`,
         method: "post",
         data: {
-          password: isNewUser ? otp : password,
-          phoneNumber: phone,
+          password,
+          phoneNumber: phone.replace(dialCode, ""),
           rememberMe: false,
         },
         isJSON: true,
