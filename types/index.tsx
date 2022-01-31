@@ -1,8 +1,41 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode } from "react";
+
+export interface IAuth {
+  GLOBAL_OBJ: IAuthState;
+  AUTH_LOGIN?: (payload: IAuthPayload) => Dispatch<IAuthState>;
+  AUTH_LOGOUT?: () => Dispatch<IAuthState>;
+}
+
+export interface IAuthState {
+  isLoggedIn?: boolean;
+  token?: string;
+  data: any;
+  rememberMe?: boolean;
+}
+
+export interface IAuthAction {
+  type: string;
+  payload?: IAuthPayload;
+}
+
+export interface IAuthPayload {
+  isLoggedIn?: boolean;
+  token?: string;
+  data: any;
+  currentPage?: string;
+  rememberMe?: boolean;
+}
 
 export interface IHeaderProps {
   title: string;
   canonical?: string;
+}
+
+export interface INavbarProps {
+  variant?: string;
+  classNames: string;
+  showSidebar: () => void;
+  onRefresh: () => void;
 }
 
 export interface IFormGroupProps {
@@ -27,6 +60,8 @@ export interface IFormGroupProps {
   autofocus?: boolean;
   min?: number | string;
   max?: number | string;
+  editable?: boolean;
+  isRequired?: boolean;
 }
 
 export interface IListBoxProps {
@@ -36,12 +71,12 @@ export interface IListBoxProps {
   values: {
     name: string;
     value: string;
-    id: string;
+    id?: string;
   }[];
   selected?: {
     name: string;
     value: string;
-    id: string;
+    id?: string;
   };
   onValueChange: (ev: { name: string; value: string; id: string }) => void;
 }

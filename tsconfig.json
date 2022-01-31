@@ -25,9 +25,12 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx",
+    "components/international-input.jsx"
+, "components/panel/file-upload.tsx"  ],
   "exclude": [
+    "**/*.js",
+    "**/*.jsx",
     "node_modules"
   ]
 }

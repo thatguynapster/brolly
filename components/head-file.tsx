@@ -22,7 +22,6 @@ export const HeadFile: FC<IHeaderProps> = ({ title, canonical }) => {
         <meta name="keywords" content="" />
 
         <link rel="prefetch" href="/img/logo.png" />
-        <link rel="prefetch" href="/img/bg-art.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={"true"} />
         <link
@@ -42,11 +41,11 @@ export const HeadFile: FC<IHeaderProps> = ({ title, canonical }) => {
           locale: SEOConfig.locale,
           site_name: SEOConfig.site_name,
         }}
-        twitter={{
-          handle: "@thatguynapster",
-          site: canonical || SEOConfig.canonical || currentPage,
-          cardType: "summary",
-        }}
+        // twitter={{
+        //   handle: "@thatguynapster",
+        //   site: canonical || SEOConfig.canonical || currentPage,
+        //   cardType: "summary",
+        // }}
       />
     </>
   );
