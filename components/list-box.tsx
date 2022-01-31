@@ -18,7 +18,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
         value={selectedValue.value}
         onChange={(ev) => {
           setSelectedValue(values.filter((_v) => _v.value === ev)[0]);
-          onValueChange(values.filter((_v) => _v.value === ev)[0]);
+          // onValueChange(values.filter((_v) => _v.value === ev)[0]);
         }}
       >
         <div className="relative mt-1">
