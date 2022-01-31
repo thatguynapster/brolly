@@ -61,6 +61,7 @@ export interface IFormGroupProps {
   min?: number | string;
   max?: number | string;
   editable?: boolean;
+  isRequired?: boolean;
 }
 
 export interface IListBoxProps {
@@ -70,12 +71,12 @@ export interface IListBoxProps {
   values: {
     name: string;
     value: string;
-    id: string;
+    id?: string;
   }[];
   selected?: {
     name: string;
     value: string;
-    id: string;
+    id?: string;
   };
   onValueChange: (ev: { name: string; value: string; id: string }) => void;
 }

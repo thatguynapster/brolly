@@ -74,7 +74,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
     let premium_check_result = await mkPostReq({
       endpoint: "/api/quote/getPremium",
       method: "post",
-      data: premium_check_data,
+      data: JSON.stringify(premium_check_data),
       isJSON: true,
     });
     console.log(premium_check_result);

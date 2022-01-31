@@ -1,4 +1,5 @@
-import { ChangeEvent, FC } from "react";
+import { PencilIcon } from "@heroicons/react/outline";
+import { ChangeEvent, FC, useState } from "react";
 import { IFormGroupProps } from "../types";
 
 export const FormGroup: FC<IFormGroupProps> = ({
@@ -22,58 +23,80 @@ export const FormGroup: FC<IFormGroupProps> = ({
   onFocusOut,
   min,
   max,
+  editable,
+  isRequired,
 }) => {
+  const [editField, setEditField] = useState<boolean>(false);
+
   return (
-    <div className="flex flex-col box-border w-full p-0 font-medium text-xs">
-      {label && (
-        <label htmlFor={id} className="w-full text-gray-900 p-0 mb-1">
-          {label}
-        </label>
+    <>
+      {editable && !editField ? (
+        <div className="flex flex-col box-border w-full p-0">
+          <label className="w-full text-gray-900 p-0 mb-1 font-medium text-xs">{label}</label>
+          <p className="flex flex-row items-center justify-between space-x-4 bg-gray-100 pl-3 rounded-md text-gray-700 group">
+            <span>{value}</span>
+            <span
+              className="invisible group-hover:visible hover:bg-gray-200 rounded-md p-3 cursor-pointer"
+              onClick={() => {
+                setEditField(true);
+              }}
+            >
+              <PencilIcon className="w-4 h-4 text-priamry-main" />
+            </span>
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col box-border w-full p-0 font-medium text-xs">
+          {label && (
+            <label htmlFor={id} className="w-full text-gray-900 p-0 mb-1">
+              {label}
+            </label>
+          )}
+
+          <div className={`flex flex-row items-center justify-center ${disabled && "bg-gray-100"} relative`}>
+            {prependIcon && (
+              <span
+                className={`absolute left-0 flex items-center justify-center w-12 h-full p-4 ${prependIconContainerClass}`}
+                onClick={onPrependClicked}
+              >
+                {prependIcon}
+              </span>
+            )}
+            <input
+              min={min}
+              max={max}
+              id={id}
+              className={`border${prependIcon ? " pl-14" : " "}outline-none border-gray-200${
+                appendIcon ? "pr-14" : " "
+              }py-3 px-4${disabled ? "border-none text-gray-900" : " "}text-sm${
+                failedValidation ? "border-danger-main" : " "
+              }w-full${passValidation ? "border-success-main" : " "}focus:ring-2 ${className}`}
+              value={value}
+              type={type}
+              disabled={disabled}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+                onValueChanged(ev);
+              }}
+              onBlur={(ev: ChangeEvent<HTMLInputElement>) => {
+                onFocusOut(ev);
+              }}
+              required={isRequired}
+            />
+
+            {appendIcon && (
+              <span
+                className={`absolute right-0 flex items-center justify-center w-12 h-full p-4 group ${appendIconContainerClass}`}
+                onClick={onAppendClicked}
+              >
+                {appendIcon}
+              </span>
+            )}
+          </div>
+        </div>
       )}
-
-      <div className={`flex flex-row items-center justify-center ${disabled && "bg-gray-100"} relative`}>
-        {prependIcon && (
-          <span
-            className={`absolute left-0 flex items-center justify-center w-12 h-full p-4 ${prependIconContainerClass}`}
-            onClick={onPrependClicked}
-          >
-            {prependIcon}
-          </span>
-        )}
-        <input
-          min={min}
-          max={max}
-          id={id}
-          className={`border${
-            prependIcon ? "pl-14" : " "
-          }outline-none border-gray-200${
-            appendIcon ? "pr-14" : " "
-          }py-3 px-4${disabled ? "border-none text-gray-900" : " "}text-sm${
-            failedValidation ? "border-danger-main" : " "
-          }w-full${passValidation ? "border-success-main" : " "}focus:ring-2 ${className}`}
-          value={value}
-          type={type}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-          onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-            onValueChanged(ev);
-          }}
-          onBlur={(ev: ChangeEvent<HTMLInputElement>) => {
-            onFocusOut(ev);
-          }}
-        />
-
-        {appendIcon && (
-          <span
-            className={`absolute right-0 flex items-center justify-center w-12 h-full p-4 group ${appendIconContainerClass}`}
-            onClick={onAppendClicked}
-          >
-            {appendIcon}
-          </span>
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 

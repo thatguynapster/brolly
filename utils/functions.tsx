@@ -65,13 +65,13 @@ export async function mkPostReq(payload: {
     method: payload.method,
     cors: "no-cors",
     headers: {},
-    body: JSON.stringify(payload.data),
+    body: payload.data,
   };
 
   payload.isJSON && (options.headers["Content-Type"] = "application/json");
-  payload.token && (options.headers["Authorization"] = `${payload.token}`);
+  payload.token && (options.headers["Authorization"] = `Bearer ${payload.token}`);
 
-  const request = await fetch(`${process.env.NEXT_PUBLIC_API}${payload.endpoint}`, options);
+  const request = await fetch(`${process.env.NEXT_PUBLIC_API}${payload.endpoint}${payload.queries ? `?${payload.queries}` : ""}`, options);
   const results = await request.json();
 
   return results;
@@ -97,4 +97,40 @@ export async function checkPaymentStatus(_ref: string) {
   });
   console.log(check_payment_response);
   return check_payment_response.data.status;
+}
+
+export function sentenceCase(str: string) {
+  let _tmp = str.toLowerCase();
+  let result = _tmp
+    .replace(/[a-z]/i, function (letter) {
+      return letter.toUpperCase();
+    })
+    .trim();
+
+  return result;
+}
+
+export function dataURItoBlob(dataURI: string) {
+  // convert base64/URLEncoded data component to raw binary data held in a string
+  var sliceSize = 512;
+
+  var byteCharacters = atob(dataURI);
+  var byteArrays = [];
+
+  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    var byteNumbers = new Array(slice.length);
+    for (var i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    var byteArray = new Uint8Array(byteNumbers);
+
+    byteArrays.push(byteArray);
+  }
+
+  var blob = new Blob(byteArrays, { type: "image/jpeg" });
+
+  return blob;
 }

@@ -5,7 +5,7 @@ import AuthContext from "../../context/auth-context";
 import { checkPaymentStatus, mkGetReq } from "../../utils/functions";
 import { Modal } from "../modal";
 import QuoteDetails from "./quote-details-modal";
-import QuoteProgress from "./quote-progress";
+import ProgressSteps from "./progress-steps";
 import QuotesCard from "./quotes-card";
 
 const QuotesView: FC<{ show: boolean }> = ({ show }) => {

@@ -56,11 +56,11 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       let login_response = await mkPostReq({
         endpoint: `/api/authenticate`,
         method: "post",
-        data: {
+        data: JSON.stringify({
           password,
           phoneNumber: phone.replace(dialCode, ""),
           rememberMe: false,
-        },
+        }),
         isJSON: true,
       });
       console.log(login_response);
@@ -104,10 +104,10 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       let set_password_response = await mkPostReq({
         endpoint: `/api/account/reset-password/finish`,
         method: "post",
-        data: {
+        data: JSON.stringify({
           key: userKey,
           newPassword: newPass,
-        },
+        }),
         isJSON: true,
       });
       console.log(set_password_response);

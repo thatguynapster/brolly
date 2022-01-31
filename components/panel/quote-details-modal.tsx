@@ -1,12 +1,16 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import React, { ChangeEvent, Children, FC, Fragment, useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
 import { checkPaymentStatus, mkGetReq, openInNewTab } from "../../utils/functions";
+import FormGroup from "../form-group";
 import { Modal } from "../modal";
 import { Navbar } from "./navbar";
+import ProgressSteps from "./progress-steps";
 import Sidebar from "./sidebar";
 import SidebarMobile from "./sidebar-mobile";
+import VerifyPolicyDetails from "./verify-policy-details";
 
 const QuoteDetails: FC<{
   progress: number;
@@ -17,7 +21,18 @@ const QuoteDetails: FC<{
   policy,
   initiatePayment, // start | complete
 }) => {
+  console.log(policy);
   const { GLOBAL_OBJ } = useContext(AuthContext);
+
+  // quote details states
+  const [firstName, setFirstName] = useState<string>(policy?.firstName ?? "first name");
+  const [lastName, setLastName] = useState<string>(policy?.lastName);
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumberValid, setPhoneNumberValid] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [userAddress, setUserAddress] = useState<string>("");
+  const [userOccupation, setUserOccupation] = useState<string>("");
+  const [premiumStartDate, setPremiumStartDate] = useState<any>(""); // TODO get required format and set appropriate type
 
   const _initiatePayment = async () => {
     console.log(policy.id);
@@ -56,86 +71,42 @@ const QuoteDetails: FC<{
   useEffect(() => {
     let mounted = true;
 
-    console.log(progress, policy);
+    if (policy) {
+      setFirstName(policy.firstName);
+      setLastName(policy.lastName);
+      setPhoneNumber(policy.phoneNumber);
+      setEmail(policy.email);
+      setUserAddress(policy.userAddress);
+      setUserOccupation(policy.userOccupation);
+      setPremiumStartDate(policy.startDate);
+    }
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [policy]);
 
   return (
     <div className="p-4">
       {policy ? (
         <div className="py-4 flex flex-col items justify-center space-y-8">
           {/* <QuoteProgress progress={2} /> */}
-          <h1 className="text-center text-md">
-            Annual Premium: <span className="font-semibold">GHS {policy?.totalPremium?.toFixed(2)}</span>
-          </h1>
-
-          {/* <div className="flex flex-col divide-y divide-gray-200">
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Cover</p>
-              <p className="font-semibold text-right">GHS {policy?.cover?.toFixed(2)}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Excess</p>
-              <p className="font-semibold text-right">GHS {policy?.excess?.toFixed(2)}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>TPPDL</p>
-              <p className="font-semibold text-right">GHS {policy?.tppdl?.toFixed(2)}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Pre-approval Repair Limit</p>
-              <p className="font-semibold text-right">GHS {policy?.tppdl?.toFixed(2)}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>PA Cover for Driver &amp; Vehicle Owner</p>
-              <p className="font-semibold text-right">GHS {policy?.paCover?.toFixed(2)}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Courtesy for Service</p>
-              <p className="font-semibold text-right">{policy?.courtesyForService ? "Yes" : "No"}</p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Breakdown Tow Service</p>
-              <p className="font-semibold text-right"> {policy?.breakdownTowService ? "Yes" : "No"} </p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Roadside Assistance</p>
-              <p className="font-semibold text-right"> {policy?.roadsideAssistance ? "Yes" : "No"} </p>
-            </div>
-
-            <div className="p-2 w-full flex flex-row items-between justify-between">
-              <p>Other Benefits</p>
-              <p className="font-semibold text-right"> {policy?.otherBenefits} </p>
-            </div>
-          </div> */}
-
-          {/* render below details when payment is complete */}
-          {policy?.status === "PAYMENT_COMPLETED" && (
-            <div className="flex flex-col items-center divide-y divide-gray-200">
-              show form for quote and allow editing some fields
-            </div>
+          {policy?.status !== "PAYMENT_COMPLETED" && (
+            <h1 className="text-center text-md">
+              Annual Premium: <span className="font-semibold">GHS {policy?.totalPremium?.toFixed(2)}</span>
+            </h1>
           )}
 
-          <div className="flex justify-center">
-            {policy?.status === "QUOTE_CONFIRMED" && (
+          {/* render below details when payment is complete */}
+          {policy?.status === "PAYMENT_COMPLETED" && <VerifyPolicyDetails policy={policy} />}
+
+          {policy?.status === "QUOTE_CONFIRMED" && (
+            <div className="flex justify-center">
               <button className="bg-primary-main px-4 py-2 w-max" onClick={_initiatePayment}>
                 Pay for Policy
               </button>
-            )}
-            {policy?.status === "PAYMENT_COMPLETED" && (
-              <button className="bg-primary-main px-4 py-2 w-max">Upload Documents</button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="flex items-center justify-center">

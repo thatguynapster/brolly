@@ -4,7 +4,13 @@ import { Navbar } from "./navbar";
 import Sidebar from "./sidebar";
 import SidebarMobile from "./sidebar-mobile";
 
-const QuoteProgress: FC<{ progress: number }> = ({ progress }) => {
+const ProgressSteps: FC<{
+  steps: {
+    name: string;
+    is_complete: boolean;
+  }[];
+  progress: number;
+}> = ({ steps, progress }) => {
   useEffect(() => {
     let mounted = true;
 
@@ -18,8 +24,31 @@ const QuoteProgress: FC<{ progress: number }> = ({ progress }) => {
   return (
     <div className="mb-4">
       <div className="w-11/12 mx-auto px-4">
-        <div className="bg-swooveGray-disabled-text h-1 flex items-center justify-between">
-          {progress >= 0 ? (
+        <div className="bg-gray-200 h-1 flex items-center justify-between">
+          {steps.map((_step, i, steps) => {
+            return (
+              <>
+                <div className={`w-1/3 flex justify-end`}>
+                  <div className={`bg-white h-6 w-6 rounded-full border-4 border-swooveGray-disabled-text shadow`} />
+                </div>
+
+                {/* {_step.is_complete ? (
+                  <div
+                    className={`${progress === 0 ? "" : "w-1/3"} bg-primary-main h-1 flex items-center ${
+                      _step.is_complete ? "justify-end" : "justify-center"
+                    }`}
+                  >
+                    <div className="bg-primary-main h-6 w-6 rounded-full shadow flex items-center justify-center"></div>
+                  </div>
+                ) : (
+                  <div className="w-1/3 flex justify-end">
+                    <div className="bg-white h-6 w-6 rounded-full border-4 border-swooveGray-disabled-text shadow" />
+                  </div>
+                )} */}
+              </>
+            );
+          })}
+          {/* {progress >= 0 ? (
             <div className={`${progress === 0 ? "" : "w-1/3"} bg-primary-main h-1 flex items-center`}>
               <div className="bg-primary-main h-6 w-6 rounded-full shadow flex items-center justify-center"></div>
             </div>
@@ -54,7 +83,7 @@ const QuoteProgress: FC<{ progress: number }> = ({ progress }) => {
             <div className="w-1/3 flex justify-end">
               <div className="bg-white h-6 w-6 rounded-full border-4 border-swooveGray-disabled-text shadow" />
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -70,4 +99,4 @@ const QuoteProgress: FC<{ progress: number }> = ({ progress }) => {
   );
 };
 
-export default QuoteProgress;
+export default ProgressSteps;

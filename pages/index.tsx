@@ -93,7 +93,7 @@ const Home: NextPage = () => {
       let create_insurance_response = await mkPostReq({
         endpoint: `/api/insurances/create`,
         method: "post",
-        data: premium_request_data,
+        data: JSON.stringify(premium_request_data),
         isJSON: true,
         token: GLOBAL_OBJ.token,
       });
