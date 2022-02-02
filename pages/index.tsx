@@ -382,6 +382,7 @@ const Home: NextPage = () => {
                 onValueChange={_handlePhoneNumber}
                 disabled={false}
                 autoFocus={false}
+                readOnly={false}
               />
 
               <FormGroup
