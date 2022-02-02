@@ -12,7 +12,7 @@ import DocumentPreview from "./document-preview";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
 
-const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
+const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({ policy, onClose }) => {
   console.log(policy);
 
   const sectionsList = [
@@ -209,42 +209,43 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
     // }
 
     try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
-        token: GLOBAL_OBJ.token,
-        queries: `insuranceId=1303`,
-      });
-      console.log(uploaded_docs);
-      let dvla_doc = uploaded_docs.filter((_doc: any) => _doc.docType === "DVLA");
-      console.log(dvla_doc);
-
-      // delete already existing dvla dov
-      if (dvla_doc.length > 0) {
-        let delete_doc = await mkPostReq({
-          endpoint: `/api/insurance-documents/${dvla_doc[0].id}`,
-          isJSON: true,
-          method: "delete",
-          data: {},
-        });
-        console.log(delete_doc);
-      }
-
-      // let upload_licence_response = await mkPostReq({
-      //   endpoint: `/api/insurance-documents/upload`,
-      //   queries: `docType=DVLA&insuranceId=${policy.id}`,
-      //   method: "post",
+      // let uploaded_docs = await mkGetReq({
+      //   endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
       //   token: GLOBAL_OBJ.token,
-      //   isJSON: false,
-      //   data: form_data,
+      //   queries: `insuranceId=${policy.id}`,
       // });
-      // console.log(upload_licence_response);
+      // console.log(uploaded_docs);
+      // let dvla_doc = uploaded_docs.filter((_doc: any) => _doc.docType === "DVLA");
+      // console.log(dvla_doc);
 
-      // if (upload_licence_response.status) {
-      //   toast.error(upload_licence_response.title);
-      // } else {
-      //   // handle success
-      //   // _updateInsuranceDetails(true);
+      // // delete already existing dvla dov
+      // if (dvla_doc.length > 0) {
+      //   let delete_doc = await mkPostReq({
+      //     endpoint: `/api/insurance-documents/${dvla_doc[0].id}`,
+      //     isJSON: true,
+      //     method: "delete",
+      //     data: {},
+      //   });
+      //   console.log(delete_doc);
       // }
+
+      let upload_licence_response = await mkPostReq({
+        endpoint: `/api/user-documents/upload`,
+        queries: `docType=ID_CARD&userId=${GLOBAL_OBJ.data.user_id}`,
+        method: "post",
+        token: GLOBAL_OBJ.token,
+        isJSON: false,
+        data: form_data,
+      });
+      console.log(upload_licence_response);
+
+      if (upload_licence_response.status) {
+        toast.error(upload_licence_response.title);
+      } else {
+        // handle success
+        // _updateInsuranceDetails(true);
+        onClose && onClose();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -371,14 +372,15 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
                 className={`appearance-none relative block w-full py-3 px-4 placeholder-[#848484] border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
                 label={{
                   classNames: "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
-                  text: "Pickup Number",
+                  text: "Phone Number",
                 }}
-                name={"pickupNumber"}
+                name={"phoneNumber"}
                 defaultValue={phoneNumber}
                 defaultCountry={"gh"}
                 onValueChange={_handlePhoneNumber}
                 disabled={false}
                 autoFocus={false}
+                readOnly={policy.status === "QUOTE_CONFIRMED"}
               />
             </div>
 
@@ -1155,6 +1157,7 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
             <div className="w-full flex flex-col space-y-4">
               <FileUpload
                 multiple={false}
+                allowSelect={true}
                 onFileLoad={(image: any) => {
                   console.log(image);
 

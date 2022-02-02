@@ -30,7 +30,7 @@ export const Navbar: FC<INavbarProps> = ({ classNames, showSidebar, onRefresh })
 
   return (
     <div className={`fixed inset-x-0 bg-white text-gray-900 shadow-sm ${classNames}`}>
-      <div className="w-full mx-auto px-6 py-8 sm:px-6">
+      <div className="w-full mx-auto sm:px-6">
         <div className="flex justify-between items-center md:justify-end md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1 space-x-7 md:hidden">
             <MenuIcon
@@ -41,20 +41,20 @@ export const Navbar: FC<INavbarProps> = ({ classNames, showSidebar, onRefresh })
             />
           </div>
           <div className="flex flex-row space-x-4">
-            <div className="p-3 rounded-full flex relative ">
+            {/* <div className="p-3 rounded-full flex relative ">
               <BellIcon className="w-6 h-6 text-gray-300" />
               <span className="flex h-3 w-3 absolute right-3">
                 <span className="animate-ping absolute inline-flex h-2.5 w-2.5 rounded-full bg-primary-border opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-main"></span>
               </span>
-            </div>
-            <div className="p-3 rounded-full flex relative ">
+            </div> */}
+            {/* <div className="p-3 rounded-full flex relative ">
               <ChatIcon className="w-6 h-6 text-gray-300" />
               <span className="flex h-3 w-3 absolute right-3">
                 <span className="animate-ping absolute inline-flex h-2.5 w-2.5 rounded-full bg-primary-border opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-main"></span>
               </span>
-            </div>
+            </div> */}
             {/* <div className="flex flex-row items-center space-x-3 rounded-md px-2 cursor-pointer group hover:bg-primary-surface">
               {/* <img
                 className="h-10 w-10 rounded-full"
@@ -66,7 +66,7 @@ export const Navbar: FC<INavbarProps> = ({ classNames, showSidebar, onRefresh })
             </div> */}
 
             <Menu as="div" className="relative text-left flex">
-              <Menu.Button className="flex flex-row items-center space-x-3 rounded-md px-4 cursor-pointer group hover:bg-primary-surface">
+              <Menu.Button className="flex flex-row items-center space-x-3 rounded-md px-4 py-3 cursor-pointer group hover:bg-primary-surface">
                 {GLOBAL_OBJ.data?.user_name}
                 <ChevronDownIcon className="w-5 h-5 " aria-hidden="true" />
               </Menu.Button>

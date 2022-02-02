@@ -30,7 +30,7 @@ const PanelHome: NextPage = () => {
     <>
       <HeadFile title={SEOConfig.title} />
       {/* <Header pagename="claims" /> */}
-      <main className={`h-screen flex items-center justify-center`}>
+      <main className={`min-h-screen flex items-center justify-center`}>
         <Layout onRefresh={() => {}}>
           <QuotesView show={GLOBAL_OBJ.currentPage === "quotes"} />
         </Layout>

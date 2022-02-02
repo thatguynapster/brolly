@@ -8,9 +8,9 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
   const [selectedValue, setSelectedValue] = useState(selected ?? values[0]);
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-2">
       {label && (
-        <label htmlFor={id} className="w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs">
+        <label htmlFor={id} className="w-full text-swooveGray-caption p-0 font-medium text-xs">
           {label}
         </label>
       )}
@@ -21,7 +21,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
           onValueChange(values.filter((_v) => _v.value === ev)[0]);
         }}
       >
-        <div className="relative mt-1">
+        <div className="relative">
           <Listbox.Button
             className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white border-solid border border-swooveGray-background-pressed cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
           >
