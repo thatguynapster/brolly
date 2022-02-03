@@ -66,11 +66,11 @@ export const FormGroup: FC<IFormGroupProps> = ({
               min={min}
               max={max}
               id={id}
-              className={`border${prependIcon ? " pl-14" : " "}outline-none border-gray-200${
+              className={`border ${prependIcon ? "pl-14" : ""} outline-none border-gray-200 ${
                 appendIcon ? "pr-14" : ""
-              } py-3 px-4${disabled ? "border-none text-gray-900" : ""} text-sm ${
+              } py-3 px-4 ${disabled ? "border-none text-gray-900" : ""} text-sm ${
                 failedValidation ? "border-danger-main" : " "
-              }w-full${passValidation ? "border-success-main" : " "}focus:ring-2 ${className}`}
+              } w-full ${passValidation ? "border-success-main" : ""} focus:ring-2 ${className}`}
               value={value}
               type={type}
               disabled={disabled}

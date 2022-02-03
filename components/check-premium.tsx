@@ -14,14 +14,15 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
   // premium calculation params
 
   const [typeOfQuote, setTypeOfQuote] = useState<string>("");
-  const [typeOfCar, setTypeOfCar] = useState<string>("");
-  const [yearOfRegistration, setYearOfRegistration] = useState<any>("");
-  const [vehicleValue, setVehicleValue] = useState<any>("");
-  const [typeOfUse, setTypeOfUse] = useState<string>("");
-  const [passengerCount, setPassengerCount] = useState<number | "">("");
+  const [vehicleType, setTypeOfCar] = useState<string>("");
+  const [registrationYear, setYearOfRegistration] = useState<any>("");
+  const [vehicleInsuredValue, setVehicleValue] = useState<any>("");
+  const [vehicleUse, setTypeOfUse] = useState<string>("");
+  const [numOfPassenger, setPassengerCount] = useState<number | "">("");
   const [whatsappNumber, setWhatsappNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [installmentCount, setInstallmentCount] = useState<string>("");
+  const [noOfInstallments, setInstallmentCount] = useState<string>("");
+  const [employerType, setEmployerType] = useState<string>("");
 
   const [premiumCheckData, setPremiumCheckData] = useState<any>({});
   const [premiumCheckResponse, setPremiumCheckResponse] = useState<any>({});
@@ -29,44 +30,47 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
   const [premiumDue, setPremiumDue] = useState<string | null>(null);
   const [initialPremium, setInitialPremium] = useState<string | null>(null);
 
+  const [installmentOptions, setInstallmentOptions] = useState<{ name: string; value: string; id: string }[]>([]);
+
   const _handleCheckPremium = async () => {
-    if (typeOfCar === "") {
+    if (vehicleType === "") {
       toast.error("Select vehicle type");
       return;
     }
-    if (yearOfRegistration === "") {
+    if (registrationYear === "") {
       toast.error("Select vehicle's registration year");
       return;
     }
-    if (vehicleValue < 1) {
+    if (vehicleInsuredValue < 1) {
       toast.error("Enter vehicles current/insured value");
       return;
     }
-    if (typeOfUse === "") {
+    if (vehicleUse === "") {
       toast.error("Select vehicle's type of use");
       return;
     }
-    if (passengerCount < 1) {
+    if (numOfPassenger < 1) {
       toast.error("Enter the number of passengers your vehicle can take");
       return;
     }
-    // if (whatsappNumber === "") {
-    //   toast.error("Please add you whatsapp number");
-    //   return;
-    // }
-    if (installmentCount === "") {
+    if (employerType === "") {
+      toast.error("Please add your employer type");
+      return;
+    }
+    if (noOfInstallments === "") {
       toast.error("Select an installment option");
       return;
     }
 
     let premium_check_data = {
-      noOfInstallments: installmentCount,
-      numOfPassenger: passengerCount,
+      noOfInstallments,
+      numOfPassenger,
       protectionType: "COMPREHENSIVE",
-      registrationYear: yearOfRegistration,
-      vehicleUse: typeOfUse,
-      vehicleInsuredValue: vehicleValue,
-      vehicleType: typeOfCar,
+      registrationYear,
+      vehicleUse,
+      vehicleInsuredValue,
+      vehicleType,
+      employerType,
     };
     setPremiumCheckData(premium_check_data);
     console.log(premium_check_data);
@@ -89,6 +93,183 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
     setInitialPremium(premium_check_result.initialDeposit.toFixed(2));
   };
 
+  useEffect(() => {
+    let installment_options = [
+      {
+        name: "",
+        value: "No. of Installments",
+        id: "0",
+      },
+    ];
+    // {
+    //   name: "FULL_PAYMENT",
+    //   value: "Full Payment",
+    //   id: "1",
+    // },
+    // {
+    //   name: "THREE_MONTHS",
+    //   value: "3 months",
+    //   id: "2",
+    // },
+    // {
+    //   name: "SIX_MONTHS",
+    //   value: "6 months",
+    //   id: "3",
+    // },
+    // {
+    //   name: "NINE_MONTHS",
+    //   value: "9 months",
+    //   id: "4",
+    // },
+    // {
+    //   name: "TWELVE_MONTHS",
+    //   value: "12 months",
+    //   id: "5",
+    // },
+    switch (employerType) {
+      case "STATE_OR_GOVT":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          },
+          {
+            name: "SIX_MONTHS",
+            value: "6 months",
+            id: "3",
+          },
+          {
+            name: "NINE_MONTHS",
+            value: "9 months",
+            id: "4",
+          },
+          {
+            name: "TWELVE_MONTHS",
+            value: "12 months",
+            id: "5",
+          }
+        );
+        break;
+      case "LARGE_PRIVATE_COMPANY":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          },
+          {
+            name: "SIX_MONTHS",
+            value: "6 months",
+            id: "3",
+          },
+          {
+            name: "NINE_MONTHS",
+            value: "9 months",
+            id: "4",
+          }
+        );
+        break;
+      case "SME":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          },
+          {
+            name: "SIX_MONTHS",
+            value: "6 months",
+            id: "3",
+          }
+        );
+        break;
+      case "SELF_EMPLOYED_PRIVATE_PRACTITIONER":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          }
+        );
+        break;
+      case "UBER_BOLT_YANGO":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          },
+          {
+            name: "SIX_MONTHS",
+            value: "6 months",
+            id: "3",
+          }
+        );
+        break;
+      case "COMMERCIAL_UNION":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          },
+          {
+            name: "SIX_MONTHS",
+            value: "6 months",
+            id: "3",
+          }
+        );
+        break;
+      case "OTHER":
+        installment_options.push(
+          {
+            name: "FULL_PAYMENT",
+            value: "Full Payment",
+            id: "1",
+          },
+          {
+            name: "THREE_MONTHS",
+            value: "3 months",
+            id: "2",
+          }
+        );
+        break;
+    }
+
+    setInstallmentOptions(installment_options);
+  }, [employerType]);
+
   return (
     <div
       className={`bg-white w-full max-w-md px-2 md:px-12 ${
@@ -108,49 +289,6 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
       >
         <input autoComplete="off" name="hidden" id="hidden" type="text" className="hidden" />
         <div className="w-full flex-col space-y-5">
-          {/* <ListBox
-            className="bg-[#101d490d] border-none"
-            id="type_of_quote"
-            values={[
-              {
-                name: "",
-                value: "Type of Quote",
-                id: "0",
-              },
-              {
-                name: "vehicle",
-                value: "Car/Vehicle",
-                id: "1",
-              },
-              {
-                name: "home",
-                value: "Home",
-                id: "2",
-              },
-              {
-                name: "life",
-                value: "Life",
-                id: "3",
-              },
-              {
-                name: "travel",
-                value: "Travel",
-                id: "4",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Type of Quote",
-              id: "0",
-            }}
-            onValueChange={(_type: any) => {
-              console.log(_type);
-              setTypeOfQuote(_type.name);
-              setPremiumDue(null);
-              setInitialPremium(null);
-            }}
-          /> */}
-
           <ListBox
             className="bg-[#101d490d] border-none"
             id="type_of_car"
@@ -292,7 +430,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             id="vehicleValue"
             placeholder="Current/Insured value (GHS)"
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={vehicleValue}
+            value={vehicleInsuredValue}
             onValueChanged={(_val: any) => {
               // console.log(_val.target.value);
               setVehicleValue(_val.target.value);
@@ -401,7 +539,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             id="passengerCount"
             placeholder="Number of passengers (including driver)"
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={passengerCount}
+            value={numOfPassenger}
             onValueChanged={(_val: any) => {
               console.log(_val.target.value);
               setPassengerCount(_val.target.value);
@@ -416,81 +554,68 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             }}
           />
 
-          {/* <FormGroup
-            type="tel"
-            id="whatsappNumber"
-            placeholder="Whatsapp number"
-            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={whatsappNumber}
-            onValueChanged={(_val: any) => {
-              console.log(_val.target.value);
-              setWhatsappNumber(_val.target.value);
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="employer_type"
+            values={[
+              {
+                name: "",
+                value: "Employer type",
+                id: "0",
+              },
+              {
+                name: "STATE_OR_GOVT",
+                value: "State or Government Organisation",
+                id: "1",
+              },
+              {
+                name: "LARGE_PRIVATE_COMPANY",
+                value: "Large Private Company",
+                id: "2",
+              },
+              {
+                name: "SME",
+                value: "SME",
+                id: "3",
+              },
+              {
+                name: "SELF_EMPLOYED_PRIVATE_PRACTITIONER",
+                value: "Self Employed/Private Practitioner",
+                id: "4",
+              },
+              {
+                name: "UBER_BOLT_YANGO",
+                value: "Uber/Bolt/Yango",
+                id: "4",
+              },
+              {
+                name: "COMMERCIAL_UNION",
+                value: "Commercial Union",
+                id: "4",
+              },
+              {
+                name: "OTHER",
+                value: "Other",
+                id: "4",
+              },
+            ]}
+            selected={{
+              name: "",
+              value: "Employer type",
+              id: "0",
+            }}
+            onValueChange={(_type: any) => {
+              console.log(_type);
+              setEmployerType(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
-            onFocusOut={(_val: any) => {
-              console.log(_val.target.value);
-              setWhatsappNumber(_val.target.value);
-              setPremiumDue(null);
-              setInitialPremium(null);
-            }}
-          /> */}
-
-          {/* <FormGroup
-            type="email"
-            id="email"
-            placeholder="Email"
-            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={email}
-            onValueChanged={(_val: any) => {
-              // console.log(_val.target.value);
-              setEmail(_val.target.value);
-              setPremiumDue(null);
-              setInitialPremium(null);
-            }}
-            onFocusOut={(_val: any) => {
-              // console.log(_val.target.value);
-              setEmail(_val.target.value);
-              setPremiumDue(null);
-              setInitialPremium(null);
-            }}
-          /> */}
+          />
 
           <ListBox
             className="bg-[#101d490d] border-none"
             id="number_of_installments"
-            values={[
-              {
-                name: "",
-                value: "No. of Installments",
-                id: "0",
-              },
-              {
-                name: "FULL_PAYMENT",
-                value: "Full Payment",
-                id: "1",
-              },
-              {
-                name: "THREE_MONTHS",
-                value: "3 months",
-                id: "2",
-              },
-              {
-                name: "SIX_MONTHS",
-                value: "6 months",
-                id: "3",
-              },
-              {
-                name: "NINE_MONTHS",
-                value: "9 months",
-                id: "4",
-              },
-              {
-                name: "TWELVE_MONTHS",
-                value: "12 months",
-                id: "5",
-              },
-            ]}
+            values={installmentOptions}
             selected={{
               name: "",
               value: "No. of Installments",
@@ -504,7 +629,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             }}
           />
 
-          {installmentCount === "full_payment"
+          {noOfInstallments === "full_payment"
             ? premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>
             : premiumDue && (
                 <div>
@@ -514,9 +639,9 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
                   <p>
                     Monthly installment: <span className="font-bold text-lg">&#8373;{premiumDue}</span>
                     <span>
-                      {installmentCount === "full_payment"
+                      {noOfInstallments === "full_payment"
                         ? ""
-                        : `/m for ${String(installmentCount).split("_")[0]} months`}
+                        : `/m for ${String(noOfInstallments).split("_")[0]} months`}
                     </span>
                   </p>
                 </div>
