@@ -244,12 +244,12 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
       </button>
 
       <div className="py-4 flex flex-col items justify-center space-y-8">
-        <div className="flex flex-row space-x-4 items-center">
-          <hr className="w-full text-gray-700 bg-gray-700" />
-          <h1 className="w-max whitespace-nowrap text-center font-bold text-lg capitalize">
+      <div className="w-full flex flex-row space-x-4 items-center justify-center">
+          <hr className="md:w-full text-gray-700 bg-gray-700" />
+          <h1 className="w-max md:whitespace-nowrap text-center font-bold text-lg capitalize">
             payroll deduction mandate
           </h1>
-          <hr className="w-full text-gray-700 bg-gray-700" />
+          <hr className="md:w-full text-gray-700 bg-gray-700" />
         </div>
 
         <div className="grid grid-cols-4 gap-4">
@@ -682,7 +682,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
           <div className="flex flex-row items-center justify-start text-left space-x-2 cursor-pointer">
             <input
               id="acceptTerms"
-              className="form-checkbox border border-swooveGray-800 cursor-pointer"
+              className="form-checkbox border border-gray-800 cursor-pointer"
               type="checkbox"
               checked={allDataValid}
               onChange={() => {
@@ -690,7 +690,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
               }}
             />
             <label htmlFor="acceptTerms" className="leading-tight font-normal cursor-pointer">
-              By clicking proced you agree to the authorization stated above.
+              I agree to the authorization stated above.
             </label>
           </div>
         </div>

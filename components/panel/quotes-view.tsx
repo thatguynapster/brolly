@@ -8,6 +8,7 @@ import QuoteDetails from "./quote-details";
 import ProgressSteps from "./progress-steps";
 import QuotesCard from "./quotes-card";
 import MandateForm from "./mandate-form";
+import AgreementForm from "./agreement-form";
 
 const QuotesView: FC<{ show: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
@@ -203,7 +204,15 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
         />
       )}
 
-      {currentView === "agreement_form" && <></>}
+      {currentView === "agreement_form" && (
+        <AgreementForm
+          policy={policyDetails}
+          onReturn={() => {
+            setCurrentView("index");
+            _getUserInsurances();
+          }}
+        />
+      )}
 
       {/* Unconfirmed quote modal */}
       <Modal
