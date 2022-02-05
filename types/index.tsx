@@ -73,6 +73,7 @@ export interface IListBoxProps {
     value: string;
     id?: string;
   }[];
+  search?: boolean;
   selected?: {
     name: string;
     value: string;

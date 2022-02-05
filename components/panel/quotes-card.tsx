@@ -26,7 +26,7 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
       case "DETAILS_VERIFIED":
         setNextStep("accept_mandate");
         break;
-      case "MANDATE_FORM_COMPLETE":
+      case "MANDATE_FORM_COMPLETED":
         setNextStep("accept_agreement");
         break;
       case "AGREEMENT_SIGNED":

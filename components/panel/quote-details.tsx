@@ -256,8 +256,6 @@ const QuoteDetails: FC<{
         toast.error(upload_licence_response.title);
       } else {
         // handle success
-        // _updateInsuranceDetails(true);
-        // onClose && onClose();
       }
     } catch (error) {
       console.log(error);
@@ -434,20 +432,16 @@ const QuoteDetails: FC<{
                 editable={true}
               />
 
-              <InternationalInput
-                firstLoad
-                className={`appearance-none relative block w-full py-3 px-4 placeholder-[#848484] border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
-                label={{
-                  classNames: "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
-                  text: "Phone Number",
-                }}
-                name={"phoneNumber"}
-                defaultValue={phoneNumber}
-                defaultCountry={"gh"}
-                onValueChange={_handlePhoneNumber}
-                disabled={false}
-                autoFocus={false}
-                readOnly={false}
+              <FormGroup
+                type="text"
+                id="lastName"
+                label="Phone Number"
+                placeholder="Eg: 0231234567"
+                className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+                value={`${phoneNumber}`}
+                onValueChanged={() => {}}
+                onFocusOut={() => {}}
+                disabled
               />
 
               <FormGroup
@@ -936,7 +930,7 @@ const QuoteDetails: FC<{
           <div className="flex flex-col space-y-4">
             <div className="flex flex-row space-x-8 items-center">
               <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">
-                vehicle owner&apos; id
+                vehicle owner&apos;s id
               </h1>
               <hr className="w-full text-gray-700 bg-gray-700" />
             </div>

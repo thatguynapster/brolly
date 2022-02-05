@@ -74,7 +74,7 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
           onRefresh && onRefresh();
         }}
       />
-      <div className="md:ml-60 mt-28 p-6 w-full">{children}</div>
+      <div className="md:ml-60 mt-16 p-6 w-full">{children}</div>
     </div>
   );
 };

@@ -105,7 +105,7 @@ const FileUpload: FC<{
             {imagePreviews.length > 0 ? (
               imagePreviews.map((_img, i, imagePreviews) => {
                 return (
-                  <li className="block p-1 w-1/2 h-52" key={i}>
+                  <li className={`block p-1 ${multiple ? "w-1/2" : "w-full"} h-52`} key={i}>
                     <article
                       tabIndex={0}
                       className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm"

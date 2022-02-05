@@ -30,7 +30,7 @@ export const Navbar: FC<INavbarProps> = ({ classNames, showSidebar, onRefresh })
 
   return (
     <div className={`fixed inset-x-0 bg-white text-gray-900 shadow-sm ${classNames}`}>
-      <div className="w-full mx-auto sm:px-6">
+      <div className="w-full mx-auto py-2 sm:px-6">
         <div className="flex justify-between items-center md:justify-end md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1 space-x-7 md:hidden">
             <MenuIcon

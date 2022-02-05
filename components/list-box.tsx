@@ -4,11 +4,11 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { IListBoxProps } from "../types";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
-const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, onValueChange }) => {
+const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, search, onValueChange }) => {
   const [selectedValue, setSelectedValue] = useState(selected ?? values[0]);
 
   return (
-    <div className="w-full space-y-2">
+    <div className="flex flex-col box-border w-full p-0 font-medium text-xs space-y-2">
       {label && (
         <label htmlFor={id} className="w-full text-swooveGray-caption p-0 font-medium text-xs">
           {label}
@@ -23,7 +23,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
       >
         <div className="relative">
           <Listbox.Button
-            className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white border-solid border border-gray-200 cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
+            className={`${className} relative w-full py-3 pl-4 pr-10  text-left bg-white border border-gray-200 cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 text-sm`}
           >
             <span className="block truncate">{selectedValue.value}</span>
             <span className="absolute inset-y-0 right-5 flex items-center pointer-events-none">
@@ -32,6 +32,7 @@ const ListBox: FC<IListBoxProps> = ({ className, values, label, id, selected, on
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
             <Listbox.Options className="z-10 absolute w-full py-1 mt-1 overflow-auto text-base bg-white shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {search && <div> Search... </div>}
               {values.map((value, valueIdx) => (
                 <Listbox.Option
                   key={valueIdx}
