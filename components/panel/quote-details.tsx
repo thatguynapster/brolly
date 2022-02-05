@@ -27,7 +27,7 @@ import VerifyPolicyDetails from "./verify-policy-details";
 
 const QuoteDetails: FC<{
   policy: any;
-  initiatePayment: (_status: "start" | "complete", _ref?: string) => void;
+  initiatePayment?: (_status: "start" | "complete", _ref?: string) => void;
   onClose?: () => void;
   onReturn?: () => void;
 }> = ({
@@ -139,46 +139,7 @@ const QuoteDetails: FC<{
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
-  async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
-    setPhoneNumberValid(isValid);
-    setPhoneNumber(String(value.split("+").pop()));
-    console.log(field, value, isValid, dial_code);
-    setDialCode(dial_code);
-  }
-
-  const _initiatePayment = async () => {
-    console.log(policy.id);
-
-    // check if previous payment attempt was successful
-    if (policy.pInitialPayment) {
-      let payment_status = await checkPaymentStatus(policy.pInitialReference);
-      if (payment_status === "success") {
-        //ignore payment and refresh page content
-        initiatePayment("complete");
-        return;
-      }
-    }
-
-    try {
-      let initiate_payment_response = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurances/paystack/transaction/initialize/`,
-        queries: `insuranceId=${policy.id}`,
-        token: GLOBAL_OBJ.token,
-      });
-      console.log(initiate_payment_response);
-
-      if (!initiate_payment_response.data) {
-        toast.error(initiate_payment_response.title);
-      } else {
-        // handle success
-        initiatePayment("start", initiate_payment_response.data.reference);
-        openInNewTab(initiate_payment_response.data.authorization_url);
-      }
-    } catch (error) {
-      toast.error("Unexpected Error Occurred");
-      console.log(error);
-    }
-  };
+  const [vehicleInsuranceId, setVehicleinsuranceId] = useState<string>("");
 
   const _getPolicyDocuments = async () => {
     try {
@@ -265,6 +226,7 @@ const QuoteDetails: FC<{
   const _updateInsuranceDetails = async (final: boolean = false) => {
     toast.info("Updating Quote Information...");
     let update_data = {
+      ...policy,
       alterationDetails,
       chassisNum,
       colour,
@@ -294,13 +256,16 @@ const QuoteDetails: FC<{
       repairState,
       status: "DETAILS_VERIFIED",
       userAddress,
+      userId: GLOBAL_OBJ.data.user_id,
       vehicleCity,
       vehicleMainDriver,
       vehicleType,
+      vehicleInsuranceId,
       vehicleUse,
       vehicleMake,
       vehicleModel,
     };
+    console.log(update_data);
 
     try {
       let update_insurance_response = await mkPostReq({
@@ -367,6 +332,8 @@ const QuoteDetails: FC<{
       setInitialDeposit(policy.initialDeposit);
       setMonthlyInstallment(policy.monthlyInstallment);
       setNoOfInstallments(policy.noOfInstallments);
+
+      setVehicleinsuranceId(policy.vehicleInsuranceId ?? "");
 
       _getPolicyDocuments();
     }

@@ -9,13 +9,14 @@ import ProgressSteps from "./progress-steps";
 import QuotesCard from "./quotes-card";
 import MandateForm from "./mandate-form";
 import AgreementForm from "./agreement-form";
+import PaymentForm from "./payment-form";
 
 const QuotesView: FC<{ show: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
 
-  const [currentView, setCurrentView] = useState<"index" | "quote_details" | "mandate_form" | "agreement_form">(
-    "index"
-  );
+  const [currentView, setCurrentView] = useState<
+    "index" | "quote_details" | "mandate_form" | "agreement_form" | "payment"
+  >("index");
 
   const [policyDetails, setPolicyDetails] = useState<any>(null);
   const [showPolicyDetails, setShowPolicyDetails] = useState<boolean>(false);
@@ -134,9 +135,9 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
                     case "accept_agreement":
                       setCurrentView("agreement_form");
                       break;
-                    // case "payment":
-                    //   _initiatePayment();
-                    //   break;
+                    case "payment":
+                      setCurrentView("payment");
+                      break;
                   }
                   // setShowPolicyDetails(true);
                 }}
@@ -152,39 +153,6 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
         <>
           <QuoteDetails
             policy={policyDetails}
-            initiatePayment={(_status, _ref) => {
-              console.log(_status, _ref);
-              // setShowPolicyDetails(false);
-              switch (_status) {
-                case "start":
-                  setShowPendingPaymentModal(true);
-                  // check payment status every 30s for 5mins
-                  console.log("start checking for payment status");
-                  let payment_status = null;
-                  let payment_check_interval = setInterval(async () => {
-                    console.log("check payment status");
-                    payment_status = await checkPaymentStatus(String(_ref));
-
-                    if (payment_status === "success") {
-                      setShowPendingPaymentModal(false);
-                      setShowPaymentCompleteModal(true);
-                      setPaymentSuccessMessage("Payment successful");
-                      _finalizePayment(policyDetails.id);
-                      clearInterval(payment_check_interval);
-                    }
-                  }, 15_000);
-                  setTimeout(async () => {
-                    console.log("end checking for payment status");
-                    clearInterval(payment_check_interval);
-                  }, 300_000);
-                  break;
-                case "complete":
-                  setPaymentSuccessMessage("Payment already made.");
-                  _finalizePayment(policyDetails.id);
-                  setShowPaymentCompleteModal(true);
-                  break;
-              }
-            }}
             onClose={_getUserInsurances}
             onReturn={() => {
               setCurrentView("index");
@@ -206,6 +174,16 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
 
       {currentView === "agreement_form" && (
         <AgreementForm
+          policy={policyDetails}
+          onReturn={() => {
+            setCurrentView("index");
+            _getUserInsurances();
+          }}
+        />
+      )}
+
+      {currentView === "payment" && (
+        <PaymentForm
           policy={policyDetails}
           onReturn={() => {
             setCurrentView("index");

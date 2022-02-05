@@ -23,6 +23,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
   const [email, setEmail] = useState<string>("");
   const [noOfInstallments, setInstallmentCount] = useState<string>("");
   const [employerType, setEmployerType] = useState<string>("");
+  const [referredFrom, setReferredFrom] = useState<string>("");
 
   const [premiumCheckData, setPremiumCheckData] = useState<any>({});
   const [premiumCheckResponse, setPremiumCheckResponse] = useState<any>({});

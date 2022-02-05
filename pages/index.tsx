@@ -33,7 +33,7 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [vehicleMake, setVehicleMake] = useState<string>("");
   const [vehicleModel, setVehicleModel] = useState<string>("");
-  const [howYouHeard, setHowYouHeard] = useState<string>("");
+  const [referredFrom, setReferredFrom] = useState<string>("");
 
   const [dialCode, setDialCode] = useState<string>("");
 
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
       vehicleType: "<string>",
       vehicleUse: "<string>",
       vehicleValue: "<long>",
-      reference: howYouHeard,
+      referredFrom,
       ...premiumData,
     };
 
@@ -99,7 +99,7 @@ const Home: NextPage = () => {
       });
       console.log(create_insurance_response);
 
-      if (create_insurance_response.httpStatus) {
+      if (typeof create_insurance_response.status === "number") {
         toast.error(create_insurance_response.message);
       } else {
         setShowPremiumRequestModal(false);
@@ -467,7 +467,7 @@ const Home: NextPage = () => {
               }}
               onValueChange={(_type: any) => {
                 // console.log(_type);
-                setHowYouHeard(_type);
+                setReferredFrom(_type.name);
               }}
             />
 

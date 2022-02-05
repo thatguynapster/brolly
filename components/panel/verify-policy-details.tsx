@@ -126,6 +126,8 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({ policy
 
   const [driverLicence, setDriverLicence] = useState<any>("");
 
+  const [vehicleInsuranceId, setVehicleInsuranceId] = useState<string>("");
+
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
@@ -167,6 +169,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({ policy
       status: policy.status,
       userAddress,
       vehicleCity,
+      vehicleInsuranceId,
       vehicleMainDriver,
       vehicleType,
       vehicleUse,
@@ -293,6 +296,8 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({ policy
       setInitialDeposit(policy.initialDeposit);
       setMonthlyInstallment(policy.monthlyInstallment);
       setNoOfInstallments(policy.noOfInstallments);
+
+      setVehicleInsuranceId(policy.vehicleInsuranceId ?? "");
     }
 
     return () => {
