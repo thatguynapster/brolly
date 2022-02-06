@@ -18,6 +18,17 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
     "index" | "quote_details" | "mandate_form" | "agreement_form" | "payment"
   >("index");
 
+  const statusList = [
+    "QUOTE_REQUESTED",
+    "QUOTE_CONFIRMED",
+    "DETAILS_VERIFIED",
+    "MANDATE_FORM_COMPLETED",
+    "AGREEMENT_SIGNED",
+    "PAYMENT_COMPLETED",
+    "DOCUMENTS_SUBMITTED",
+    "DOCUMENTS_VERIFIED",
+  ];
+
   const [policyDetails, setPolicyDetails] = useState<any>(null);
   const [showPolicyDetails, setShowPolicyDetails] = useState<boolean>(false);
   const [showPendingPaymentModal, setShowPendingPaymentModal] = useState<boolean>(false);
@@ -41,7 +52,17 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
         toast.error(user_policies_response.title);
       } else {
         // handle success
-        setPolicies(user_policies_response);
+
+        user_policies_response.map((_r: any, i: any) => {
+          console.log(statusList.indexOf(_r.status) >= statusList.indexOf("PAYMENT_COMPLETED"));
+        });
+
+        let quotes = user_policies_response.filter(
+          (_r: any) => statusList.indexOf(_r.status) < statusList.indexOf("PAYMENT_COMPLETED")
+        );
+        console.log(quotes);
+
+        setPolicies(quotes);
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -148,6 +169,9 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
           <></>
         )}
       </div>
+
+      {/* progress viewfor forms */}
+      {currentView !== "index" && <></>}
 
       {currentView === "quote_details" && (
         <>

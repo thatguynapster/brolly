@@ -14,13 +14,13 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
         Cookie.set("loggedIn", "true", { expires: 1, sameSite: "lax" });
         userData = JSON.stringify(action.payload);
         // console.log(action.payload)
-        Cookie.set("client", userData, { expires: 1, sameSite: "lax" });
-        sessionStorage.setItem("client", userData);
+        Cookie.set("user", userData, { expires: 1, sameSite: "lax" });
+        sessionStorage.setItem("user", userData);
 
         //check rememberMe
         if (action.payload?.rememberMe) {
           const encodedUserData = btoa(userData);
-          localStorage.setItem("client", encodedUserData);
+          localStorage.setItem("user", encodedUserData);
         }
         // console.log('Cookies set')
         authenticated = true;
@@ -42,8 +42,8 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
     case "REFRESH":
       // console.log(action.payload)
 
-      sessionStorage.setItem("client", JSON.stringify(action.payload));
-      Cookie.set("client", JSON.stringify(action.payload), { expires: 1, sameSite: "lax" });
+      sessionStorage.setItem("user", JSON.stringify(action.payload));
+      Cookie.set("user", JSON.stringify(action.payload), { expires: 1, sameSite: "lax" });
 
       /** Always return state */
       return {
@@ -59,19 +59,19 @@ const authReducer = (state: IAuthState, action: IAuthAction) => {
       /** Destroy all cookies or storage */
       Cookie.remove("loggedIn", { sameSite: "lax" });
       Cookie.remove("user", { sameSite: "lax" });
-      Cookie.remove("client", { sameSite: "lax" });
+      Cookie.remove("user", { sameSite: "lax" });
 
       sessionStorage.removeItem("loggedIn");
       sessionStorage.removeItem("user");
-      sessionStorage.removeItem("client");
+      sessionStorage.removeItem("user");
 
       //set login to false and save into localStorage
-      let user = localStorage.getItem("client");
+      let user = localStorage.getItem("user");
       if (user) {
         let decodedUserData: IAuthPayload = JSON.parse(atob(user as string));
         decodedUserData = { ...decodedUserData, isLoggedIn: false };
         let encodedUserData = btoa(JSON.stringify(decodedUserData));
-        localStorage.setItem("client", encodedUserData);
+        localStorage.setItem("user", encodedUserData);
       }
 
       return {

@@ -29,7 +29,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     // console.log('initialising cookie handling...')
     try {
       const authCookie = Cookie.get("loggedIn");
-      const userSession = Cookie.get("client");
+      const userSession = Cookie.get("user");
       // console.log(userSession, authCookie)
 
       if (authCookie === "true" && userSession) {
