@@ -819,7 +819,11 @@ const QuoteDetails: FC<{
             </div>
             <div className="grid grid-cols-4 gap-4">
               <div className="flex flex-row">
-                <DocumentPreview documents={renewalNotice} />
+                {renewalNotice
+                  ? renewalNotice.map((_ren: any, i: any) => {
+                      return <DocumentPreview document={_ren} key={i} />;
+                    })
+                  : null}
               </div>
             </div>
           </div>
