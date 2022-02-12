@@ -2,7 +2,12 @@ import { CheckCircleIcon } from "@heroicons/react/outline";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { checkPaymentStatus, mkGetReq, sentenceCase } from "../../utils/functions";
+import {
+  checkPaymentStatus,
+  mkGetReq,
+  mkPostReq,
+  sentenceCase,
+} from "../../utils/functions";
 import { Modal } from "../modal";
 import QuoteDetails from "./quote-details";
 import ProgressSteps from "./progress-steps";
@@ -15,7 +20,9 @@ import DocumentPreview from "./document-preview";
 const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
 
-  const [currentView, setCurrentView] = useState<"index" | "policy_details">("index");
+  const [currentView, setCurrentView] = useState<"index" | "policy_details">(
+    "index"
+  );
 
   const statusList = [
     "QUOTE_REQUESTED",
@@ -30,11 +37,19 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
 
   const [policyDetails, setPolicyDetails] = useState<any>(null);
   const [showPolicyDetails, setShowPolicyDetails] = useState<boolean>(false);
-  const [showPendingPaymentModal, setShowPendingPaymentModal] = useState<boolean>(false);
-  const [showPaymentCompleteModal, setShowPaymentCompleteModal] = useState<boolean>(false);
-  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>("Payment successfully made");
-  const [showUnconfirmedQuoteModal, setShowUnconfirmedQuoteModal] = useState<boolean>(false);
+  const [showPendingPaymentModal, setShowPendingPaymentModal] =
+    useState<boolean>(false);
+  const [showPaymentCompleteModal, setShowPaymentCompleteModal] =
+    useState<boolean>(false);
+  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>(
+    "Payment successfully made"
+  );
+  const [showUnconfirmedQuoteModal, setShowUnconfirmedQuoteModal] =
+    useState<boolean>(false);
   const [insuranceDocs, setInsuranceDocs] = useState<any>(null);
+  const [showClaimResponseModal, setShowClaimResponseModal] =
+    useState<boolean>(false);
+  const [claimResponseText, setClaimResponseText] = useState<string>("");
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
@@ -54,11 +69,16 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         // handle success
 
         user_policies_response.map((_r: any, i: any) => {
-          console.log(statusList.indexOf(_r.status) >= statusList.indexOf("PAYMENT_COMPLETED"));
+          console.log(
+            statusList.indexOf(_r.status) >=
+              statusList.indexOf("PAYMENT_COMPLETED")
+          );
         });
 
         let quotes = user_policies_response.filter(
-          (_r: any) => statusList.indexOf(_r.status) >= statusList.indexOf("PAYMENT_COMPLETED")
+          (_r: any) =>
+            statusList.indexOf(_r.status) >=
+            statusList.indexOf("PAYMENT_COMPLETED")
         );
         console.log(quotes);
 
@@ -109,6 +129,34 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
           temp_docs.push(_d.docURL);
         });
         setInsuranceDocs(temp_docs);
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
+      console.log(error);
+    }
+  };
+
+  const _makeClaim = async () => {
+    try {
+      let insurance_claim_response = await mkPostReq({
+        endpoint: `/api/insurances/claim/${policyDetails.id}`,
+        queries: ``,
+        token: GLOBAL_OBJ.token,
+        method: "post",
+        data: null,
+        isJSON: true,
+      });
+      console.log(insurance_claim_response);
+
+      if (insurance_claim_response.status) {
+        toast.error(insurance_claim_response.title);
+      } else {
+        // handle success
+        setShowPolicyDetails(false);
+        setShowClaimResponseModal(true);
+        setClaimResponseText(
+          insurance_claim_response.message
+        );
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -181,26 +229,50 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
               </div>
               <div className="flex flex-col text-center">
                 <h1 className="font-bold text-center text-xl uppercase">
-                  {policyDetails?.protectionType?.substring(0, 4)} {policyDetails?.registrationNum}
+                  {policyDetails?.protectionType?.substring(0, 4)}{" "}
+                  {policyDetails?.registrationNum}
                 </h1>
                 <p>{sentenceCase(policyDetails?.protectionType ?? "")}</p>
               </div>
             </div>
             <div className="px-6 flex flex-col space-y-2.5">
-              <h3 className="text-center font-semibold">Annual Premium: GHS {policyDetails?.outRightPremium}</h3>
-              <p>Cover: {policyDetails?.cover ? `${policyDetails?.cover}GHS` : ""}</p>
-              <p>Excess: {policyDetails?.excess ? `${policyDetails?.excess}%` : ""}</p>
-              <p>TPPDL: {policyDetails?.tppdl ? `${policyDetails?.tppdl}GHS` : ""}</p>
+              <h3 className="text-center font-semibold">
+                Annual Premium: GHS {policyDetails?.outRightPremium}
+              </h3>
+              <p>
+                Cover:{" "}
+                {policyDetails?.cover ? `${policyDetails?.cover}GHS` : ""}
+              </p>
+              <p>
+                Excess:{" "}
+                {policyDetails?.excess ? `${policyDetails?.excess}%` : ""}
+              </p>
+              <p>
+                TPPDL:{" "}
+                {policyDetails?.tppdl ? `${policyDetails?.tppdl}GHS` : ""}
+              </p>
               <p>
                 Pre-approval Repair Limit:{" "}
-                {policyDetails?.preApprovedRepairLimit ? `${policyDetails?.preApprovedRepairLimit}GHS` : ""}
+                {policyDetails?.preApprovedRepairLimit
+                  ? `${policyDetails?.preApprovedRepairLimit}GHS`
+                  : ""}
               </p>
               <p>
-                PA Cover for Driver &amp; Vehicle Owner: {policyDetails?.paCover ? `${policyDetails?.paCover}GHS` : ""}
+                PA Cover for Driver &amp; Vehicle Owner:{" "}
+                {policyDetails?.paCover ? `${policyDetails?.paCover}GHS` : ""}
               </p>
-              <p>Courtesy for Service: {policyDetails?.courtesyCarService ? "Yes" : "No"}</p>
-              <p>Breakown Tow Service: {policyDetails?.breakdownTowService ? "Yes" : "No"}</p>
-              <p>Roadside Assistance: {policyDetails?.roadsideAssistance ? "Yes" : "No"}</p>
+              <p>
+                Courtesy for Service:{" "}
+                {policyDetails?.courtesyCarService ? "Yes" : "No"}
+              </p>
+              <p>
+                Breakown Tow Service:{" "}
+                {policyDetails?.breakdownTowService ? "Yes" : "No"}
+              </p>
+              <p>
+                Roadside Assistance:{" "}
+                {policyDetails?.roadsideAssistance ? "Yes" : "No"}
+              </p>
               <p>Other Benefits: {policyDetails?.otherBenefits}</p>
             </div>
             <hr />
@@ -208,12 +280,20 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
               <div className="flex flex-row">
                 {insuranceDocs
                   ? insuranceDocs.map((_doc: any, i: any) => {
-                      return <DocumentPreview document={insuranceDocs[0]} key={i} />;
+                      return (
+                        <DocumentPreview document={insuranceDocs[0]} key={i} />
+                      );
                     })
                   : null}
               </div>
             </div>
-            <div className="flex flex-row items-center justify-center">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <button
+                className="whitespace-nowrap text-base font-medium text-dark border border-primary-main hover:bg-primary-border py-2 px-6 shadow-sm flex justify-center items-center space-x-4 rounded-lg capitalize"
+                onClick={_makeClaim}
+              >
+                make claim
+              </button>
               <button
                 className="whitespace-nowrap text-base font-medium text-dark bg-primary-main hover:bg-primary-border py-2 px-6 border-0 shadow-sm flex justify-center items-center space-x-4 rounded-lg"
                 onClick={() => {
@@ -225,6 +305,19 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
             </div>
           </div>
         )}
+      </Modal>
+      {/* END Unconfirmed quote modal */}
+
+      {/* Unconfirmed quote modal */}
+      <Modal
+        show={showClaimResponseModal}
+        onClose={() => {
+          setShowClaimResponseModal(false);
+        }}
+      >
+        <div className="p-8 flex flex-row items-center justify-center bg-primary-surface space-x-4 rounded-b-4xl shadow-md">
+          <p className="text-center text-md font-semibold">{claimResponseText}</p>
+        </div>
       </Modal>
       {/* END Unconfirmed quote modal */}
     </div>
