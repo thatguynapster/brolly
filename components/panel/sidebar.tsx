@@ -39,7 +39,7 @@ const Sidebar: FC = () => {
     <div className="hidden md:flex flex-col bg-white fixed h-screen w-60 font-sans-Roboto z-10 border-r-2 border-gray-100">
       {/* Businame div */}
       <div className="px-10 pt-8">
-        <img className="cursor-pointer w-auto" src="/img/logo.svg" alt="" />
+        <img className="cursor-pointer w-auto" width={94} height={32} src="/img/logo.svg" alt="" />
       </div>
 
       {/* Sidebar Menus */}
@@ -67,7 +67,7 @@ const Sidebar: FC = () => {
 
                 <h2
                   className={`${
-                    activePage === _item.page ? "text-gray-600" : "text-gray-400"
+                    activePage === _item.page ? "text-gray-900" : "text-gray-500"
                   } text-sm font-medium ml-4 my-auto`}
                 >
                   {_item.text}

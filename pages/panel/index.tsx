@@ -7,6 +7,7 @@ import Layout from "../../components/panel/layout";
 import AuthContext from "../../context/auth-context";
 import { useRouter } from "next/router";
 import QuotesView from "../../components/panel/quotes-view";
+import PoliciesView from "../../components/panel/policies-view";
 
 const PanelHome: NextPage = () => {
   const [pageSection, setPageSection] = useState<string>("login"); // login | vehicle_verify | vehicle_details | panel
@@ -30,9 +31,10 @@ const PanelHome: NextPage = () => {
     <>
       <HeadFile title={SEOConfig.title} />
       {/* <Header pagename="claims" /> */}
-      <main className={`h-screen flex items-center justify-center`}>
+      <main className={`min-h-screen flex items-center justify-center`}>
         <Layout onRefresh={() => {}}>
           <QuotesView show={GLOBAL_OBJ.currentPage === "quotes"} />
+          <PoliciesView show={GLOBAL_OBJ.currentPage === "policies"} />
         </Layout>
 
         {/* verify vehicle details section */}

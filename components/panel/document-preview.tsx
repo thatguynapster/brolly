@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, FC } from "react";
 import AuthContext from "../../context/auth-context";
 
-const DocumentPreview: FC<{ documents: string[] }> = ({ documents }) => {
+const DocumentPreview: FC<{ document: string | null }> = ({ document }) => {
   return (
     <>
-      {documents.length > 0 ? (
-        documents.map((_doc, i) => {
-          return (
-            <div className="w-full flex flex-col items-center" key={i}>
-              <img src="/img/document.svg" alt="Document Preview" className="w-1/3" />
-              <p className="font-semibold text-sm">{_doc}</p>
-            </div>
-          );
-        })
+      {document? (
+            <a
+              className="w-full px-2 flex flex-col items-center justify-center"
+              href={`${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${document}`}
+              download={true}
+            >
+              <img src="/img/document.svg" alt="Document Preview" className="w-1/2" />
+              <p className="w-full font-semibold text-sm line-clamp-2">{document}</p>
+            </a>
       ) : (
         <div className="w-full flex flex-col items-center">
           <img src="/img/forbidden.svg" alt="Document Preview" className="w-1/3" />
-          <p className="font-semibold text-sm">No documents to show</p>
+          <p className="font-semibold text-base">No documents to show</p>
         </div>
       )}
     </>

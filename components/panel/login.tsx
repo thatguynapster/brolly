@@ -186,6 +186,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                 onValueChange={_handlePhoneNumber}
                 disabled={false}
                 autoFocus={true}
+                readOnly={false}
               />
             </div>
             {isNewUser ? (

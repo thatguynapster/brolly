@@ -1,10 +1,22 @@
 import { Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import moment from "moment";
-import React, { FC, Fragment, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  Fragment,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { dataURItoBlob, mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
+import {
+  dataURItoBlob,
+  mkGetReq,
+  mkPostReq,
+  sentenceCase,
+} from "../../utils/functions";
 import FormGroup from "../form-group";
 import InternationalInput from "../international-input";
 import ListBox from "../list-box";
@@ -12,7 +24,10 @@ import DocumentPreview from "./document-preview";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
 
-const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
+const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
+  policy,
+  onClose,
+}) => {
   console.log(policy);
 
   const sectionsList = [
@@ -30,7 +45,9 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
   const [detailsSection, setDetailsSection] = useState<string>("user");
 
   // quote details states
-  const [firstName, setFirstName] = useState<string>(policy?.firstName ?? "first name");
+  const [firstName, setFirstName] = useState<string>(
+    policy?.firstName ?? "first name"
+  );
   const [lastName, setLastName] = useState<string>(policy?.lastName);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [dialCode, setDialCode] = useState<string>("");
@@ -100,7 +117,8 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
   const [vehicleCubicCap, setVehiclecubicCap] = useState<number>(0);
   const [repairState, setRepairState] = useState<string>("");
   const [vehicleColour, setVehicleColour] = useState<string>("");
-  const [vehicleAlterationDetails, setVehicleAlterationDetails] = useState<string>("");
+  const [vehicleAlterationDetails, setVehicleAlterationDetails] =
+    useState<string>("");
   const [vehicleOwner, setVehicleOwner] = useState<string>("");
   const [vehicleUse, setVehicleUse] = useState<string>("");
 
@@ -111,10 +129,13 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
   const [hirePurchaseProvider, setHirePurchaseProvider] = useState<string>("");
 
   const [vehicleMainDriver, setVehicleMainDriver] = useState<string>("");
-  const [diseaseOrComplications, setDiseaseOrComplications] = useState<boolean>(false);
+  const [diseaseOrComplications, setDiseaseOrComplications] =
+    useState<boolean>(false);
 
-  const [declinedByOtherInsurer, setDeclinedByOthernsurer] = useState<string>("");
-  const [previouslyIssuedClaim, setPreviouslyIssuedClaim] = useState<string>("");
+  const [declinedByOtherInsurer, setDeclinedByOthernsurer] =
+    useState<string>("");
+  const [previouslyIssuedClaim, setPreviouslyIssuedClaim] =
+    useState<string>("");
 
   const [NCDRenewalNotice, setNCDRenewalNotice] = useState<File | null>(null);
 
@@ -126,9 +147,16 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
 
   const [driverLicence, setDriverLicence] = useState<any>("");
 
+  const [vehicleInsuranceId, setVehicleInsuranceId] = useState<string>("");
+
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
-  async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
+  async function _handlePhoneNumber(
+    field: string,
+    value: string,
+    isValid: boolean,
+    dial_code: any
+  ) {
     setPhoneNumberValid(isValid);
     setPhoneNumber(String(value.split("+").pop()));
     console.log(field, value, isValid, dial_code);
@@ -167,6 +195,7 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
       status: policy.status,
       userAddress,
       vehicleCity,
+      vehicleInsuranceId,
       vehicleMainDriver,
       vehicleType,
       vehicleUse,
@@ -209,42 +238,43 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
     // }
 
     try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
-        token: GLOBAL_OBJ.token,
-        queries: `insuranceId=1303`,
-      });
-      console.log(uploaded_docs);
-      let dvla_doc = uploaded_docs.filter((_doc: any) => _doc.docType === "DVLA");
-      console.log(dvla_doc);
-
-      // delete already existing dvla dov
-      if (dvla_doc.length > 0) {
-        let delete_doc = await mkPostReq({
-          endpoint: `/api/insurance-documents/${dvla_doc[0].id}`,
-          isJSON: true,
-          method: "delete",
-          data: {},
-        });
-        console.log(delete_doc);
-      }
-
-      // let upload_licence_response = await mkPostReq({
-      //   endpoint: `/api/insurance-documents/upload`,
-      //   queries: `docType=DVLA&insuranceId=${policy.id}`,
-      //   method: "post",
+      // let uploaded_docs = await mkGetReq({
+      //   endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
       //   token: GLOBAL_OBJ.token,
-      //   isJSON: false,
-      //   data: form_data,
+      //   queries: `insuranceId=${policy.id}`,
       // });
-      // console.log(upload_licence_response);
+      // console.log(uploaded_docs);
+      // let dvla_doc = uploaded_docs.filter((_doc: any) => _doc.docType === "DVLA");
+      // console.log(dvla_doc);
 
-      // if (upload_licence_response.status) {
-      //   toast.error(upload_licence_response.title);
-      // } else {
-      //   // handle success
-      //   // _updateInsuranceDetails(true);
+      // // delete already existing dvla dov
+      // if (dvla_doc.length > 0) {
+      //   let delete_doc = await mkPostReq({
+      //     endpoint: `/api/insurance-documents/${dvla_doc[0].id}`,
+      //     isJSON: true,
+      //     method: "delete",
+      //     data: {},
+      //   });
+      //   console.log(delete_doc);
       // }
+
+      let upload_licence_response = await mkPostReq({
+        endpoint: `/api/user-documents/upload`,
+        queries: `docType=ID_CARD&userId=${GLOBAL_OBJ.data.user_id}`,
+        method: "post",
+        token: GLOBAL_OBJ.token,
+        isJSON: false,
+        data: form_data,
+      });
+      console.log(upload_licence_response);
+
+      if (upload_licence_response.status) {
+        toast.error(upload_licence_response.title);
+      } else {
+        // handle success
+        // _updateInsuranceDetails(true);
+        onClose && onClose();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -292,6 +322,8 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
       setInitialDeposit(policy.initialDeposit);
       setMonthlyInstallment(policy.monthlyInstallment);
       setNoOfInstallments(policy.noOfInstallments);
+
+      setVehicleInsuranceId(policy.vehicleInsuranceId ?? "");
     }
 
     return () => {
@@ -315,7 +347,11 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
                 progress={1}
             /> */}
         </div>
-        <form action="#" method="post" className="w-full flex flex-col space-y-8">
+        <form
+          action="#"
+          method="post"
+          className="w-full flex flex-col space-y-8"
+        >
           <Transition
             as={"div"}
             show={detailsSection === "user"}
@@ -370,15 +406,17 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
                 firstLoad
                 className={`appearance-none relative block w-full py-3 px-4 placeholder-[#848484] border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
                 label={{
-                  classNames: "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
-                  text: "Pickup Number",
+                  classNames:
+                    "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
+                  text: "Phone Number",
                 }}
-                name={"pickupNumber"}
+                name={"phoneNumber"}
                 defaultValue={phoneNumber}
                 defaultCountry={"gh"}
                 onValueChange={_handlePhoneNumber}
                 disabled={false}
                 autoFocus={false}
+                readOnly={policy.status === "QUOTE_CONFIRMED"}
               />
             </div>
 
@@ -1005,7 +1043,10 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
             className={"max-w-md w-full space-y-2"}
           >
             <div className="w-full flex flex-col">
-              <label htmlFor="declinedByOtherInsurance" className="w-full text-gray-900 p-0 mb-1 font-medium text-xs">
+              <label
+                htmlFor="declinedByOtherInsurance"
+                className="w-full text-gray-900 p-0 mb-1 font-medium text-xs"
+              >
                 Declined By Other Insurance?
               </label>
               <textarea
@@ -1021,7 +1062,10 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
             </div>
 
             <div className="w-full flex flex-col">
-              <label htmlFor="declinedByOtherInsurance" className="w-full text-gray-900 p-0 mb-1 font-medium text-xs">
+              <label
+                htmlFor="declinedByOtherInsurance"
+                className="w-full text-gray-900 p-0 mb-1 font-medium text-xs"
+              >
                 Previously Issued Claim
               </label>
               <textarea
@@ -1053,7 +1097,7 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
           >
             <p className="text-center font-semibold mb-8">Renewal Notice</p>
             <div className="flex flex-row">
-              <DocumentPreview documents={[]} />
+              <DocumentPreview document={""} />
             </div>
           </Transition>
 
@@ -1155,6 +1199,7 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
             <div className="w-full flex flex-col space-y-4">
               <FileUpload
                 multiple={false}
+                allowSelect={true}
                 onFileLoad={(image: any) => {
                   console.log(image);
 
@@ -1180,13 +1225,19 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
           <div className="w-full flex flex-row justify-between">
             <button
               className={`border border-gray-200 rounded-md px-4 py-2 w-max flex flex-row items-center space-x-2 ${
-                detailsSection === "user" ? "cursor-not-allowed" : "cursor-pointer"
+                detailsSection === "user"
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
               }`}
               disabled={detailsSection === "user"}
               onClick={(ev) => {
                 ev.preventDefault();
-                console.log(sectionsList[sectionsList.indexOf(detailsSection) - 1]);
-                setTempSection(sectionsList[sectionsList.indexOf(detailsSection) - 1]);
+                console.log(
+                  sectionsList[sectionsList.indexOf(detailsSection) - 1]
+                );
+                setTempSection(
+                  sectionsList[sectionsList.indexOf(detailsSection) - 1]
+                );
                 setDetailsSection("");
               }}
             >
@@ -1204,12 +1255,18 @@ const VerifyPolicyDetails: FC<{ policy: any }> = ({ policy }) => {
                 }
 
                 _updateInsuranceDetails();
-                console.log(sectionsList[sectionsList.indexOf(detailsSection) + 1]);
-                setTempSection(sectionsList[sectionsList.indexOf(detailsSection) + 1]);
+                console.log(
+                  sectionsList[sectionsList.indexOf(detailsSection) + 1]
+                );
+                setTempSection(
+                  sectionsList[sectionsList.indexOf(detailsSection) + 1]
+                );
                 setDetailsSection("");
               }}
             >
-              <span>{detailsSection === "upload_docs" ? "Proceed" : "Next"}</span>
+              <span>
+                {detailsSection === "upload_docs" ? "Proceed" : "Next"}
+              </span>
               <ChevronRightIcon className="w-4 h-4" />
             </button>
           </div>

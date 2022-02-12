@@ -53,7 +53,7 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex flex-row bg-gray-100">
+    <div className="w-screen min-h-screen flex flex-row bg-gray-100">
       <Sidebar />
 
       {isTabletOrMobile && (
@@ -74,7 +74,7 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
           onRefresh && onRefresh();
         }}
       />
-      <div className="md:ml-60 mt-28 p-6 w-full">{children}</div>
+      <div className="md:ml-60 mt-16 p-6 w-full">{children}</div>
     </div>
   );
 };

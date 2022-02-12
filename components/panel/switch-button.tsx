@@ -16,7 +16,7 @@ const SwitchButton: FC<{
   }, [GLOBAL_OBJ]);
 
   return (
-    <div className={`flex items-center justify-center cursor-pointer space-x-2 ${className}`} onClick={onSwitch}>
+    <div className={`flex cursor-pointer space-x-2 ${className}`} onClick={onSwitch}>
       <input type="checkbox" name="toggle" className="hidden" />
       <span className="font-semibold text-sm">No</span>
       <label className="relative w-8 h-5 flex items-center select-none cursor-pointer" htmlFor="toggle">

@@ -5,7 +5,10 @@ import Sidebar from "./sidebar";
 import SidebarMobile from "./sidebar-mobile";
 import moment from "moment";
 
-const QuotesCard: FC<{ policy: any; showDetails: (_pol: string) => void }> = ({ policy, showDetails }) => {
+const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: string) => void }> = ({
+  policy,
+  showDetails,
+}) => {
   const [nextStep, setNextStep] = useState<string>("");
   useEffect(() => {
     let mounted = true;
@@ -15,19 +18,28 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string) => void }> = ({ 
     // figure out next quote step
     switch (policy.status) {
       case "QUOTE_REQUESTED":
-        setNextStep("Quote Confirmation");
+        setNextStep("quote_confirmation");
         break;
       case "QUOTE_CONFIRMED":
-        setNextStep("Payment");
+        setNextStep("verify_details");
+        break;
+      case "DETAILS_VERIFIED":
+        setNextStep("accept_mandate");
+        break;
+      case "MANDATE_FORM_COMPLETED":
+        setNextStep("accept_agreement");
+        break;
+      case "AGREEMENT_SIGNED":
+        setNextStep("payment");
         break;
       case "PAYMENT_COMPLETED":
-        setNextStep("Submit Documents");
+        setNextStep("submit_documents");
         break;
       case "DOCUMENTS_SUBMITTED":
-        setNextStep("Documents Verification");
+        setNextStep("documents_verification");
         break;
       case "DOCUMENTS_VERIFIED":
-        setNextStep("Completed");
+        setNextStep("completed");
         break;
     }
 
@@ -40,7 +52,7 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string) => void }> = ({ 
     <div
       className="flex flex-col bg-white p-4 rounded-lg group border border-transparent hover:border-primary-border cursor-pointer"
       onClick={() => {
-        showDetails(policy.id);
+        showDetails(policy.id, nextStep);
       }}
     >
       <h1 className="font-semibold">{policy.protectionType}</h1>
@@ -52,7 +64,7 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string) => void }> = ({ 
       </p> */}
 
       <p className="mt-4">
-        Action required: <span className="px-2 py-1 bg-gray-200 rounded-md">{nextStep}</span>
+        Action required: <span className="px-2 py-1 bg-gray-200 rounded-md capitalize">{nextStep.replaceAll("_", " ")}</span>
       </p>
     </div>
   );
