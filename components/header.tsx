@@ -1,10 +1,16 @@
 import React, { FC, Fragment, useState } from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  MenuIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { Modal } from "./modal";
 import router from "next/router";
 import CheckPremium from "./check-premium";
+import PremiumRequest from "./panel/premium-request";
 
 const Header: FC<{ pagename: string }> = ({ pagename }) => {
   const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
@@ -198,9 +204,55 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
           onRequestCover={(_data) => {
             console.log(_data);
             setPremiumData(_data);
+            setShowQuoteForm(false);
             setShowPremiumRequestModal(true);
           }}
         />
+      </Modal>
+
+      <Modal
+        show={showPremiumRequestModal}
+        onClose={(ev: any) => {
+          setShowPremiumRequestModal(false);
+        }}
+        className="z-50"
+      >
+        <XIcon
+          className="absolute top-0 right-0 m-4 w-5 h-5 cursor-pointer"
+          onClick={() => {
+            setShowPremiumRequestModal(false);
+          }}
+        />
+        <PremiumRequest
+          data={premiumData}
+          onClose={() => {
+            setShowPremiumRequestModal(false);
+            setShowPremiumRequestResponseModal(true);
+          }}
+        />
+      </Modal>
+
+      <Modal
+        show={showPremiumRequestResponseModal}
+        onClose={() => {
+          setShowPremiumRequestResponseModal(false);
+        }}
+      >
+        <div className="flex flex-col px-4 py-8 space-y-8 items-center">
+          <CheckCircleIcon className="text-success-main w-48 h-48" />
+          <h2 className="text-center font-semibold text-md">
+            Insurance premium successfully requested. A representative will be
+            in touch soon.
+          </h2>
+          <button
+            className="bg-primary-main px-4 py-2"
+            onClick={() => {
+              setShowPremiumRequestResponseModal(false);
+            }}
+          >
+            Close
+          </button>
+        </div>
       </Modal>
     </header>
   );

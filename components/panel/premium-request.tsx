@@ -7,7 +7,10 @@ import ListBox from "../list-box";
 import { mkPostReq, validateEmail } from "../../utils/functions";
 import AuthContext from "../../context/auth-context";
 
-const CheckPremium: FC<{}> = ({}) => {
+const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
+  data,
+  onClose,
+}) => {
   const [premiumData, setPremiumData] = useState<any>({});
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastName] = useState<string>("");
@@ -20,7 +23,7 @@ const CheckPremium: FC<{}> = ({}) => {
   const [referredFrom, setReferredFrom] = useState<string>("");
 
   const [dialCode, setDialCode] = useState<string>("");
-  
+
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   async function _handlePhoneNumber(
@@ -62,6 +65,7 @@ const CheckPremium: FC<{}> = ({}) => {
     }
 
     let premium_request_data = {
+      ...data,
       email: email,
       firstName: firstname,
       lastName: lastname,
@@ -72,7 +76,6 @@ const CheckPremium: FC<{}> = ({}) => {
       vehicleUse: "<string>",
       vehicleValue: "<long>",
       referredFrom,
-      ...premiumData,
     };
 
     console.log(premiumData);
@@ -91,6 +94,7 @@ const CheckPremium: FC<{}> = ({}) => {
       if (typeof create_insurance_response.status === "number") {
         toast.error(create_insurance_response.message);
       } else {
+        onClose();
         // setShowPremiumRequestModal(false);
         // setShowPremiumRequestResponseModal(true);
       }
@@ -106,9 +110,9 @@ const CheckPremium: FC<{}> = ({}) => {
         Please provide these details to complete your request.
       </h1>
 
-      <div className="flex flex-row items-center space-x-8">
-        <hr className="w-full" />
-        <h2 className="w-full">Personal Details</h2>
+      <div className="flex flex-row items-center md:space-x-8">
+        <hr className="md:w-full" />
+        <h2 className="w-full font-medium">Personal Details</h2>
         <hr className="w-full" />
       </div>
 
@@ -248,9 +252,9 @@ const CheckPremium: FC<{}> = ({}) => {
         }}
       />
 
-      <div className="flex flex-row items-center space-x-8">
-        <hr className="w-full" />
-        <h2 className="w-full">Vehicle Details</h2>
+      <div className="flex flex-row items-center md:space-x-8">
+        <hr className="md:w-full" />
+        <h2 className="w-full font-medium">Vehicle Details</h2>
         <hr className="w-full" />
       </div>
 
@@ -296,4 +300,4 @@ const CheckPremium: FC<{}> = ({}) => {
   );
 };
 
-export default CheckPremium;
+export default PremiumRequest;

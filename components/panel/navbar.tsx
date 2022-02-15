@@ -38,7 +38,7 @@ export const Navbar: FC<INavbarProps> = ({
     <div
       className={`fixed inset-x-0 bg-white text-gray-900 shadow-sm ${classNames}`}
     >
-      <div className="w-full mx-auto py-2 sm:px-6">
+      <div className="w-full mx-auto py-2 px-6">
         <div className="flex justify-between items-center md:justify-end md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1 space-x-7 md:hidden">
             <MenuIcon
@@ -75,7 +75,7 @@ export const Navbar: FC<INavbarProps> = ({
 
             <Menu as="div" className="relative text-left flex">
               <Menu.Button className="flex flex-row items-center space-x-3 rounded-md px-4 py-3 cursor-pointer group hover:bg-primary-surface">
-                {GLOBAL_OBJ.data?.user_name}
+                <span>{GLOBAL_OBJ.data?.user_name}</span>
                 <ChevronDownIcon className="w-5 h-5 " aria-hidden="true" />
               </Menu.Button>
 
@@ -94,9 +94,7 @@ export const Navbar: FC<INavbarProps> = ({
                       {({ active }) => (
                         <button
                           className={`${
-                            active
-                              ? "bg-primary-surface"
-                              : "text-gray-900"
+                            active ? "bg-primary-surface" : "text-gray-900"
                           } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                           onClick={AUTH_LOGOUT}
                         >
