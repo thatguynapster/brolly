@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon, XIcon } from "@heroicons/react/outline";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
@@ -10,6 +10,7 @@ import QuotesCard from "./quotes-card";
 import MandateForm from "./mandate-form";
 import AgreementForm from "./agreement-form";
 import PaymentForm from "./payment-form";
+import CheckPremium from "../check-premium";
 
 const QuotesView: FC<{ show: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
@@ -27,14 +28,23 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
     "PAYMENT_COMPLETED",
     "DOCUMENTS_SUBMITTED",
     "DOCUMENTS_VERIFIED",
+    "POLICY_APPROVED",
   ];
 
   const [policyDetails, setPolicyDetails] = useState<any>(null);
   const [showPolicyDetails, setShowPolicyDetails] = useState<boolean>(false);
-  const [showPendingPaymentModal, setShowPendingPaymentModal] = useState<boolean>(false);
-  const [showPaymentCompleteModal, setShowPaymentCompleteModal] = useState<boolean>(false);
-  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>("Payment successfully made");
-  const [showUnconfirmedQuoteModal, setShowUnconfirmedQuoteModal] = useState<boolean>(false);
+  const [showPendingPaymentModal, setShowPendingPaymentModal] =
+    useState<boolean>(false);
+  const [showPaymentCompleteModal, setShowPaymentCompleteModal] =
+    useState<boolean>(false);
+  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>(
+    "Payment successfully made"
+  );
+  const [showUnconfirmedQuoteModal, setShowUnconfirmedQuoteModal] =
+    useState<boolean>(false);
+  const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
+  const [premiumData, setPremiumData] = useState<any>({});
+  
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
@@ -54,11 +64,16 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
         // handle success
 
         user_policies_response.map((_r: any, i: any) => {
-          console.log(statusList.indexOf(_r.status) >= statusList.indexOf("PAYMENT_COMPLETED"));
+          console.log(
+            statusList.indexOf(_r.status) >=
+              statusList.indexOf("DOCUMENTS_VERIFIED")
+          );
         });
 
         let quotes = user_policies_response.filter(
-          (_r: any) => statusList.indexOf(_r.status) < statusList.indexOf("PAYMENT_COMPLETED")
+          (_r: any) =>
+            statusList.indexOf(_r.status) <
+            statusList.indexOf("DOCUMENTS_VERIFIED")
         );
         console.log(quotes);
 
@@ -96,7 +111,9 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
 
     // check if previous payment attempt was successful
     if (policyDetails.pInitialPayment) {
-      let payment_status = await checkPaymentStatus(policyDetails.pInitialReference);
+      let payment_status = await checkPaymentStatus(
+        policyDetails.pInitialReference
+      );
       if (payment_status === "success") {
         //ignore payment and refresh page content
         // initiatePayment("complete");
@@ -132,7 +149,17 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
   }, [GLOBAL_OBJ.data]);
 
   return (
-    <div className={`${!show && "hidden"}`}>
+    <div className={`${!show && "hidden"} space-y-4`}>
+      <div className="flex flex-row justify-end">
+        <button
+          className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4 rounded-md"
+          onClick={() => {
+            setShowQuoteForm(true);
+          }}
+        >
+          Get Quote
+        </button>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {currentView === "index" && policies ? (
           policies.map((_pol: any, i: string) => {
@@ -225,7 +252,8 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
       >
         <div className="p-4 flex items-center justify-center">
           <p className="font-semibold text-lg text-center">
-            A representative will be in touch to confirm the quote, then you can proceed
+            A representative will be in touch to confirm the quote, then you can
+            proceed
           </p>
         </div>
       </Modal>
@@ -238,7 +266,9 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
         }}
       >
         <div className="p-4 flex items-center justify-center">
-          <p className="font-semibold text-lg">Wating for payment confirmation</p>
+          <p className="font-semibold text-lg">
+            Wating for payment confirmation
+          </p>
         </div>
       </Modal>
 
@@ -250,7 +280,9 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
       >
         <div className="flex flex-col px-4 py-8 space-y-8 items-center">
           <CheckCircleIcon className="text-success-main w-48 h-48" />
-          <h2 className="text-center font-semibold text-md">{paymentSuccessMessage}</h2>
+          <h2 className="text-center font-semibold text-md">
+            {paymentSuccessMessage}
+          </h2>
           <button
             className="bg-primary-main px-4 py-2"
             onClick={() => {
@@ -260,6 +292,28 @@ const QuotesView: FC<{ show: boolean }> = ({ show }) => {
             Close
           </button>
         </div>
+      </Modal>
+
+      <Modal
+        show={showQuoteForm}
+        onClose={(ev: any) => {
+          setShowQuoteForm(false);
+        }}
+        className="z-50"
+      >
+        <XIcon
+          className="absolute top-0 right-0 m-4 w-5 h-5 cursor-pointer"
+          onClick={() => {
+            setShowQuoteForm(false);
+          }}
+        />
+        <CheckPremium
+          isModal={true}
+          onRequestCover={(_data) => {
+            console.log(_data);
+            setPremiumData(_data);
+          }}
+        />
       </Modal>
     </div>
   );

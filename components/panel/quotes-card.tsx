@@ -39,6 +39,10 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
         setNextStep("documents_verification");
         break;
       case "DOCUMENTS_VERIFIED":
+        setNextStep("finalize_policy");
+        break;
+        
+      case "POLICY_APPROVED":
         setNextStep("completed");
         break;
     }

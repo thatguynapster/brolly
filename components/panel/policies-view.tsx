@@ -71,14 +71,14 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         user_policies_response.map((_r: any, i: any) => {
           console.log(
             statusList.indexOf(_r.status) >=
-              statusList.indexOf("PAYMENT_COMPLETED")
+              statusList.indexOf("DOCUMENTS_VERIFIED")
           );
         });
 
         let quotes = user_policies_response.filter(
           (_r: any) =>
             statusList.indexOf(_r.status) >=
-            statusList.indexOf("PAYMENT_COMPLETED")
+            statusList.indexOf("DOCUMENTS_VERIFIED")
         );
         console.log(quotes);
 
@@ -154,9 +154,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         // handle success
         setShowPolicyDetails(false);
         setShowClaimResponseModal(true);
-        setClaimResponseText(
-          insurance_claim_response.message
-        );
+        setClaimResponseText(insurance_claim_response.message);
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -229,10 +227,8 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
               </div>
               <div className="flex flex-col text-center">
                 <h1 className="font-bold text-center text-xl uppercase">
-                  {policyDetails?.protectionType?.substring(0, 4)}{" "}
-                  {policyDetails?.registrationNum}
+                  {policyDetails?.policyNumber}
                 </h1>
-                <p>{sentenceCase(policyDetails?.protectionType ?? "")}</p>
               </div>
             </div>
             <div className="px-6 flex flex-col space-y-2.5">
@@ -241,7 +237,9 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
               </h3>
               <p>
                 Cover:{" "}
-                {policyDetails?.cover ? `${policyDetails?.cover}GHS` : ""}
+                {policyDetails?.protectionType
+                  ? `${policyDetails?.protectionType}GHS`
+                  : ""}
               </p>
               <p>
                 Excess:{" "}
@@ -288,12 +286,14 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center space-y-4">
-              <button
-                className="whitespace-nowrap text-base font-medium text-dark border border-primary-main hover:bg-primary-border py-2 px-6 shadow-sm flex justify-center items-center space-x-4 rounded-lg capitalize"
-                onClick={_makeClaim}
-              >
-                make claim
-              </button>
+              {policyDetails.status === "COMPLETED" && (
+                <button
+                  className="whitespace-nowrap text-base font-medium text-dark border border-primary-main hover:bg-primary-border py-2 px-6 shadow-sm flex justify-center items-center space-x-4 rounded-lg capitalize"
+                  onClick={_makeClaim}
+                >
+                  make claim
+                </button>
+              )}
               <button
                 className="whitespace-nowrap text-base font-medium text-dark bg-primary-main hover:bg-primary-border py-2 px-6 border-0 shadow-sm flex justify-center items-center space-x-4 rounded-lg"
                 onClick={() => {
@@ -315,8 +315,10 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
           setShowClaimResponseModal(false);
         }}
       >
-        <div className="p-8 flex flex-row items-center justify-center bg-primary-surface space-x-4 rounded-b-4xl shadow-md">
-          <p className="text-center text-md font-semibold">{claimResponseText}</p>
+        <div className="p-4 flex items-center justify-center">
+          <p className="font-semibold text-md text-center">
+            {claimResponseText}
+          </p>
         </div>
       </Modal>
       {/* END Unconfirmed quote modal */}
