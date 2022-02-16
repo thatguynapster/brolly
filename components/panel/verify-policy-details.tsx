@@ -1,22 +1,10 @@
 import { Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import moment from "moment";
-import React, {
-  FC,
-  Fragment,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import {
-  dataURItoBlob,
-  mkGetReq,
-  mkPostReq,
-  sentenceCase,
-} from "../../utils/functions";
+import { dataURItoBlob, mkPostReq, sentenceCase } from "../../utils/functions";
 import FormGroup from "../form-group";
 import InternationalInput from "../international-input";
 import ListBox from "../list-box";
@@ -1097,7 +1085,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
           >
             <p className="text-center font-semibold mb-8">Renewal Notice</p>
             <div className="flex flex-row">
-              <DocumentPreview document={""} />
+              <DocumentPreview documents={null} />
             </div>
           </Transition>
 

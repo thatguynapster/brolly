@@ -1,12 +1,9 @@
-import { Transition } from "@headlessui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 import moment from "moment";
 import React, {
   FC,
-  Fragment,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { toast } from "react-toastify";
@@ -15,14 +12,10 @@ import {
   dataURItoBlob,
   mkGetReq,
   mkPostReq,
-  sentenceCase,
 } from "../../utils/functions";
 import FormGroup from "../form-group";
-import InternationalInput from "../international-input";
 import ListBox from "../list-box";
-import DocumentPreview from "./document-preview";
 import FileUpload from "./file-upload";
-import SwitchButton from "./switch-button";
 
 const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
   policy,
@@ -712,7 +705,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
         </div>
         <div className="flex flex-row items-center space-x-4">
           <p>DATE:</p>{" "}
-          <p className="font-bold">{moment().format("dd DD MMM, YYYY")}</p>
+          <p className="font-bold">{moment().format("ddd DD MMM, YYYY")}</p>
         </div>
 
         <div className="flex flex-col items-center space-y-4">

@@ -1,17 +1,10 @@
-import { Transition } from "@headlessui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 import moment from "moment";
 import Link from "next/link";
-import React, { FC, Fragment, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { dataURItoBlob, mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
-import FormGroup from "../form-group";
-import InternationalInput from "../international-input";
-import ListBox from "../list-box";
-import DocumentPreview from "./document-preview";
-import FileUpload from "./file-upload";
-import SwitchButton from "./switch-button";
+import { mkPostReq } from "../../utils/functions";
 
 const AgreementForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
   // console.log(policy);

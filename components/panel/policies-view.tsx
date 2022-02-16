@@ -1,20 +1,9 @@
-import { CheckCircleIcon } from "@heroicons/react/outline";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import {
-  checkPaymentStatus,
-  mkGetReq,
-  mkPostReq,
-  sentenceCase,
-} from "../../utils/functions";
+import { mkGetReq, mkPostReq } from "../../utils/functions";
 import { Modal } from "../modal";
-import QuoteDetails from "./quote-details";
-import ProgressSteps from "./progress-steps";
 import QuotesCard from "./quotes-card";
-import MandateForm from "./mandate-form";
-import AgreementForm from "./agreement-form";
-import PaymentForm from "./payment-form";
 import DocumentPreview from "./document-preview";
 
 const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
@@ -47,7 +36,9 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   );
   const [showUnconfirmedQuoteModal, setShowUnconfirmedQuoteModal] =
     useState<boolean>(false);
-  const [insuranceDocs, setInsuranceDocs] = useState<any>(null);
+  const [insuranceDocs, setInsuranceDocs] = useState<
+    { name: string; type: string }[] | null
+  >(null);
   const [showClaimResponseModal, setShowClaimResponseModal] =
     useState<boolean>(false);
   const [claimResponseText, setClaimResponseText] = useState<string>("");
@@ -120,16 +111,17 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
         queries: `insuranceId=${policy_id}`,
         token: GLOBAL_OBJ.token,
       });
-      // console.log(insurance_documents_response);
+      console.log(insurance_documents_response);
 
       if (insurance_documents_response.httpStatus) {
         toast.error(insurance_documents_response.title);
       } else {
         // handle success
-        let temp_docs: string[] = [];
+        let temp_docs: { name: string; type: string }[] = [];
         insurance_documents_response.map((_d: any) => {
-          temp_docs.push(_d.docURL);
+          temp_docs.push({ name: _d.docURL, type: _d.docType });
         });
+        console.log(temp_docs);
         setInsuranceDocs(temp_docs);
       }
     } catch (error) {
@@ -274,16 +266,15 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
               <p>Other Benefits: {policyDetails?.otherBenefits}</p>
             </div>
             <hr />
-            <div className="px-8 grid grid-cols-4 gap-2">
-              <div className="flex flex-row">
-                {insuranceDocs
+            <div className="px-8">
+              {/* {insuranceDocs
                   ? insuranceDocs.map((_doc: any, i: any) => {
                       return (
-                        <DocumentPreview document={insuranceDocs[0]} key={i} />
+                        <DocumentPreview documents={insuranceDocs[0]} key={i} />
                       );
                     })
-                  : null}
-              </div>
+                  : null} */}
+              <DocumentPreview documents={insuranceDocs} />
             </div>
             <div className="flex flex-col items-center justify-center space-y-4">
               {policyDetails.status === "COMPLETED" && (

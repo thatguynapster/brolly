@@ -1,25 +1,13 @@
-import { Transition } from "@headlessui/react";
-import { CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import moment from "moment";
-import Link from "next/link";
-import React, { FC, Fragment, useContext, useEffect, useRef, useState } from "react";
+import { CheckCircleIcon, ChevronLeftIcon } from "@heroicons/react/outline";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
 import {
   checkPaymentStatus,
-  dataURItoBlob,
   mkGetReq,
-  mkPostReq,
   openInNewTab,
-  sentenceCase,
 } from "../../utils/functions";
-import FormGroup from "../form-group";
-import InternationalInput from "../international-input";
-import ListBox from "../list-box";
 import { Modal } from "../modal";
-import DocumentPreview from "./document-preview";
-import FileUpload from "./file-upload";
-import SwitchButton from "./switch-button";
 
 const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
   // console.log(policy);
