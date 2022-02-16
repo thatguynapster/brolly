@@ -1233,8 +1233,8 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
               onClick={(ev) => {
                 ev.preventDefault();
                 // console.log(
-                  sectionsList[sectionsList.indexOf(detailsSection) - 1]
-                );
+                //   sectionsList[sectionsList.indexOf(detailsSection) - 1]
+                // );
                 setTempSection(
                   sectionsList[sectionsList.indexOf(detailsSection) - 1]
                 );
@@ -1256,8 +1256,8 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
 
                 _updateInsuranceDetails();
                 // console.log(
-                  sectionsList[sectionsList.indexOf(detailsSection) + 1]
-                );
+                //   sectionsList[sectionsList.indexOf(detailsSection) + 1]
+                // );
                 setTempSection(
                   sectionsList[sectionsList.indexOf(detailsSection) + 1]
                 );
