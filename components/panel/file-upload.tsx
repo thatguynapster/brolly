@@ -19,7 +19,7 @@ const FileUpload: FC<{
 
   function onImageUpload(e: any) {
     const files: any = Array.from(e.target.files);
-    console.log(files);
+    // console.log(files);
     if (files.length === 0) {
       return;
     }
@@ -27,8 +27,8 @@ const FileUpload: FC<{
     if (files[0].size <= fileSize) {
       let reader = new FileReader();
       reader.onloadend = () => {
-        console.log("image laoded");
-        console.log(reader.result);
+        // console.log("image laoded");
+        // console.log(reader.result);
         setImageUrl(reader.result);
         let temp_previews: any = [];
 

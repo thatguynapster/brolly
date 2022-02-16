@@ -42,7 +42,7 @@ const Home: NextPage = () => {
   async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: string) {
     setWhatsappNumberValid(isValid);
     setWhatsappNumber(String(value.split("+").pop()));
-    console.log(dial_code);
+    // console.log(dial_code);
     setDialCode(dial_code);
   }
 
@@ -86,8 +86,8 @@ const Home: NextPage = () => {
       ...premiumData,
     };
 
-    console.log(premiumData);
-    console.log(premium_request_data);
+    // console.log(premiumData);
+    // console.log(premium_request_data);
 
     try {
       let create_insurance_response = await mkPostReq({
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
         isJSON: true,
         token: GLOBAL_OBJ.token,
       });
-      console.log(create_insurance_response);
+      // console.log(create_insurance_response);
 
       if (typeof create_insurance_response.status === "number") {
         toast.error(create_insurance_response.message);
@@ -107,12 +107,12 @@ const Home: NextPage = () => {
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
   useEffect(() => {
-    console.log(window.location.origin);
+    // console.log(window.location.origin);
     setBasePath(window.location.origin);
   }, [basePath]);
 
@@ -227,7 +227,7 @@ const Home: NextPage = () => {
 
             <CheckPremium
               onRequestCover={(_data) => {
-                console.log(_data);
+                // console.log(_data);
                 setPremiumData(_data);
                 setShowPremiumRequestModal(true);
               }}
@@ -466,7 +466,7 @@ const Home: NextPage = () => {
                 id: "0",
               }}
               onValueChange={(_type: any) => {
-                // console.log(_type);
+                // // console.log(_type);
                 setReferredFrom(_type.name);
               }}
             />

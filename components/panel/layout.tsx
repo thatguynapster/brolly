@@ -21,7 +21,7 @@ const Layout: FC<{ onRefresh: () => void }> = ({ onRefresh, children }) => {
         queries: "",
         token: GLOBAL_OBJ.token,
       });
-      console.log(set_password_response);
+      // console.log(set_password_response);
 
       if (set_password_response.status) {
         toast.error(set_password_response.title);

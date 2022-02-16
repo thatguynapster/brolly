@@ -34,7 +34,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   ) {
     setWhatsappNumberValid(isValid);
     setWhatsappNumber(String(value.split("+").pop()));
-    console.log(dial_code);
+    // console.log(dial_code);
     setDialCode(dial_code);
   }
 
@@ -78,8 +78,8 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
       referredFrom,
     };
 
-    console.log(premiumData);
-    console.log(premium_request_data);
+    // console.log(premiumData);
+    // console.log(premium_request_data);
 
     try {
       let create_insurance_response = await mkPostReq({
@@ -89,7 +89,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
         isJSON: true,
         token: GLOBAL_OBJ.token,
       });
-      console.log(create_insurance_response);
+      // console.log(create_insurance_response);
 
       if (typeof create_insurance_response.status === "number") {
         toast.error(create_insurance_response.message);
@@ -100,7 +100,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -247,7 +247,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
           id: "0",
         }}
         onValueChange={(_type: any) => {
-          // console.log(_type);
+          // // console.log(_type);
           setReferredFrom(_type.name);
         }}
       />

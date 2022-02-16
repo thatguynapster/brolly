@@ -14,14 +14,14 @@ import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
 
 const AgreementForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
-  console.log(policy);
+  // console.log(policy);
 
   const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   const _acceptAgreement = async () => {
-    console.log("accepting agreement...");
+    // console.log("accepting agreement...");
 
     if (!acceptTerms) {
       toast.error("You need to accept the terms to proceed");
@@ -37,7 +37,7 @@ const AgreementForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onR
       startDate: moment(policy.startDate).format("DD-MM-YYYY"),
       endDate: moment(policy.startDate).subtract("days", 1).format("DD-MM-YYYY"),
     };
-    console.log(acceptance_data);
+    // console.log(acceptance_data);
 
     try {
       let accept_agreement_response = await mkPostReq({
@@ -48,7 +48,7 @@ const AgreementForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onR
         isJSON: true,
         data: JSON.stringify(acceptance_data),
       });
-      console.log(accept_agreement_response);
+      // console.log(accept_agreement_response);
 
       if (accept_agreement_response.httpStatus) {
         toast.error(accept_agreement_response.title);
@@ -57,13 +57,13 @@ const AgreementForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onR
         onReturn && onReturn();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   useEffect(() => {
     let mounted = true;
-    console.log(policy);
+    // console.log(policy);
 
     return () => {
       mounted = false;

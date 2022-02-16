@@ -202,7 +202,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
         <CheckPremium
           isModal={true}
           onRequestCover={(_data) => {
-            console.log(_data);
+            // console.log(_data);
             setPremiumData(_data);
             setShowQuoteForm(false);
             setShowPremiumRequestModal(true);

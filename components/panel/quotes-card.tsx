@@ -13,7 +13,7 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
   useEffect(() => {
     let mounted = true;
 
-    console.log(policy);
+    // console.log(policy);
 
     // figure out next quote step
     switch (policy.status) {

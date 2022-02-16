@@ -12,7 +12,7 @@ const SwitchButton: FC<{
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(GLOBAL_OBJ);
+    // console.log(GLOBAL_OBJ);
   }, [GLOBAL_OBJ]);
 
   return (

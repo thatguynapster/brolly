@@ -17,7 +17,7 @@ import AgreementForm from "./agreement-form";
 import PaymentForm from "./payment-form";
 import DocumentPreview from "./document-preview";
 
-const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
+const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
 
   const [currentView, setCurrentView] = useState<"index" | "policy_details">(
@@ -33,6 +33,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
     "PAYMENT_COMPLETED",
     "DOCUMENTS_SUBMITTED",
     "DOCUMENTS_VERIFIED",
+    "POLICY_APPROVED",
   ];
 
   const [policyDetails, setPolicyDetails] = useState<any>(null);
@@ -61,7 +62,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
         token: GLOBAL_OBJ.token,
       });
-      console.log(user_policies_response);
+      // console.log(user_policies_response);
 
       if (user_policies_response.status) {
         toast.error(user_policies_response.title);
@@ -70,15 +71,16 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
 
         user_policies_response.map((_r: any, i: any) => {
           console.log(
-            statusList.indexOf(_r.status) >=
-              statusList.indexOf("DOCUMENTS_VERIFIED")
+            _r.status,
+            statusList.indexOf(_r.status),
+            statusList.indexOf("POLICY_APPROVED")
           );
         });
 
         let quotes = user_policies_response.filter(
           (_r: any) =>
             statusList.indexOf(_r.status) >=
-            statusList.indexOf("DOCUMENTS_VERIFIED")
+            statusList.indexOf("POLICY_APPROVED")
         );
         console.log(quotes);
 
@@ -86,7 +88,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -97,7 +99,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         queries: "",
         token: GLOBAL_OBJ.token,
       });
-      console.log(policy_details_response);
+      // console.log(policy_details_response);
 
       if (policy_details_response.httpStatus) {
         toast.error(policy_details_response.title);
@@ -107,7 +109,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -118,7 +120,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         queries: `insuranceId=${policy_id}`,
         token: GLOBAL_OBJ.token,
       });
-      console.log(insurance_documents_response);
+      // console.log(insurance_documents_response);
 
       if (insurance_documents_response.httpStatus) {
         toast.error(insurance_documents_response.title);
@@ -132,7 +134,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -146,7 +148,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
         data: null,
         isJSON: true,
       });
-      console.log(insurance_claim_response);
+      // console.log(insurance_claim_response);
 
       if (insurance_claim_response.status) {
         toast.error(insurance_claim_response.title);
@@ -158,14 +160,14 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
   useEffect(() => {
     let mounted = true;
 
-    console.log(GLOBAL_OBJ.data?.user_id);
+    // console.log(GLOBAL_OBJ.data?.user_id);
     GLOBAL_OBJ.isLoggedIn && GLOBAL_OBJ.data?.user_id && _getUserInsurances();
 
     return () => {
@@ -174,16 +176,17 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
   }, [GLOBAL_OBJ.data]);
 
   return (
-    <div className={`${!show && "hidden"}`}>
+    <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {currentView === "index" && policies ? (
+        {currentView === "index" &&
+          policies &&
           policies.map((_pol: any, i: string) => {
             return (
               <QuotesCard
                 key={i}
                 policy={_pol}
                 showDetails={(policy_id, next_step) => {
-                  console.log(policy_id, next_step);
+                  // console.log(policy_id, next_step);
                   _getPolicyDetails(policy_id);
                   _getInsuranceDocuments(policy_id);
                   //   setCurrentView("policy_details");
@@ -191,10 +194,7 @@ const PoliciesView: FC<{ show: boolean }> = ({ show }) => {
                 }}
               />
             );
-          })
-        ) : (
-          <></>
-        )}
+          })}
       </div>
 
       {/* progress viewfor forms */}

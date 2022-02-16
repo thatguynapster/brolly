@@ -30,10 +30,6 @@ export const Navbar: FC<INavbarProps> = ({
 
   const { GLOBAL_OBJ, AUTH_LOGOUT } = useContext(AuthContext);
 
-  useEffect(() => {
-    console.log(GLOBAL_OBJ);
-  }, []);
-
   return (
     <div
       className={`fixed inset-x-0 bg-white text-gray-900 shadow-sm ${classNames}`}

@@ -36,7 +36,7 @@ const QuoteDetails: FC<{
   onClose,
   onReturn,
 }) => {
-  console.log(policy);
+  // console.log(policy);
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   // quote details states
@@ -148,20 +148,20 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: `insuranceId=${policy.id}`,
       });
-      console.log(policy_docs_response);
+      // console.log(policy_docs_response);
 
       // set renewal notice
       let rn = policy_docs_response.filter((_doc: any) => _doc.docType === "POLICY_RENEWAL_NOTICE");
 
       if (rn.length > 0) {
-        console.log("renewal notices found");
-        console.log(rn[rn.length - 1].docURL);
+        // console.log("renewal notices found");
+        // console.log(rn[rn.length - 1].docURL);
         rn.length > 0 && setRenewalNotice(rn[rn.length - 1].docURL);
       } else {
-        console.log("no renewal notice found");
+        // console.log("no renewal notice found");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -171,7 +171,7 @@ const QuoteDetails: FC<{
     form_data.append("file", driverLicence);
 
     // for (var entry of form_data.entries()) {
-    //   console.log(entry[0] + ": " + entry[1]);
+    //   // console.log(entry[0] + ": " + entry[1]);
     // }
 
     let dvla_docs = [];
@@ -181,11 +181,11 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: ``,
       });
-      console.log(uploaded_docs);
+      // console.log(uploaded_docs);
       dvla_docs = uploaded_docs.filter((_doc: any) => _doc.docType === "ID_CARD");
-      console.log(dvla_docs);
+      // console.log(dvla_docs);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     // delete already existing dvla dov
@@ -197,9 +197,9 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         data: {},
       });
-      console.log(delete_doc);
+      // console.log(delete_doc);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     try {
@@ -211,7 +211,7 @@ const QuoteDetails: FC<{
         isJSON: false,
         data: form_data,
       });
-      console.log(upload_licence_response);
+      // console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
@@ -219,7 +219,7 @@ const QuoteDetails: FC<{
         // handle success
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -265,7 +265,7 @@ const QuoteDetails: FC<{
       vehicleMake,
       vehicleModel,
     };
-    console.log(update_data);
+    // console.log(update_data);
 
     try {
       let update_insurance_response = await mkPostReq({
@@ -276,7 +276,7 @@ const QuoteDetails: FC<{
         isJSON: true,
         data: JSON.stringify(update_data),
       });
-      console.log(update_insurance_response);
+      // console.log(update_insurance_response);
 
       if (update_insurance_response.httpStatus) {
         toast.error(update_insurance_response.title);
@@ -285,7 +285,7 @@ const QuoteDetails: FC<{
         onReturn && onReturn();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -764,7 +764,7 @@ const QuoteDetails: FC<{
                 <SwitchButton
                   state={diseaseOrComplications}
                   onSwitch={() => {
-                    console.log(diseaseOrComplications);
+                    // console.log(diseaseOrComplications);
                     setDiseaseOrComplications(!diseaseOrComplications);
                   }}
                 />
@@ -910,10 +910,10 @@ const QuoteDetails: FC<{
                 multiple={false}
                 allowSelect={!driverLicence}
                 onFileLoad={(image: any) => {
-                  console.log(image);
+                  // console.log(image);
 
                   if (image) {
-                    //console.log(productImages)
+                    //// console.log(productImages)
                     var block = image[0].file?.split(";");
 
                     // Get the content type of the image
@@ -924,7 +924,7 @@ const QuoteDetails: FC<{
 
                     // Convert it to a blob to upload
                     var blobImage = dataURItoBlob(realData);
-                    console.log(blobImage);
+                    // console.log(blobImage);
 
                     setDriverLicence(blobImage);
                     return;
@@ -958,7 +958,7 @@ const QuoteDetails: FC<{
               onClick={async (ev) => {
                 ev.preventDefault();
 
-                console.log(allDataValid);
+                // console.log(allDataValid);
 
                 if (!driverLicence) {
                   toast.error("Attach an image of your ID");

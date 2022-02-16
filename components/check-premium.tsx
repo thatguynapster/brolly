@@ -74,7 +74,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
       employerType,
     };
     setPremiumCheckData(premium_check_data);
-    console.log(premium_check_data);
+    // console.log(premium_check_data);
 
     let premium_check_result = await mkPostReq({
       endpoint: "/api/quote/getPremium",
@@ -82,7 +82,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
       data: JSON.stringify(premium_check_data),
       isJSON: true,
     });
-    console.log(premium_check_result);
+    // console.log(premium_check_result);
 
     if (premium_check_result.message === "ERROR_MESSAGE") {
       toast.error("Failed to get Quote");
@@ -361,7 +361,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               id: "0",
             }}
             onValueChange={(_type: any) => {
-              console.log(_type);
+              // console.log(_type);
               setTypeOfCar(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -419,7 +419,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               id: "0",
             }}
             onValueChange={(_YoR: any) => {
-              console.log(_YoR);
+              // console.log(_YoR);
               setYearOfRegistration(_YoR.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -527,7 +527,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               id: "0",
             }}
             onValueChange={(_type: any) => {
-              console.log(_type);
+              // console.log(_type);
               setTypeOfUse(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -542,13 +542,13 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
             value={numOfPassenger}
             onValueChanged={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
             onFocusOut={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setPassengerCount(_val.target.value);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -606,7 +606,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               id: "0",
             }}
             onValueChange={(_type: any) => {
-              console.log(_type);
+              // console.log(_type);
               setEmployerType(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -623,7 +623,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               id: "0",
             }}
             onValueChange={(_IstCnt: any) => {
-              console.log(_IstCnt);
+              // console.log(_IstCnt);
               setInstallmentCount(_IstCnt.name);
               setPremiumDue(null);
               setInitialPremium(null);

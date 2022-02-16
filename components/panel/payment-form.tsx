@@ -22,7 +22,7 @@ import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
 
 const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
-  console.log(policy);
+  // console.log(policy);
 
   const [showPendingPaymentModal, setShowPendingPaymentModal] = useState<boolean>(false);
   const [showPaymentCompleteModal, setShowPaymentCompleteModal] = useState<boolean>(false);
@@ -33,7 +33,7 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   const _initiatePayment = async () => {
-    console.log(policy.id);
+    // console.log(policy.id);
 
     setShowPendingPaymentModal(true);
 
@@ -56,7 +56,7 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         queries: `insuranceId=${policy.id}`,
         token: GLOBAL_OBJ.token,
       });
-      console.log(initiate_payment_response);
+      // console.log(initiate_payment_response);
 
       if (!initiate_payment_response.data) {
         toast.error(initiate_payment_response.title);
@@ -65,10 +65,10 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         // initiatePayment("start", initiate_payment_response.data.reference);
         openInNewTab(initiate_payment_response.data.authorization_url);
 
-        console.log("start checking for payment status");
+        // console.log("start checking for payment status");
         let payment_status = null;
         let payment_check_interval = setInterval(async () => {
-          console.log("check payment status");
+          // console.log("check payment status");
           payment_status = await checkPaymentStatus(initiate_payment_response.data.reference);
 
           if (payment_status === "success") {
@@ -80,13 +80,13 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
           }
         }, 15_000);
         setTimeout(async () => {
-          console.log("end checking for payment status");
+          // console.log("end checking for payment status");
           clearInterval(payment_check_interval);
         }, 300_000);
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -100,14 +100,14 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         token: GLOBAL_OBJ.token,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
     onReturn && onReturn();
   };
 
   useEffect(() => {
     let mounted = true;
-    console.log(policy);
+    // console.log(policy);
 
     return () => {
       mounted = false;
