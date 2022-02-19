@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { mkGetReq, mkPostReq } from "../../utils/functions";
+import { mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
 import { Modal } from "../modal";
 import QuotesCard from "./quotes-card";
 import DocumentPreview from "./document-preview";
@@ -230,7 +230,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
               <p>
                 Cover:{" "}
                 {policyDetails?.protectionType
-                  ? `${policyDetails?.protectionType}GHS`
+                  ? `${sentenceCase(policyDetails?.protectionType)}`
                   : ""}
               </p>
               <p>
@@ -239,17 +239,17 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
               </p>
               <p>
                 TPPDL:{" "}
-                {policyDetails?.tppdl ? `${policyDetails?.tppdl}GHS` : ""}
+                {policyDetails?.tppdl ? `GHS ${policyDetails?.tppdl}` : ""}
               </p>
               <p>
                 Pre-approval Repair Limit:{" "}
                 {policyDetails?.preApprovedRepairLimit
-                  ? `${policyDetails?.preApprovedRepairLimit}GHS`
+                  ? `GHS ${policyDetails?.preApprovedRepairLimit}`
                   : ""}
               </p>
               <p>
                 PA Cover for Driver &amp; Vehicle Owner:{" "}
-                {policyDetails?.paCover ? `${policyDetails?.paCover}GHS` : ""}
+                {policyDetails?.paCover ? `GHS ${policyDetails?.paCover}` : ""}
               </p>
               <p>
                 Courtesy for Service:{" "}
@@ -277,7 +277,8 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
               <DocumentPreview documents={insuranceDocs} />
             </div>
             <div className="flex flex-col items-center justify-center space-y-4">
-              {policyDetails.status === "COMPLETED" && (
+              {(policyDetails.status === "COMPLETED" ||
+                policyDetails.status === "POLICY_APPROVED") && (
                 <button
                   className="whitespace-nowrap text-base font-medium text-dark border border-primary-main hover:bg-primary-border py-2 px-6 shadow-sm flex justify-center items-center space-x-4 rounded-lg capitalize"
                   onClick={_makeClaim}

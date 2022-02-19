@@ -61,7 +61,7 @@ const QuotesView: FC<{}> = ({}) => {
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
         token: GLOBAL_OBJ.token,
       });
-      // console.log(user_policies_response);
+      console.log(user_policies_response);
 
       if (user_policies_response.status) {
         toast.error(user_policies_response.title);
@@ -349,6 +349,7 @@ const QuotesView: FC<{}> = ({}) => {
           onClose={() => {
             setShowPremiumRequestModal(false);
             setShowPremiumRequestResponseModal(true);
+            _getUserInsurances();
           }}
         />
       </Modal>

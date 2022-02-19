@@ -72,9 +72,6 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
       makeOfVehicle: `${vehicleMake} - ${vehicleModel}`,
       phoneNumber: whatsappNumber.replace(dialCode, ""),
       countryInfoId: 1,
-      vehicleType: "<string>",
-      vehicleUse: "<string>",
-      vehicleValue: "<long>",
       referredFrom,
     };
 
@@ -188,7 +185,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
 
       <ListBox
         className="bg-[#101d490d] border-none"
-        id="vehicle_type_of_use"
+        id="how_you_heard"
         values={[
           {
             name: "",

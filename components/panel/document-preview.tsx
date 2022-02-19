@@ -4,7 +4,7 @@ import AuthContext from "../../context/auth-context";
 const DocumentPreview: FC<{
   documents: { name: string; type: string }[] | null;
 }> = ({ documents }) => {
-  let grid_length: number | undefined = 4;
+  let grid_length: number | undefined = 0;
   if (documents && documents.length < 4) {
     grid_length = documents?.length;
   }

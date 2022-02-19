@@ -228,7 +228,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
 
   useEffect(() => {
     let mounted = true;
-    // console.log(policy);
+    console.log(policy);
 
     if (policy) {
       setFirstName(policy.firstName ?? "");

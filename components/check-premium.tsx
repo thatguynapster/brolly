@@ -1,23 +1,27 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
 import { TypeOfUseProps } from "../types";
-import { mkPostReq } from "../utils/functions";
+import { mkGetReq, mkPostReq } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
+import AuthContext from "../context/auth-context";
 
-const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?: boolean }> = ({
-  onRequestCover,
-  isModal,
-}) => {
+const CheckPremium: FC<{
+  onRequestCover?: (request_data: any) => void;
+  isModal?: boolean;
+}> = ({ onRequestCover, isModal }) => {
+  const { GLOBAL_OBJ } = useContext(AuthContext);
+
+  const [inPanel, setInPanel] = useState<boolean>(false);
   // premium calculation params
 
   const [typeOfQuote, setTypeOfQuote] = useState<string>("");
   const [vehicleType, setTypeOfCar] = useState<string>("");
   const [registrationYear, setYearOfRegistration] = useState<any>("");
   const [vehicleInsuredValue, setVehicleValue] = useState<any>("");
-  const [vehicleUse, setTypeOfUse] = useState<string>("");
+  const [vehicleUse, setVehicleUse] = useState<string>("");
   const [numOfPassenger, setPassengerCount] = useState<number | "">("");
   const [whatsappNumber, setWhatsappNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -31,7 +35,9 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
   const [premiumDue, setPremiumDue] = useState<string | null>(null);
   const [initialPremium, setInitialPremium] = useState<string | null>(null);
 
-  const [installmentOptions, setInstallmentOptions] = useState<{ name: string; value: string; id: string }[]>([]);
+  const [installmentOptions, setInstallmentOptions] = useState<
+    { name: string; value: string; id: string }[]
+  >([]);
 
   const _handleCheckPremium = async () => {
     if (vehicleType === "") {
@@ -92,6 +98,26 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
     setPremiumCheckResponse(premium_check_result);
     setPremiumDue(premium_check_result.monthlyInstallment.toFixed(2));
     setInitialPremium(premium_check_result.initialDeposit.toFixed(2));
+  };
+
+  const _getUserEmployerType = async () => {
+    try {
+      let emp_type_result = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/account`,
+        token: GLOBAL_OBJ.token,
+        queries: "",
+      });
+      console.log(emp_type_result);
+
+      if (emp_type_result.message === "ERROR_MESSAGE") {
+        toast.error("Failed to get Quote");
+        return;
+      }
+
+      setEmployerType(emp_type_result.employerType);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -271,6 +297,19 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
     setInstallmentOptions(installment_options);
   }, [employerType]);
 
+  useEffect(() => {
+    console.log(window.location.pathname);
+
+    // get page endpoint
+    // console.log(endpoint);
+
+    setInPanel(window.location.pathname === "/panel");
+
+    if (window.location.pathname === "/panel") {
+      let empType = _getUserEmployerType();
+    }
+  }, []);
+
   return (
     <div
       className={`bg-white w-full max-w-md px-2 md:px-12 ${
@@ -278,7 +317,11 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
       }  items-center justify-center shadow-sm rounded-xl space-y-8 md:space-y-20`}
     >
       <div className="w-full flex flex-row">
-        <img className="w-16 mx-auto" src="/img/car-icon-vector.svg" alt="Check Insurance" />
+        <img
+          className="w-16 mx-auto"
+          src="/img/car-icon-vector.svg"
+          alt="Check Insurance"
+        />
       </div>
       <form
         autoComplete="false"
@@ -288,7 +331,13 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
           _handleCheckPremium();
         }}
       >
-        <input autoComplete="off" name="hidden" id="hidden" type="text" className="hidden" />
+        <input
+          autoComplete="off"
+          name="hidden"
+          id="hidden"
+          type="text"
+          className="hidden"
+        />
         <div className="w-full flex-col space-y-5">
           <ListBox
             className="bg-[#101d490d] border-none"
@@ -528,7 +577,7 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             }}
             onValueChange={(_type: any) => {
               // console.log(_type);
-              setTypeOfUse(_type.name);
+              setVehicleUse(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
@@ -555,63 +604,65 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
             }}
           />
 
-          <ListBox
-            className="bg-[#101d490d] border-none"
-            id="employer_type"
-            values={[
-              {
+          {!inPanel && (
+            <ListBox
+              className="bg-[#101d490d] border-none"
+              id="employer_type"
+              values={[
+                {
+                  name: "",
+                  value: "Employer type",
+                  id: "0",
+                },
+                {
+                  name: "STATE_OR_GOVT",
+                  value: "State or Government Organisation",
+                  id: "1",
+                },
+                {
+                  name: "LARGE_PRIVATE_COMPANY",
+                  value: "Large Private Company",
+                  id: "2",
+                },
+                {
+                  name: "SME",
+                  value: "SME",
+                  id: "3",
+                },
+                {
+                  name: "SELF_EMPLOYED_PRIVATE_PRACTITIONER",
+                  value: "Self Employed/Private Practitioner",
+                  id: "4",
+                },
+                {
+                  name: "UBER_BOLT_YANGO",
+                  value: "Uber/Bolt/Yango",
+                  id: "4",
+                },
+                {
+                  name: "COMMERCIAL_UNION",
+                  value: "Commercial Union",
+                  id: "4",
+                },
+                {
+                  name: "OTHER",
+                  value: "Other",
+                  id: "4",
+                },
+              ]}
+              selected={{
                 name: "",
                 value: "Employer type",
                 id: "0",
-              },
-              {
-                name: "STATE_OR_GOVT",
-                value: "State or Government Organisation",
-                id: "1",
-              },
-              {
-                name: "LARGE_PRIVATE_COMPANY",
-                value: "Large Private Company",
-                id: "2",
-              },
-              {
-                name: "SME",
-                value: "SME",
-                id: "3",
-              },
-              {
-                name: "SELF_EMPLOYED_PRIVATE_PRACTITIONER",
-                value: "Self Employed/Private Practitioner",
-                id: "4",
-              },
-              {
-                name: "UBER_BOLT_YANGO",
-                value: "Uber/Bolt/Yango",
-                id: "4",
-              },
-              {
-                name: "COMMERCIAL_UNION",
-                value: "Commercial Union",
-                id: "4",
-              },
-              {
-                name: "OTHER",
-                value: "Other",
-                id: "4",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Employer type",
-              id: "0",
-            }}
-            onValueChange={(_type: any) => {
-              // console.log(_type);
-              setEmployerType(_type.name);
-              setPremiumDue(null);
-              setInitialPremium(null);
-            }}
-          />
+              }}
+              onValueChange={(_type: any) => {
+                // console.log(_type);
+                setEmployerType(_type.name);
+                setPremiumDue(null);
+                setInitialPremium(null);
+              }}
+            />
+          )}
 
           <ListBox
             className="bg-[#101d490d] border-none"
@@ -631,18 +682,30 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
           />
 
           {noOfInstallments === "full_payment"
-            ? premiumDue && <p className="w-max mx-auto text-5xl font-bold">&#8373;{premiumDue}</p>
+            ? premiumDue && (
+                <p className="w-max mx-auto text-5xl font-bold">
+                  &#8373;{premiumDue}
+                </p>
+              )
             : premiumDue && (
                 <div>
                   <p>
-                    Initial Deposit: <span className="font-bold text-lg">&#8373;{initialPremium}</span>
+                    Initial Deposit:{" "}
+                    <span className="font-bold text-lg">
+                      &#8373;{initialPremium}
+                    </span>
                   </p>
                   <p>
-                    Monthly installment: <span className="font-bold text-lg">&#8373;{premiumDue}</span>
+                    Monthly installment:{" "}
+                    <span className="font-bold text-lg">
+                      &#8373;{premiumDue}
+                    </span>
                     <span>
                       {noOfInstallments === "full_payment"
                         ? ""
-                        : `/m for ${String(noOfInstallments).split("_")[0]} months`}
+                        : `/m for ${
+                            String(noOfInstallments).split("_")[0]
+                          } months`}
                     </span>
                   </p>
                 </div>
@@ -656,7 +719,11 @@ const CheckPremium: FC<{ onRequestCover?: (request_data: any) => void; isModal?:
               className="w-full whitespace-nowrap text-base font-medium text-dark bg-primary-main py-2 px-4 border-0 shadow-sm flex justify-center items-center space-x-4"
               onClick={(ev) => {
                 ev.preventDefault();
-                onRequestCover && onRequestCover({ ...premiumCheckData, ...premiumCheckResponse });
+                onRequestCover &&
+                  onRequestCover({
+                    ...premiumCheckData,
+                    ...premiumCheckResponse,
+                  });
               }}
             >
               <span> Request Cover </span>

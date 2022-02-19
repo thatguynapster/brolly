@@ -305,7 +305,7 @@ const QuoteDetails: FC<{
       setOccupation(policy.occupation ?? "");
 
       setVehicleType(policy.vehicleType ?? "");
-      setVehicleMake(policy.vehicleMake ?? "");
+      setVehicleMake(policy.makeOfVehicle ?? "");
       setRegistrationYear(policy.registrationYear ?? "");
       setVehicleModel(policy.vehicleModel ?? "");
       setNumOfPassenger(policy.numOfPassenger ?? "");
