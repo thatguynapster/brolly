@@ -1,4 +1,8 @@
-import { ChevronLeftIcon } from "@heroicons/react/outline";
+import {
+  ChevronLeftIcon,
+  PhotographIcon,
+  TrashIcon,
+} from "@heroicons/react/outline";
 import moment from "moment";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -16,15 +20,9 @@ import SwitchButton from "./switch-button";
 
 const QuoteDetails: FC<{
   policy: any;
-  initiatePayment?: (_status: "start" | "complete", _ref?: string) => void;
-  onClose?: () => void;
+  onProceed: () => void;
   onReturn?: () => void;
-}> = ({
-  policy,
-  initiatePayment, // start | complete
-  onClose,
-  onReturn,
-}) => {
+}> = ({ policy, onProceed, onReturn }) => {
   // console.log(policy);
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
@@ -132,6 +130,7 @@ const QuoteDetails: FC<{
     { name: string; type: string }[] | null
   >(null);
   const [driverLicence, setDriverLicence] = useState<any>(null);
+  const [hasLicence, setHasLicence] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
@@ -158,6 +157,33 @@ const QuoteDetails: FC<{
           setRenewalNotice([
             { name: rn[rn.length - 1].docURL, type: rn[rn.length - 1].docType },
           ]);
+      } else {
+        // console.log("no renewal notice found");
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _getUserDocuments = async () => {
+    try {
+      let policy_docs_response = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/user-documents`,
+        token: GLOBAL_OBJ.token,
+        queries: ``,
+      });
+      // console.log(policy_docs_response);
+
+      // set renewal notice
+      let rn = policy_docs_response.filter(
+        (_doc: any) => _doc.docType === "ID_CARD"
+      );
+
+      if (rn.length > 0) {
+        console.log("driver licence found");
+        console.log(rn[rn.length - 1].docURL);
+        setDriverLicence(rn[rn.length - 1].docURL);
+        setHasLicence(true);
       } else {
         // console.log("no renewal notice found");
       }
@@ -285,7 +311,8 @@ const QuoteDetails: FC<{
         toast.error(update_insurance_response.title);
       } else {
         // handle success
-        onReturn && onReturn();
+        toast.success("Quote Information Updated");
+        onProceed();
       }
     } catch (error) {
       // console.log(error);
@@ -295,7 +322,7 @@ const QuoteDetails: FC<{
   useEffect(() => {
     let mounted = true;
 
-    if (policy) {
+    if (mounted && policy) {
       setFirstName(policy.firstName ?? "");
       setLastName(policy.lastName ?? "");
       setPhoneNumber(policy.phoneNumber ?? "");
@@ -345,6 +372,14 @@ const QuoteDetails: FC<{
       mounted = false;
     };
   }, [policy]);
+
+  useEffect(() => {
+    let mounted = true;
+    mounted && _getUserDocuments();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="p-4">
@@ -928,32 +963,68 @@ const QuoteDetails: FC<{
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
           <div className="grid grid-cols-1 gap-4">
-            <FileUpload
-              multiple={false}
-              allowSelect={!driverLicence}
-              onFileLoad={(image: any) => {
-                // console.log(image);
+            {driverLicence ? (
+              <li className={`block p-1 w-full h-52`}>
+                <article
+                  tabIndex={0}
+                  className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm"
+                >
+                  <img
+                    alt="upload preview"
+                    src={`${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${driverLicence}`}
+                    className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+                  />
 
-                if (image) {
-                  //// console.log(productImages)
-                  var block = image[0].file?.split(";");
+                  <section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
+                    <h1 className="flex-1">{driverLicence}</h1>
+                    <div className="flex">
+                      <span className="p-1">
+                        <i>
+                          <PhotographIcon className="w-4 h-4" />
+                        </i>
+                      </span>
+                      <button
+                        className="delete ml-auto focus:outline-none group hover:bg-gray-200 p-1 rounded-md"
+                        onClick={(ev) => {
+                          ev.preventDefault();
+                          // remove this image
+                          setDriverLicence(null);
+                        }}
+                      >
+                        <TrashIcon className="w-4 h-4 group-hover:text-danger-main" />
+                      </button>
+                    </div>
+                  </section>
+                </article>
+              </li>
+            ) : (
+              <FileUpload
+                multiple={false}
+                allowSelect={!driverLicence}
+                onFileLoad={(image: any) => {
+                  console.log(image);
 
-                  // Get the content type of the image
-                  var contentType = block[0].split(":")[1]; // In this case "image/gif"
+                  if (image) {
+                    //// console.log(productImages)
+                    var block = image[0].file?.split(";");
 
-                  // get the real base64 content of the file
-                  var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+                    // Get the content type of the image
+                    var contentType = block[0].split(":")[1]; // In this case "image/gif"
 
-                  // Convert it to a blob to upload
-                  var blobImage = dataURItoBlob(realData);
-                  // console.log(blobImage);
+                    // get the real base64 content of the file
+                    var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
 
-                  setDriverLicence(blobImage);
-                  return;
-                }
-                setDriverLicence(null);
-              }}
-            />
+                    // Convert it to a blob to upload
+                    var blobImage = dataURItoBlob(realData);
+                    // console.log(blobImage);
+
+                    setDriverLicence(blobImage);
+                    return;
+                  }
+                  setDriverLicence(null);
+                }}
+              />
+            )}
           </div>
         </div>
 
@@ -996,7 +1067,7 @@ const QuoteDetails: FC<{
                 return;
               }
 
-              await _uploadDocs();
+              !hasLicence && (await _uploadDocs());
               _updateInsuranceDetails();
             }}
           >

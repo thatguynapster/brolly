@@ -1,26 +1,18 @@
 import { ChevronLeftIcon } from "@heroicons/react/outline";
 import moment from "moment";
-import React, {
-  FC,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import {
-  dataURItoBlob,
-  mkGetReq,
-  mkPostReq,
-} from "../../utils/functions";
+import { dataURItoBlob, mkGetReq, mkPostReq } from "../../utils/functions";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
 import FileUpload from "./file-upload";
 
-const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
-  policy,
-  onReturn,
-}) => {
+const MandateForm: FC<{
+  policy: any;
+  onReturn?: () => void;
+  onProceed: () => void;
+}> = ({ policy, onReturn, onProceed }) => {
   // console.log(policy);
 
   const [tempSection, setTempSection] = useState<string>("user");
@@ -219,9 +211,31 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
         toast.error(update_insurance_response.title);
       } else {
         // handle success
-        onReturn && onReturn();
+        onProceed();
       }
     } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _getUserDetails = async () => {
+    try {
+      let user_details_response = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/account`,
+        queries: ``,
+        token: GLOBAL_OBJ.token,
+      });
+      console.log(user_details_response);
+
+      if (user_details_response.status) {
+        toast.error(user_details_response.title);
+      } else {
+        // handle success
+        setAddress(user_details_response.address);
+        setEmploymentType(user_details_response.employerType);
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
       // console.log(error);
     }
   };
@@ -247,8 +261,15 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
   }, [policy]);
 
   useEffect(() => {
-    console.log(GLOBAL_OBJ);
-  }, [GLOBAL_OBJ]);
+    let mounted = true;
+
+    if (mounted) {
+      _getUserDetails();
+    }
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
@@ -735,6 +756,16 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({
               ev.preventDefault();
 
               // console.log(allDataValid);
+
+              if (
+                !(
+                  confirmFullName.includes(firstName) &&
+                  confirmFullName.includes(surname)
+                )
+              ) {
+                toast.error("Signed name does not match records");
+                return;
+              }
 
               if (employer === "") {
                 toast.error("Select employer");

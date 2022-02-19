@@ -54,7 +54,7 @@ const QuotesView: FC<{}> = ({}) => {
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   const _getUserInsurances = async () => {
-    // setPolicies(null);
+    setPolicies(null);
     try {
       let user_policies_response = await mkGetReq({
         endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurances/user`,
@@ -67,13 +67,6 @@ const QuotesView: FC<{}> = ({}) => {
         toast.error(user_policies_response.title);
       } else {
         // handle success
-
-        // user_policies_response.map((_r: any, i: any) => {
-        //   console.log(
-        //     statusList.indexOf(_r.status) <
-        //       statusList.indexOf("POLICY_APPROVED")
-        //   );
-        // });
 
         let quotes = user_policies_response.filter(
           (_r: any) =>
@@ -109,37 +102,6 @@ const QuotesView: FC<{}> = ({}) => {
       toast.error("Unexpected Error Occurred");
       // console.log(error);
     }
-  };
-
-  const _initiatePayment = async () => {
-    // console.log(policyDetails.id);
-
-    // check if previous payment attempt was successful
-    if (policyDetails.pInitialPayment) {
-      let payment_status = await checkPaymentStatus(
-        policyDetails.pInitialReference
-      );
-      if (payment_status === "success") {
-        //ignore payment and refresh page content
-        // initiatePayment("complete");
-        return;
-      }
-    }
-  };
-
-  const _finalizePayment = async (policy_id: string) => {
-    toast.info("Finalizing payment...");
-
-    try {
-      await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurances/paystack/transaction/finish/`,
-        queries: `insuranceId=${policy_id}`,
-        token: GLOBAL_OBJ.token,
-      });
-    } catch (error) {
-      // console.log(error);
-    }
-    _getUserInsurances();
   };
 
   useEffect(() => {
@@ -217,9 +179,12 @@ const QuotesView: FC<{}> = ({}) => {
         <>
           <QuoteDetails
             policy={policyDetails}
-            onClose={_getUserInsurances}
             onReturn={() => {
               setCurrentView("index");
+              _getUserInsurances();
+            }}
+            onProceed={() => {
+              setCurrentView("mandate_form");
               _getUserInsurances();
             }}
           />
@@ -233,6 +198,10 @@ const QuotesView: FC<{}> = ({}) => {
             setCurrentView("index");
             _getUserInsurances();
           }}
+          onProceed={() => {
+            setCurrentView("agreement_form");
+            _getUserInsurances();
+          }}
         />
       )}
 
@@ -241,6 +210,10 @@ const QuotesView: FC<{}> = ({}) => {
           policy={policyDetails}
           onReturn={() => {
             setCurrentView("index");
+            _getUserInsurances();
+          }}
+          onProceed={() => {
+            setCurrentView("payment");
             _getUserInsurances();
           }}
         />

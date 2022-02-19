@@ -128,31 +128,7 @@ const CheckPremium: FC<{
         id: "0",
       },
     ];
-    // {
-    //   name: "FULL_PAYMENT",
-    //   value: "Full Payment",
-    //   id: "1",
-    // },
-    // {
-    //   name: "THREE_MONTHS",
-    //   value: "3 months",
-    //   id: "2",
-    // },
-    // {
-    //   name: "SIX_MONTHS",
-    //   value: "6 months",
-    //   id: "3",
-    // },
-    // {
-    //   name: "NINE_MONTHS",
-    //   value: "9 months",
-    //   id: "4",
-    // },
-    // {
-    //   name: "TWELVE_MONTHS",
-    //   value: "12 months",
-    //   id: "5",
-    // },
+    
     switch (employerType) {
       case "STATE_OR_GOVT":
         installment_options.push(

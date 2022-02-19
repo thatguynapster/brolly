@@ -101,6 +101,21 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
     }
   };
 
+  const _getUserDetails = async () => {};
+
+  useEffect(() => {
+    console.log(window.location.pathname);
+
+    // get page endpoint
+    // console.log(endpoint);
+
+    // setInPanel(window.location.pathname === "/panel");
+
+    if (window.location.pathname === "/panel") {
+      let user_details = _getUserDetails();
+    }
+  }, []);
+
   return (
     <div className="px-4 py-8 space-y-8">
       <h1 className="text-md font-semibold text-center">
