@@ -17,7 +17,7 @@ export async function mkGetReq(reqOptions: {
   extraHeaders?: {}[];
 }) {
   let url = `${reqOptions.endpoint}${reqOptions.queries ? `?${reqOptions.queries}` : ""}`;
-  console.log(url);
+  // console.log(url);
 
   const options: {
     method: string;
@@ -95,7 +95,7 @@ export async function checkPaymentStatus(_ref: string) {
     queries: "",
     token: process.env.NEXT_PUBLIC_PAYSTACK_SECRET,
   });
-  console.log(check_payment_response);
+  // console.log(check_payment_response);
   return check_payment_response.data.status;
 }
 

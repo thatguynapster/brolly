@@ -1,19 +1,19 @@
-import { Transition } from "@headlessui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 import moment from "moment";
-import React, { FC, Fragment, useContext, useEffect, useRef, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { dataURItoBlob, mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
+import { dataURItoBlob, mkGetReq, mkPostReq } from "../../utils/functions";
 import FormGroup from "../form-group";
-import InternationalInput from "../international-input";
 import ListBox from "../list-box";
-import DocumentPreview from "./document-preview";
 import FileUpload from "./file-upload";
-import SwitchButton from "./switch-button";
 
-const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
-  console.log(policy);
+const MandateForm: FC<{
+  policy: any;
+  onReturn?: () => void;
+  onProceed: () => void;
+}> = ({ policy, onReturn, onProceed }) => {
+  // console.log(policy);
 
   const [tempSection, setTempSection] = useState<string>("user");
   const [detailsSection, setDetailsSection] = useState<string>("user");
@@ -62,11 +62,13 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         token: GLOBAL_OBJ.token,
         queries: ``,
       });
-      console.log(uploaded_docs);
-      staff_id_docs = uploaded_docs.filter((_doc: any) => _doc.docType === "STAFF_ID");
-      console.log(staff_id_docs);
+      // console.log(uploaded_docs);
+      staff_id_docs = uploaded_docs.filter(
+        (_doc: any) => _doc.docType === "STAFF_ID"
+      );
+      // console.log(staff_id_docs);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     // delete already existing dvla dov
@@ -78,9 +80,9 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         token: GLOBAL_OBJ.token,
         data: {},
       });
-      console.log(delete_doc);
+      // console.log(delete_doc);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     try {
@@ -92,7 +94,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         isJSON: false,
         data: form_data,
       });
-      console.log(upload_licence_response);
+      // console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
@@ -100,7 +102,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         // handle success
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -120,11 +122,13 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         token: GLOBAL_OBJ.token,
         queries: ``,
       });
-      console.log(uploaded_docs);
-      payslip_docs = uploaded_docs.filter((_doc: any) => _doc.docType === "PAYSLIP");
-      console.log(payslip_docs);
+      // console.log(uploaded_docs);
+      payslip_docs = uploaded_docs.filter(
+        (_doc: any) => _doc.docType === "PAYSLIP"
+      );
+      // console.log(payslip_docs);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     // delete already existing payslip dov
@@ -136,9 +140,9 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         token: GLOBAL_OBJ.token,
         data: {},
       });
-      console.log(delete_doc);
+      // console.log(delete_doc);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
     try {
@@ -150,7 +154,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         isJSON: false,
         data: form_data,
       });
-      console.log(upload_licence_response);
+      // console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
@@ -158,7 +162,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         // handle success
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -201,16 +205,38 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         isJSON: true,
         data: JSON.stringify(update_data),
       });
-      console.log(update_insurance_response);
+      // console.log(update_insurance_response);
 
       if (update_insurance_response.httpStatus) {
         toast.error(update_insurance_response.title);
       } else {
         // handle success
-        onReturn && onReturn();
+        onProceed();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+    }
+  };
+
+  const _getUserDetails = async () => {
+    try {
+      let user_details_response = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/account`,
+        queries: ``,
+        token: GLOBAL_OBJ.token,
+      });
+      console.log(user_details_response);
+
+      if (user_details_response.status) {
+        toast.error(user_details_response.title);
+      } else {
+        // handle success
+        setAddress(user_details_response.address);
+        setEmploymentType(user_details_response.employerType);
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
+      // console.log(error);
     }
   };
 
@@ -234,6 +260,17 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
     };
   }, [policy]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    if (mounted) {
+      _getUserDetails();
+    }
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
       <button
@@ -244,7 +281,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
       </button>
 
       <div className="py-4 flex flex-col items justify-center space-y-8">
-      <div className="w-full flex flex-row space-x-4 items-center justify-center">
+        <div className="w-full flex flex-row space-x-4 items-center justify-center">
           <hr className="md:w-full text-gray-700 bg-gray-700" />
           <h1 className="w-max md:whitespace-nowrap text-center font-bold text-lg capitalize">
             payroll deduction mandate
@@ -562,7 +599,9 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
 
         <div className="flex flex-col space-y-4">
           <div className="flex flex-row space-x-8 items-center">
-            <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">authorization</h1>
+            <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">
+              authorization
+            </h1>
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
         </div>
@@ -573,24 +612,33 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
             <span className="font-bold capitalize">{firstName}</span>{" "}
             <span className="font-bold capitalize">{surname}</span>
           </span>
-          , have received the above-stated product/service on an installment payment basis from Brolly and have
-          authorized monthly installments to be deducted directly from my bank account, I do hereby agree that if any
-          due payment from my bank account fails and I subsequently fail to make good on the missed payment within 7
-          days, Brolly shall be authorized to present the missed payment and all remaining installments for deduction
-          from my salary at source. I do hereby, by this deduction mandate voluntarily executed by me, authorize my
+          , have received the above-stated product/service on an installment
+          payment basis from Brolly and have authorized monthly installments to
+          be deducted directly from my bank account, I do hereby agree that if
+          any due payment from my bank account fails and I subsequently fail to
+          make good on the missed payment within 7 days, Brolly shall be
+          authorized to present the missed payment and all remaining
+          installments for deduction from my salary at source. I do hereby, by
+          this deduction mandate voluntarily executed by me, authorize my
           employer institution,{" "}
           <span className="font-bold underline capitalize">
-            {employerFull !== "" ? employerFull : "____________________________"}
+            {employerFull !== ""
+              ? employerFull
+              : "____________________________"}
           </span>
-          , to deduct such payment which shall be presented by Brolly within the terms of my installment payment
-          agreement with them from my salary monthly to the credit of BROLLY. This mandate shall not be revoked and
-          shall remain in force except by letter duly signed by the authoriZed person of the company on your records.
+          , to deduct such payment which shall be presented by Brolly within the
+          terms of my installment payment agreement with them from my salary
+          monthly to the credit of BROLLY. This mandate shall not be revoked and
+          shall remain in force except by letter duly signed by the authoriZed
+          person of the company on your records.
         </p>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col space-y-4">
             <div className="flex flex-row space-x-8 items-center">
-              <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">staff ID</h1>
+              <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">
+                staff ID
+              </h1>
             </div>
             <div className="grid grid-cols-1 gap-4">
               <FileUpload
@@ -624,7 +672,9 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
 
           <div className="flex flex-col space-y-4">
             <div className="flex flex-row space-x-8 items-center">
-              <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">Recent Payslip</h1>
+              <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">
+                Recent Payslip
+              </h1>
             </div>
             <div className="grid grid-cols-1 gap-4">
               <FileUpload
@@ -645,7 +695,7 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
 
                     // Convert it to a blob to upload
                     var blobImage = dataURItoBlob(realData);
-                    console.log(blobImage);
+                    // console.log(blobImage);
 
                     setRecentPayslip(blobImage);
                     return;
@@ -675,7 +725,8 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
           />
         </div>
         <div className="flex flex-row items-center space-x-4">
-          <p>DATE:</p> <p className="font-bold">{moment().format("dd DD MMM, YYYY")}</p>
+          <p>DATE:</p>{" "}
+          <p className="font-bold">{moment().format("ddd DD MMM, YYYY")}</p>
         </div>
 
         <div className="flex flex-col items-center space-y-4">
@@ -689,7 +740,10 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
                 setAllDataValid(!allDataValid);
               }}
             />
-            <label htmlFor="acceptTerms" className="leading-tight font-normal cursor-pointer">
+            <label
+              htmlFor="acceptTerms"
+              className="leading-tight font-normal cursor-pointer"
+            >
               I agree to the authorization stated above.
             </label>
           </div>
@@ -701,7 +755,17 @@ const MandateForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
             onClick={async (ev) => {
               ev.preventDefault();
 
-              console.log(allDataValid);
+              // console.log(allDataValid);
+
+              if (
+                !(
+                  confirmFullName.includes(firstName) &&
+                  confirmFullName.includes(surname)
+                )
+              ) {
+                toast.error("Signed name does not match records");
+                return;
+              }
 
               if (employer === "") {
                 toast.error("Select employer");

@@ -48,7 +48,7 @@ const SidebarMobile: FC<{
   }, [show]);
 
   useEffect(() => {
-    console.log(open);
+    // console.log(open);
     !open && onClose();
   }, [open]);
 

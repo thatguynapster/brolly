@@ -33,7 +33,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
   async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
     setPhoneValid(isValid);
     setPhone(String(value.split("+").pop()));
-    console.log(field, value, isValid, dial_code);
+    // console.log(field, value, isValid, dial_code);
     setDialCode(dial_code);
   }
 
@@ -49,7 +49,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       return;
     }
 
-    console.log({ phone: phone.replace(dialCode, ""), otp, password });
+    // console.log({ phone: phone.replace(dialCode, ""), otp, password });
 
     //hit login api
     try {
@@ -63,7 +63,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
         }),
         isJSON: true,
       });
-      console.log(login_response);
+      // console.log(login_response);
 
       if (login_response.httpStatus) {
         toast.error(login_response.message);
@@ -77,7 +77,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -97,7 +97,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       return;
     }
 
-    console.log({ newPass, confNewPass });
+    // console.log({ newPass, confNewPass });
 
     // hit set password api
     try {
@@ -110,7 +110,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
         }),
         isJSON: true,
       });
-      console.log(set_password_response);
+      // console.log(set_password_response);
 
       if (set_password_response.status) {
         toast.error(set_password_response.title);
@@ -124,7 +124,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -132,7 +132,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
     let mounted = true;
     let user_key = getQuery("key");
     setUserKey(String(user_key));
-    console.log(user_key, !(user_key === "" || user_key === null));
+    // console.log(user_key, !(user_key === "" || user_key === null));
     setIsNewUser(!(user_key === "" || user_key === null));
 
     return () => {
@@ -223,7 +223,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                   placeholder="Password"
                   value={password}
                   onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-                    console.log(ev.currentTarget.value);
+                    // console.log(ev.currentTarget.value);
                     setPassword(ev.currentTarget.value);
                   }}
                 />

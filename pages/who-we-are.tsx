@@ -128,7 +128,7 @@ const About: NextPage = () => {
       <Modal
         show={showWaitlistModal}
         onConfirm={(ev: any) => {
-          console.log(ev);
+          // console.log(ev);
         }}
         onClose={() => {
           setShowWaitlistModal(false);
@@ -167,7 +167,7 @@ const About: NextPage = () => {
               id: "0",
             }}
             onValueChange={(_IstCnt: any) => {
-              console.log(_IstCnt);
+              // console.log(_IstCnt);
             }}
           />
           <FormGroup
@@ -177,11 +177,11 @@ const About: NextPage = () => {
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
             value={email}
             onValueChanged={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setEmail(_val.target.value);
             }}
             onFocusOut={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setEmail(_val.target.value);
             }}
           />
@@ -192,11 +192,11 @@ const About: NextPage = () => {
             className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
             value={email}
             onValueChanged={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setPhoneNumber(_val.target.value);
             }}
             onFocusOut={(_val: any) => {
-              console.log(_val.target.value);
+              // console.log(_val.target.value);
               setPhoneNumber(_val.target.value);
             }}
           />

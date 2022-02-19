@@ -1,13 +1,24 @@
 import React, { FC, Fragment, useState } from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import { ArrowRightIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import {
+  ArrowRightIcon,
+  CheckCircleIcon,
+  MenuIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { Modal } from "./modal";
 import router from "next/router";
 import CheckPremium from "./check-premium";
+import PremiumRequest from "./panel/premium-request";
 
 const Header: FC<{ pagename: string }> = ({ pagename }) => {
   const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
+  const [premiumData, setPremiumData] = useState<any>({});
+  const [showPremiumRequestModal, setShowPremiumRequestModal] =
+    useState<boolean>(false);
+  const [showPremiumRequestResponseModal, setShowPremiumRequestResponseModal] =
+    useState<boolean>(false);
 
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
@@ -17,21 +28,33 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
             <div className="flex flex-row items-center justify-start lg:w-0 lg:flex-1 space-x-10">
               <Link href="/" passHref>
                 <a href="#">
-                  <img className="cursor-pointer w-auto" src="/img/logo.svg" alt="" />
+                  <img
+                    className="cursor-pointer w-auto"
+                    src="/img/logo.svg"
+                    alt=""
+                  />
                 </a>
               </Link>
               <nav className="hidden md:flex space-x-8">
                 <Link href="/how-it-works" passHref>
-                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">How it works</a>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                    How it works
+                  </a>
                 </Link>
                 <Link href="/legal?section=faq" passHref>
-                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">FAQs</a>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                    FAQs
+                  </a>
                 </Link>
                 <Link href="/network" passHref>
-                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">Network</a>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                    Network
+                  </a>
                 </Link>
                 <Link href="/claims" passHref>
-                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">Claims</a>
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">
+                    Claims
+                  </a>
                 </Link>
               </nav>
             </div>
@@ -96,7 +119,11 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
               <div className="pt-5 px-5">
                 <div className="flex items-center justify-between">
                   <Link href="/" passHref>
-                    <img className="h-20 w-1/4 sm:h-28" src="/img/logo.svg" alt="" />
+                    <img
+                      className="h-20 w-1/4 sm:h-28"
+                      src="/img/logo.svg"
+                      alt=""
+                    />
                   </Link>
                   <div className="-mr-2">
                     <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-border">
@@ -167,12 +194,65 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
         className="z-50"
       >
         <XIcon
-          className="absolute top-0 right-0 m-4 w-5 h-5"
+          className="absolute top-0 right-0 m-4 w-5 h-5 cursor-pointer"
           onClick={() => {
             setShowQuoteForm(false);
           }}
         />
-        <CheckPremium isModal={true} />
+        <CheckPremium
+          isModal={true}
+          onRequestCover={(_data) => {
+            // console.log(_data);
+            setPremiumData(_data);
+            setShowQuoteForm(false);
+            setShowPremiumRequestModal(true);
+          }}
+        />
+      </Modal>
+
+      <Modal
+        show={showPremiumRequestModal}
+        onClose={(ev: any) => {
+          setShowPremiumRequestModal(false);
+        }}
+        className="z-50"
+      >
+        <XIcon
+          className="absolute top-0 right-0 m-4 w-5 h-5 cursor-pointer"
+          onClick={() => {
+            setShowPremiumRequestModal(false);
+          }}
+        />
+        <PremiumRequest
+          data={premiumData}
+          onClose={() => {
+            setShowPremiumRequestModal(false);
+            setShowPremiumRequestResponseModal(true);
+          }}
+        />
+      </Modal>
+
+      <Modal
+        show={showPremiumRequestResponseModal}
+        onClose={() => {
+          setShowPremiumRequestResponseModal(false);
+        }}
+      >
+        <div className="flex flex-col px-4 py-8 space-y-8 items-center">
+          <CheckCircleIcon className="text-success-main w-48 h-48" />
+          <h2 className="text-center font-semibold text-md">
+            Insurance premium successfully requested. A representative will be
+            in touch soon.
+          </h2>
+          <button
+            className="bg-primary-main px-4 py-2"
+            onClick={() => {
+              setShowPremiumRequestResponseModal(false);
+            }}
+          >
+            Close
+          </button>
+        </div>
       </Modal>
     </header>
   );

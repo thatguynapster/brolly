@@ -66,7 +66,7 @@ const HowItWorks: NextPage = () => {
                     id: "0",
                   }}
                   onValueChange={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
                 <FormGroup
@@ -75,10 +75,10 @@ const HowItWorks: NextPage = () => {
                   placeholder="Current value"
                   className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                   onFocusOut={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
 
@@ -133,7 +133,7 @@ const HowItWorks: NextPage = () => {
                     id: "0",
                   }}
                   onValueChange={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
 
@@ -144,10 +144,10 @@ const HowItWorks: NextPage = () => {
                   placeholder="Number of passengers (including driver)"
                   className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                   onFocusOut={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
 
@@ -157,10 +157,10 @@ const HowItWorks: NextPage = () => {
                   placeholder="Whatsapp number"
                   className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
                   onValueChanged={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                   onFocusOut={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
 
@@ -205,7 +205,7 @@ const HowItWorks: NextPage = () => {
                     id: "0",
                   }}
                   onValueChange={(ev: any) => {
-                    console.log(ev);
+                    // console.log(ev);
                   }}
                 />
 

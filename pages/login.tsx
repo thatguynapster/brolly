@@ -18,7 +18,7 @@ const Network: NextPage = () => {
 
   useEffect(() => {
     let mounted = true;
-    console.log(GLOBAL_OBJ);
+    // console.log(GLOBAL_OBJ);
     if (!GLOBAL_OBJ.isLoggedIn) {
       setPageSection("login");
     } else {

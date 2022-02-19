@@ -6,7 +6,7 @@ export default async function checkPremium(data: {
   whatsapp_number: string;
   year_of_registration: string;
 }) {
-  console.log(data);
+  // console.log(data);
   const { installment, passenger_count, type_of_use, vehicle_value, whatsapp_number, year_of_registration } = data;
 
   //fixed rates
@@ -83,7 +83,7 @@ export default async function checkPremium(data: {
 
   let initial_premium = 0;
 
-  console.log(installment);
+  // console.log(installment);
   if (installment !== "full_payment") {
     let interest_rate = 0;
     let payment_count = 0;
@@ -113,7 +113,7 @@ export default async function checkPremium(data: {
       fv: 0,
       type: 0,
     });
-    console.log(monthly_premium);
+    // console.log(monthly_premium);
     initial_premium = total_premium_due / Number(installment?.split("_")[0]);
     total_premium_due = monthly_premium;
   }
@@ -134,9 +134,9 @@ const _calculate_tmp = async (data: {
   fv?: number; // future value
   type?: number; //when the payments are due: 0: end of the period (default), 1: beginning of period
 }) => {
-  console.log(data);
+  // console.log(data);
   let { ir = 35 / 100 / 11, np = 11, pv = 2130.06, fv = 0, type = 0 } = data;
-  console.log(ir, np, pv, fv, type);
+  // console.log(ir, np, pv, fv, type);
 
   var pmt, pvif;
 

@@ -9,7 +9,7 @@ const CookieNotice: FC = () => {
   useEffect(() => {
     // check local storage if cookie is accepted
     let cookie_accepted = localStorage.getItem("cookies_accepted");
-    console.log(cookie_accepted);
+    // console.log(cookie_accepted);
     if (!cookie_accepted || cookie_accepted === "false") {
       openModal();
     }

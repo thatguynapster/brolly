@@ -13,7 +13,7 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
   useEffect(() => {
     let mounted = true;
 
-    console.log(policy);
+    // console.log(policy);
 
     // figure out next quote step
     switch (policy.status) {
@@ -39,6 +39,10 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
         setNextStep("documents_verification");
         break;
       case "DOCUMENTS_VERIFIED":
+        setNextStep("finalize_policy");
+        break;
+        
+      case "POLICY_APPROVED":
         setNextStep("completed");
         break;
     }

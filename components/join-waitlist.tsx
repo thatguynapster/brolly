@@ -34,7 +34,7 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
   }
 
   useEffect(() => {
-    console.log(status);
+    // console.log(status);
     setFormStatus(status);
     switch (status) {
       case "error":
@@ -66,11 +66,11 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
           placeholder="Email"
           className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
           onValueChanged={(ev: any) => {
-            console.log(ev);
+            // console.log(ev);
             setEmail(ev.currentTarget.value);
           }}
           onFocusOut={(ev: any) => {
-            console.log(ev);
+            // console.log(ev);
             setEmail(ev.currentTarget.value);
           }}
         />
@@ -81,11 +81,11 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
           placeholder="Whatsapp number"
           className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
           onValueChanged={(ev: any) => {
-            console.log(ev);
+            // console.log(ev);
             setPhone(ev.currentTarget.value);
           }}
           onFocusOut={(ev: any) => {
-            console.log(ev);
+            // console.log(ev);
             setPhone(ev.currentTarget.value);
           }}
         />
@@ -104,10 +104,10 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
       <Modal
         show={formStatus === "success"}
         onConfirm={(ev: any) => {
-          console.log(ev);
+          // console.log(ev);
         }}
         onClose={(ev: any) => {
-          console.log(ev);
+          // console.log(ev);
           setFormStatus(null);
         }}
       >
@@ -120,10 +120,10 @@ const JoinWaitlist: FC<{ status: any; message: any; onValidated: (formData: any)
       <Modal
         show={formStatus === "error"}
         onConfirm={(ev: any) => {
-          console.log(ev);
+          // console.log(ev);
         }}
         onClose={(ev: any) => {
-          console.log(ev);
+          // console.log(ev);
           setFormStatus(null);
         }}
       >

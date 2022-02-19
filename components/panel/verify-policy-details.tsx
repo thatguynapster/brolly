@@ -1,22 +1,10 @@
 import { Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import moment from "moment";
-import React, {
-  FC,
-  Fragment,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import {
-  dataURItoBlob,
-  mkGetReq,
-  mkPostReq,
-  sentenceCase,
-} from "../../utils/functions";
+import { dataURItoBlob, mkPostReq, sentenceCase } from "../../utils/functions";
 import FormGroup from "../form-group";
 import InternationalInput from "../international-input";
 import ListBox from "../list-box";
@@ -28,7 +16,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
   policy,
   onClose,
 }) => {
-  console.log(policy);
+  // console.log(policy);
 
   const sectionsList = [
     "user",
@@ -159,7 +147,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
   ) {
     setPhoneNumberValid(isValid);
     setPhoneNumber(String(value.split("+").pop()));
-    console.log(field, value, isValid, dial_code);
+    // console.log(field, value, isValid, dial_code);
     setDialCode(dial_code);
   }
 
@@ -204,7 +192,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
     };
 
     final && delete update_data.status;
-    console.log(final, update_data);
+    // console.log(final, update_data);
 
     try {
       let update_insurance_response = await mkPostReq({
@@ -215,7 +203,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
         isJSON: true,
         data: JSON.stringify(update_data),
       });
-      console.log(update_insurance_response);
+      // console.log(update_insurance_response);
 
       if (update_insurance_response.httpStatus) {
         toast.error(update_insurance_response.title);
@@ -224,12 +212,12 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
         setDetailsSection("");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
   const _uploadDocs = async () => {
-    console.log("uploading licence image");
+    // console.log("uploading licence image");
     let form_data = new FormData();
     form_data.append("file", driverLicence);
 
@@ -266,7 +254,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
         isJSON: false,
         data: form_data,
       });
-      console.log(upload_licence_response);
+      // console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
@@ -276,7 +264,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
         onClose && onClose();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -562,7 +550,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                   id: "0",
                 }}
                 onValueChange={(_type: any) => {
-                  console.log(_type);
+                  // console.log(_type);
                   setVehicleType(_type.value);
                 }}
               />
@@ -649,7 +637,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                   id: "0",
                 }}
                 onValueChange={(_type: any) => {
-                  console.log(_type);
+                  // console.log(_type);
                   setVehicleUse(_type.value);
                 }}
               />
@@ -873,7 +861,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                   id: "0",
                 }}
                 onValueChange={(_YoR: any) => {
-                  console.log(_YoR);
+                  // console.log(_YoR);
                   setRegistrationYear(_YoR.name);
                 }}
               />
@@ -1021,7 +1009,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
               <SwitchButton
                 state={diseaseOrComplications}
                 onSwitch={() => {
-                  console.log(diseaseOrComplications);
+                  // console.log(diseaseOrComplications);
                   setDiseaseOrComplications(!diseaseOrComplications);
                 }}
               />
@@ -1097,7 +1085,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
           >
             <p className="text-center font-semibold mb-8">Renewal Notice</p>
             <div className="flex flex-row">
-              <DocumentPreview document={""} />
+              <DocumentPreview documents={null} />
             </div>
           </Transition>
 
@@ -1201,9 +1189,9 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                 multiple={false}
                 allowSelect={true}
                 onFileLoad={(image: any) => {
-                  console.log(image);
+                  // console.log(image);
 
-                  //console.log(productImages)
+                  //// console.log(productImages)
                   var block = image[0].file?.split(";");
 
                   // Get the content type of the image
@@ -1214,7 +1202,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
 
                   // Convert it to a blob to upload
                   var blobImage = dataURItoBlob(realData);
-                  console.log(blobImage);
+                  // console.log(blobImage);
 
                   setDriverLicence(blobImage);
                 }}
@@ -1232,9 +1220,9 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
               disabled={detailsSection === "user"}
               onClick={(ev) => {
                 ev.preventDefault();
-                console.log(
-                  sectionsList[sectionsList.indexOf(detailsSection) - 1]
-                );
+                // console.log(
+                //   sectionsList[sectionsList.indexOf(detailsSection) - 1]
+                // );
                 setTempSection(
                   sectionsList[sectionsList.indexOf(detailsSection) - 1]
                 );
@@ -1255,9 +1243,9 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                 }
 
                 _updateInsuranceDetails();
-                console.log(
-                  sectionsList[sectionsList.indexOf(detailsSection) + 1]
-                );
+                // console.log(
+                //   sectionsList[sectionsList.indexOf(detailsSection) + 1]
+                // );
                 setTempSection(
                   sectionsList[sectionsList.indexOf(detailsSection) + 1]
                 );

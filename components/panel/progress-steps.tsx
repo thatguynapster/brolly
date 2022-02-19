@@ -14,7 +14,7 @@ const ProgressSteps: FC<{
   useEffect(() => {
     let mounted = true;
 
-    console.log(progress);
+    // console.log(progress);
 
     return () => {
       mounted = false;

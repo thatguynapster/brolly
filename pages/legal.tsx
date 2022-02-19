@@ -21,10 +21,10 @@ const Legal: FC = () => {
   const [nextSection, setNextSection] = useState<string>("");
 
   useEffect(() => {
-    console.log(window.location.href);
+    // console.log(window.location.href);
     // get page endpoint
     let endpoint = getQuery("section");
-    console.log(endpoint);
+    // console.log(endpoint);
     if (endpoint && endpoint !== "") {
       setActiveSection("");
       setNextSection(endpoint);
@@ -112,7 +112,7 @@ const Legal: FC = () => {
                     onClick={() => {
                       setNextSection("faq");
                       setActiveSection("");
-                      console.log(`active: ${activeSection}; next: ${nextSection}`);
+                      // console.log(`active: ${activeSection}; next: ${nextSection}`);
                     }}
                   >
                     <span>FAQ</span>
@@ -127,7 +127,7 @@ const Legal: FC = () => {
                     onClick={() => {
                       setNextSection("tos");
                       setActiveSection("");
-                      console.log(`active: ${activeSection}; next: ${nextSection}`);
+                      // console.log(`active: ${activeSection}; next: ${nextSection}`);
                     }}
                   >
                     <span>Terms of Service</span>
@@ -142,7 +142,7 @@ const Legal: FC = () => {
                     onClick={() => {
                       setNextSection("privacy");
                       setActiveSection("");
-                      console.log(`active: ${activeSection}; next: ${nextSection}`);
+                      // console.log(`active: ${activeSection}; next: ${nextSection}`);
                     }}
                   >
                     <span>Privacy Policy</span>
@@ -157,7 +157,7 @@ const Legal: FC = () => {
                     onClick={() => {
                       setNextSection("cookies");
                       setActiveSection("");
-                      console.log(`active: ${activeSection}; next: ${nextSection}`);
+                      // console.log(`active: ${activeSection}; next: ${nextSection}`);
                     }}
                   >
                     <span>Cookies Policy</span>

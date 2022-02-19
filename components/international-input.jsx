@@ -58,9 +58,9 @@ export default function InternationalInput({ firstLoad, defaultValue, name, defa
                         //     (onValueChange(name, e.currentTarget.value, false));
                     }}
                     onBlur={e => {
-                        console.log(phone.selectedCountryData)
+                        // console.log(phone.selectedCountryData)
                         let dial_code = phone.selectedCountryData.dialCode
-                        console.log(dial_code)
+                        // console.log(dial_code)
                         setVal(phone?.getNumber().split('+')[1] ?? "");
                         phone?.isValidNumber() ?
                             (onValueChange(name, phone?.getNumber(), phone?.isValidNumber(), dial_code)) :
