@@ -137,7 +137,7 @@ const QuotesView: FC<{}> = ({}) => {
       </div>
 
       {currentView === "index" && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[calc(100vh-168px)] overflow-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-[calc(100vh-168px)] overflow-auto">
           {currentView === "index" &&
             policies?.map((_pol: any, i: string) => {
               return (

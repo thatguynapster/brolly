@@ -1,7 +1,21 @@
-import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import { ArrowRightIcon, EyeIcon, LockClosedIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import {
+  ArrowRightIcon,
+  EyeIcon,
+  EyeOffIcon,
+  LockClosedIcon,
+  MenuIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import { Modal } from "../modal";
 import router from "next/router";
 import CheckPremium from "../check-premium";
@@ -10,7 +24,7 @@ import { toast } from "react-toastify";
 import { getQuery, mkPostReq } from "../../utils/functions";
 import InternationalInput from "../international-input";
 
-const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComplete }) => {
+const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
   const [loginSection, setLoginSection] = useState<string>("login"); // login | reset
 
   const [showPasss, setShowPass] = useState<boolean>(false); // password | text
@@ -30,7 +44,12 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
 
   const { GLOBAL_OBJ, AUTH_LOGIN } = useContext(AuthContext);
 
-  async function _handlePhoneNumber(field: string, value: string, isValid: boolean, dial_code: any) {
+  async function _handlePhoneNumber(
+    field: string,
+    value: string,
+    isValid: boolean,
+    dial_code: any
+  ) {
     setPhoneValid(isValid);
     setPhone(String(value.split("+").pop()));
     // console.log(field, value, isValid, dial_code);
@@ -73,7 +92,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
           isLoggedIn: true,
           currentPage: "quotes",
         });
-        onLoginComplete("vehicle_verify");
+        onLoginComplete();
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -110,17 +129,18 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
         }),
         isJSON: true,
       });
-      // console.log(set_password_response);
+      console.log(set_password_response);
 
       if (set_password_response.status) {
         toast.error(set_password_response.title);
       } else {
-        AUTH_LOGIN({
-          token: set_password_response.id_token,
-          isLoggedIn: true,
-          currentPage: "quotes",
-        });
-        onLoginComplete("vehicle_verify");
+        setPhone(set_password_response.phoneNumber);
+        setPassword(newPass);
+        setPhoneValid(true);
+
+        setIsNewUser(false);
+
+        _handleLogin();
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -177,7 +197,8 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                 firstLoad
                 className={`appearance-none relative block w-full py-3 px-4 placeholder-[#848484] border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
                 label={{
-                  classNames: "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
+                  classNames:
+                    "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
                   text: "Phone Number",
                 }}
                 name={"pickupNumber"}
@@ -237,7 +258,10 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-main hover:bg-primary-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-border"
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <LockClosedIcon className="h-5 w-5 text-white group-hover:text-white" aria-hidden="true" />
+                <LockClosedIcon
+                  className="h-5 w-5 text-white group-hover:text-white"
+                  aria-hidden="true"
+                />
               </span>
               Sign in
             </button>
@@ -292,20 +316,25 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                     setShowPass(!showPasss);
                   }}
                 >
-                  <EyeIcon className="w-4 h-4" />
+                  {showPasss ? (
+                    <EyeOffIcon className="w-4 h-4" />
+                  ) : (
+                    <EyeIcon className="w-4 h-4" />
+                  )}
                 </span>
               </div>
               <em className="text-sm text-gray-500">
-                Password must be at least 6 characters and must have one alphabet and one special character{" "}
+                Password must be at least 6 characters and must have one
+                alphabet and one special character{" "}
               </em>
 
               <div className="flex relative">
-                <label htmlFor="newPass" className="sr-only">
+                <label htmlFor="confirmPass" className="sr-only">
                   Confirm Password
                 </label>
                 <input
-                  id="newPass"
-                  name="newPass"
+                  id="confirmPass"
+                  name="confirmPass"
                   type={showConfPass ? "text" : "password"}
                   autoComplete="off"
                   // required
@@ -321,7 +350,11 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                     setShowConfPass(!showConfPass);
                   }}
                 >
-                  <EyeIcon className="w-4 h-4" />
+                  {showConfPass ? (
+                    <EyeOffIcon className="w-4 h-4" />
+                  ) : (
+                    <EyeIcon className="w-4 h-4" />
+                  )}
                 </span>
               </div>
             </div>

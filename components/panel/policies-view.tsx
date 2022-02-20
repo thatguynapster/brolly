@@ -136,7 +136,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
         console.log(display_docs);
 
         let temp_docs: { name: string; type: string }[] = [];
-        insurance_documents_response.map((_d: any) => {
+        display_docs.map((_d: any) => {
           temp_docs.push({ name: _d.docURL, type: _d.docType });
         });
         console.log(temp_docs);
@@ -194,7 +194,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-[calc(100vh-168px)] overflow-auto">
         {currentView === "index" &&
           policies?.map((_pol: any, i: string) => {
             return (
