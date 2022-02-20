@@ -9,13 +9,24 @@ const FileUpload: FC<{
   allowSelect: boolean;
   multiple: boolean;
   onFileLoad: (images: string | ArrayBuffer | null) => void;
+  defaultImage?: any;
   // onFileDelete: (images: string | ArrayBuffer | null) => void;
-}> = ({ allowSelect, multiple, onFileLoad }) => {
+}> = ({ allowSelect, multiple, onFileLoad, defaultImage }) => {
   const [imageUrl, setImageUrl] = useState<any>(null);
   const [imagePreviews, setImagePreviews] = useState<{ file: any; name: string; size: string }[]>([]);
 
   let imageInput: HTMLInputElement | null = null;
   const fileSize = 10485760;
+
+
+  useEffect(()=>{
+    if(defaultImage){
+      setImagePreviews([{
+        file: null, 
+        name: defaultImage["docURL"], 
+        size: "",}]);
+    }
+  }, [defaultImage])
 
   function onImageUpload(e: any) {
     const files: any = Array.from(e.target.files);
@@ -112,7 +123,7 @@ const FileUpload: FC<{
                     >
                       <img
                         alt="upload preview"
-                        src={String(_img.file)}
+                        src={_img.file? String(_img.file): `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_img.name}`}
                         className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
                       />
 

@@ -12,12 +12,13 @@ import AgreementForm from "./agreement-form";
 import PaymentForm from "./payment-form";
 import CheckPremium from "../check-premium";
 import PremiumRequest from "./premium-request";
+import SubmitDocumentsView from "./submit-documents-view";
 
 const QuotesView: FC<{}> = ({}) => {
   const [policies, setPolicies] = useState<any>(null);
 
   const [currentView, setCurrentView] = useState<
-    "index" | "quote_details" | "mandate_form" | "agreement_form" | "payment"
+    "index" | "quote_details" | "mandate_form" | "agreement_form" | "payment" | "submit_documents"
   >("index");
 
   const statusList = [
@@ -163,6 +164,10 @@ const QuotesView: FC<{}> = ({}) => {
                       case "payment":
                         setCurrentView("payment");
                         break;
+                      case "submit_documents":
+                        console.log("submit_documents")
+                        setCurrentView("submit_documents");
+                        break;
                     }
                     // setShowPolicyDetails(true);
                   }}
@@ -223,6 +228,20 @@ const QuotesView: FC<{}> = ({}) => {
         <PaymentForm
           policy={policyDetails}
           onReturn={() => {
+            setCurrentView("index");
+            _getUserInsurances();
+          }}
+        />
+      )}
+
+      {currentView === "submit_documents" && (
+        <SubmitDocumentsView
+          policy={policyDetails}
+          onReturn={() => {
+            setCurrentView("index");
+            _getUserInsurances();
+          }}
+          onProceed={()=>{
             setCurrentView("index");
             _getUserInsurances();
           }}
