@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
 import { TypeOfUseProps } from "../types";
-import { mkGetReq, mkPostReq } from "../utils/functions";
+import { mkGetReq, mkPostReq, noOfInstallmentIntValue } from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
 import AuthContext from "../context/auth-context";
@@ -657,10 +657,13 @@ const CheckPremium: FC<{
             }}
           />
 
-          {noOfInstallments === "full_payment"
-            ? premiumDue && (
-                <p className="w-max mx-auto text-5xl font-bold">
-                  &#8373;{premiumDue}
+          {noOfInstallments === "FULL_PAYMENT"
+            ? initialPremium && (
+                <p>
+                  One Time Payment: {" "}
+                  <span className="w-max mx-auto text-lg font-bold">
+                    &#8373;{initialPremium}
+                  </span>
                 </p>
               )
             : premiumDue && (
@@ -677,10 +680,10 @@ const CheckPremium: FC<{
                       &#8373;{premiumDue}
                     </span>
                     <span>
-                      {noOfInstallments === "full_payment"
+                      {noOfInstallments === "FULL_PAYMENT"
                         ? ""
                         : `/m for ${
-                            String(noOfInstallments).split("_")[0]
+                            noOfInstallmentIntValue(String(noOfInstallments).split("_")[0])
                           } months`}
                     </span>
                   </p>

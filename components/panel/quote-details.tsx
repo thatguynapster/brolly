@@ -11,6 +11,7 @@ import {
   dataURItoBlob,
   mkGetReq,
   mkPostReq,
+  noOfInstallmentIntValue,
   sentenceCase,
 } from "../../utils/functions";
 import FormGroup from "../form-group";
@@ -944,10 +945,10 @@ const QuoteDetails: FC<{
             <FormGroup
               type="text"
               id="noOfInstallments"
-              label="No. Of Installments"
+              label="Installment Period"
               placeholder=""
               className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(noOfInstallments.replace("_", " "))}
+              value={`${noOfInstallmentIntValue(noOfInstallments.split('_')[0])} months`}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled

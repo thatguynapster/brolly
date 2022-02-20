@@ -110,6 +110,21 @@ export function sentenceCase(str: string) {
   return result;
 }
 
+export function noOfInstallmentIntValue(installments: String){
+  switch(installments){
+    case "THREE":
+      return 3;
+    case "SIX":
+      return 6;
+    case "NINE":
+      return 9;
+    case "TWELVE":
+      return 12;
+    default:  
+      return "";
+  }
+}
+
 export function dataURItoBlob(dataURI: string) {
   // convert base64/URLEncoded data component to raw binary data held in a string
   var sliceSize = 512;
