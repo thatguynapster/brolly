@@ -151,7 +151,7 @@ const Home: NextPage = () => {
               </button>
             </Link>
           </div>
-          <div className="w-full md:w-1/2 flex justify-center">
+          <div className="w-full md:w-1/2 flex justify-center md:-z-0">
             <img
               className="animate-swell"
               src="/img/landing-illustration.svg"

@@ -194,7 +194,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-[calc(100vh-168px)] overflow-auto">
         {currentView === "index" &&
           policies?.map((_pol: any, i: string) => {
             return (

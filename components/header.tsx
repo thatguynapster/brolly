@@ -75,7 +75,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                 </Link>
               </nav> */}
 
-              <div className="flex">
+              <div className="flex z-50">
                 <a
                   href="#"
                   className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-primary-main py-2 px-4 border-0 shadow-sm flex items-center space-x-4"

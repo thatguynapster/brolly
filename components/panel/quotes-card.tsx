@@ -1,17 +1,4 @@
-import React, {
-  ChangeEvent,
-  Children,
-  FC,
-  Fragment,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { useMediaQuery } from "react-responsive";
-import { Navbar } from "./navbar";
-import Sidebar from "./sidebar";
-import SidebarMobile from "./sidebar-mobile";
-import moment from "moment";
+import React, { FC, useEffect, useState } from "react";
 import { sentenceCase } from "../../utils/functions";
 
 const QuotesCard: FC<{
@@ -19,7 +6,9 @@ const QuotesCard: FC<{
   view?: string;
   showDetails: (_pol: string, next_step: string) => void;
 }> = ({ policy, view, showDetails }) => {
+  const [isAdminAction, setIsAdminAction] = useState<boolean>(false);
   const [nextStep, setNextStep] = useState<string>("");
+
   useEffect(() => {
     let mounted = true;
 
@@ -28,6 +17,7 @@ const QuotesCard: FC<{
     // figure out next quote step
     switch (policy.status) {
       case "QUOTE_REQUESTED":
+        setIsAdminAction(true);
         setNextStep("quote_confirmation");
         break;
       case "QUOTE_CONFIRMED":
@@ -46,12 +36,13 @@ const QuotesCard: FC<{
         setNextStep("submit_documents");
         break;
       case "DOCUMENTS_SUBMITTED":
+        setIsAdminAction(true);
         setNextStep("documents_verification");
         break;
       case "DOCUMENTS_VERIFIED":
+        setIsAdminAction(true);
         setNextStep("policy_approval");
         break;
-
       case "POLICY_APPROVED":
         setNextStep("completed");
         break;
@@ -83,9 +74,11 @@ const QuotesCard: FC<{
 
       {view !== "policy" && (
         <p className="mt-4">
-          Action required:{" "}
+          {isAdminAction ? null : "Action required: "}
           <span className="px-2 py-1 bg-gray-200 rounded-md capitalize">
-            {nextStep.replaceAll("_", " ")}
+            {`${nextStep.replaceAll("_", " ")} ${
+              isAdminAction ? "in progress" : ""
+            }`}
           </span>
         </p>
       )}
