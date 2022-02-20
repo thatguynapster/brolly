@@ -136,7 +136,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
         console.log(display_docs);
 
         let temp_docs: { name: string; type: string }[] = [];
-        insurance_documents_response.map((_d: any) => {
+        display_docs.map((_d: any) => {
           temp_docs.push({ name: _d.docURL, type: _d.docType });
         });
         console.log(temp_docs);

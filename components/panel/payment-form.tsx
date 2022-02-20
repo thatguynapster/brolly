@@ -9,21 +9,29 @@ import {
 } from "../../utils/functions";
 import { Modal } from "../modal";
 
-const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onReturn }) => {
+const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({
+  policy,
+  onReturn,
+}) => {
   // console.log(policy);
 
-  const [showPendingPaymentModal, setShowPendingPaymentModal] = useState<boolean>(false);
-  const [showPaymentCompleteModal, setShowPaymentCompleteModal] = useState<boolean>(false);
-  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>("Payment successfully made");
+  const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
+  const [showPaymentCompleteModal, setShowPaymentCompleteModal] =
+    useState<boolean>(false);
+  const [paymentSuccessMessage, setPaymentSuccessMessage] = useState<string>(
+    "Payment successfully made"
+  );
 
-  const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
+  const [paymentCheckComplete, setPaymentCheckComplete] =
+    useState<boolean>(false);
+  const [paymentURL, setPaymentURL] = useState<string>("");
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
   const _initiatePayment = async () => {
     // console.log(policy.id);
 
-    setShowPendingPaymentModal(true);
+    setShowPaymentModal(true);
 
     // check if previous payment attempt was successful
     if (policy.pInitialPayment) {
@@ -31,7 +39,7 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
       if (payment_status === "success") {
         //ignore payment and refresh page content
         // initiatePayment("complete");
-        setShowPendingPaymentModal(false);
+        setShowPaymentModal(false);
         setPaymentSuccessMessage("Payment already made");
         setShowPaymentCompleteModal(true);
         return;
@@ -44,29 +52,34 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
         queries: `insuranceId=${policy.id}`,
         token: GLOBAL_OBJ.token,
       });
-      // console.log(initiate_payment_response);
+      console.log(initiate_payment_response);
 
       if (!initiate_payment_response.data) {
         toast.error(initiate_payment_response.title);
       } else {
         // handle success
         // initiatePayment("start", initiate_payment_response.data.reference);
-        openInNewTab(initiate_payment_response.data.authorization_url);
 
-        // console.log("start checking for payment status");
+        setPaymentCheckComplete(true);
+        setPaymentURL(initiate_payment_response.data.authorization_url);
+        // openInNewTab(initiate_payment_response.data.authorization_url);
+
+        console.log("start checking for payment status");
         let payment_status = null;
         let payment_check_interval = setInterval(async () => {
           // console.log("check payment status");
-          payment_status = await checkPaymentStatus(initiate_payment_response.data.reference);
+          payment_status = await checkPaymentStatus(
+            initiate_payment_response.data.reference
+          );
 
           if (payment_status === "success") {
-            setShowPendingPaymentModal(false);
+            setShowPaymentModal(false);
             setPaymentSuccessMessage("Payment successful");
             setShowPaymentCompleteModal(true);
             _finalizePayment(policy.id);
             clearInterval(payment_check_interval);
           }
-        }, 15_000);
+        }, 10_000);
         setTimeout(async () => {
           // console.log("end checking for payment status");
           clearInterval(payment_check_interval);
@@ -113,20 +126,49 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
 
       <div className="w-full py-4 flex flex-col items justify-center space-y-8"></div>
       <div className="flex justify-center">
-        <button className="bg-primary-main px-4 py-2 w-max" onClick={_initiatePayment}>
+        <button
+          className="bg-primary-main px-4 py-2 w-max"
+          onClick={_initiatePayment}
+        >
           Pay for Policy
         </button>
       </div>
 
-      <Modal
-        show={showPendingPaymentModal}
-        onClose={() => {
-          setShowPendingPaymentModal(false);
-        }}
-      >
-        <div className="p-4 flex items-center justify-center">
-          <p className="font-semibold text-lg">Wating for payment confirmation</p>
-        </div>
+      <Modal show={showPaymentModal} onClose={() => {}}>
+        <style global jsx>
+          {`
+            /* iframe itself */
+            .iframe-container > .iframe {
+              display: block;
+              width: 100%;
+              height: 90vh;
+              border: none;
+              justify-content: center;
+              align-items: center;
+            }
+            .iframe-container {
+              width: "100% !important";
+            }
+          `}
+        </style>
+        {paymentCheckComplete && (
+          <div className="iframe-container">
+            <iframe
+              // rel="prefetch"
+              id="iF"
+              title="Main"
+              src={paymentURL}
+              className="iframe"
+              onLoad={() => {}}
+              // async
+            ></iframe>
+          </div>
+          // <div className="p-4 flex items-center justify-center">
+          //   <p className="font-semibold text-lg">
+          //     Wating for payment confirmation
+          //   </p>
+          // </div>
+        )}
       </Modal>
 
       <Modal
@@ -137,7 +179,9 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({ policy, onRet
       >
         <div className="flex flex-col px-4 py-8 space-y-8 items-center">
           <CheckCircleIcon className="text-success-main w-48 h-48" />
-          <h2 className="text-center font-semibold text-md">{paymentSuccessMessage}</h2>
+          <h2 className="text-center font-semibold text-md">
+            {paymentSuccessMessage}
+          </h2>
           <button
             className="bg-primary-main px-4 py-2"
             onClick={() => {
