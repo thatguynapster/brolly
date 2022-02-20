@@ -10,23 +10,27 @@ const FileUpload: FC<{
   multiple: boolean;
   onFileLoad: (images: string | ArrayBuffer | null) => void;
   defaultImage?: any;
-  // onFileDelete: (images: string | ArrayBuffer | null) => void;
-}> = ({ allowSelect, multiple, onFileLoad, defaultImage }) => {
+  type?: string;
+}> = ({ allowSelect, multiple, onFileLoad, defaultImage, type }) => {
   const [imageUrl, setImageUrl] = useState<any>(null);
-  const [imagePreviews, setImagePreviews] = useState<{ file: any; name: string; size: string }[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<
+    { file: any; name: string; size: string }[]
+  >([]);
 
   let imageInput: HTMLInputElement | null = null;
   const fileSize = 10485760;
 
-
-  useEffect(()=>{
-    if(defaultImage){
-      setImagePreviews([{
-        file: null, 
-        name: defaultImage["docURL"], 
-        size: "",}]);
+  useEffect(() => {
+    if (defaultImage) {
+      setImagePreviews([
+        {
+          file: null,
+          name: defaultImage["docURL"],
+          size: "",
+        },
+      ]);
     }
-  }, [defaultImage])
+  }, [defaultImage]);
 
   function onImageUpload(e: any) {
     const files: any = Array.from(e.target.files);
@@ -75,10 +79,24 @@ const FileUpload: FC<{
     }
   }
 
+  // TODO: complete this
+  let fileType = "";
+  switch (type) {
+    case "image":
+      fileType = "image/x-png,image/jpeg";
+      break;
+    case "document":
+      fileType = "";
+      break;
+  }
+
   return (
     <div className=" w-full">
-      {/* <!-- file upload modal --> */}
-      <article aria-label="File Upload Modal" className="relative h-full flex flex-col ">
+      {/* <!-- file upload --> */}
+      <article
+        aria-label="File Upload"
+        className="relative h-full flex flex-col"
+      >
         {/* <!-- scroll area --> */}
         <section className="overflow-auto w-full flex flex-col space-y-8">
           {allowSelect && (
@@ -91,7 +109,7 @@ const FileUpload: FC<{
                 type="file"
                 id="agentImageFile"
                 style={{ display: "none" }}
-                accept="image/x-png,image/jpeg"
+                accept={fileType}
                 ref={(input) => {
                   imageInput = input;
                 }}
@@ -116,29 +134,38 @@ const FileUpload: FC<{
             {imagePreviews.length > 0 ? (
               imagePreviews.map((_img, i, imagePreviews) => {
                 return (
-                  <li className={`block p-1 ${multiple ? "w-1/2" : "w-full"} h-52`} key={i}>
+                  <li
+                    className={`block p-1 ${
+                      multiple ? "w-1/2" : "w-max"
+                    } group`}
+                    key={i}
+                  >
                     <article
                       tabIndex={0}
-                      className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm"
+                      className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline cursor-pointer relative text-transparent hover:text-white"
                     >
-                      <img
-                        alt="upload preview"
-                        src={_img.file? String(_img.file): `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_img.name}`}
-                        className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
-                      />
-
-                      <section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                        <h1 className="flex-1">{_img.name}</h1>
-                        <div className="flex">
-                          <span className="p-1">
-                            <i>
-                              <PhotographIcon className="w-4 h-4" />
-                            </i>
-                          </span>
-
-                          <p className="p-1 size text-xs">{_img.size}</p>
+                      <a
+                        key={i}
+                        className="p-2 flex flex-col"
+                        onClick={() => {
+                          // onView &&
+                          //   onView(
+                          //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
+                          //     doc_type
+                          //   );
+                        }}
+                      >
+                        <img
+                          src="/img/document.svg"
+                          alt="Document Preview"
+                          className="w-1/3"
+                        />
+                        <div className="flex flex-row items-center space-x-4">
+                          <p className="text-dark font-semibold text-sm">
+                            {_img.name}
+                          </p>
                           <button
-                            className="delete ml-auto focus:outline-none group hover:bg-gray-200 p-1 rounded-md"
+                            className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
                             onClick={(ev) => {
                               ev.preventDefault();
                               // remove this image
@@ -148,22 +175,27 @@ const FileUpload: FC<{
                               onFileLoad(null);
                             }}
                           >
-                            <TrashIcon className="w-4 h-4 group-hover:text-danger-main" />
+                            <TrashIcon className="w-5 h-5 " />
                           </button>
                         </div>
-                      </section>
+                      </a>
                     </article>
                   </li>
                 );
               })
             ) : (
-              <li id="empty" className="h-full w-full text-center flex flex-col items-center justify-center">
+              <li
+                id="empty"
+                className="h-full w-full text-center flex flex-col items-center justify-center"
+              >
                 <img
                   className="mx-auto w-32"
                   src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
                   alt="no data"
                 />
-                <span className="text-small text-gray-500">No files selected</span>
+                <span className="text-small text-gray-500">
+                  No files selected
+                </span>
               </li>
             )}
           </ul>

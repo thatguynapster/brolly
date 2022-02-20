@@ -3,29 +3,47 @@ import AuthContext from "../../context/auth-context";
 
 const DocumentPreview: FC<{
   documents: { name: string; type: string }[] | null;
-}> = ({ documents }) => {
+  onView?: (doc: string, type: string) => void;
+}> = ({ documents, onView }) => {
   let grid_length: number | undefined = 0;
-  if (documents && documents.length < 4) {
+  if (documents && documents.length <= 4) {
     grid_length = documents?.length;
   }
 
+  if (documents && documents.length > 4) {
+    grid_length = 4;
+  }
+
   return (
-    <div className={`grid grid-cols-${grid_length} gap-2`}>
+    <div className={`grid grid-cols-2 md:grid-cols-${grid_length} gap-4`}>
       {documents ? (
         documents.map((_doc, i) => {
+          console.log(_doc);
+          let doc_type = "image";
+          if (_doc.name.split(".")[1] == "pdf") {
+            doc_type = "document";
+          }
           return (
             <a
               key={i}
-              className="px-2 flex flex-col items-center justify-center"
-              href={`${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`}
-              download={true}
+              // target="_blank"
+              className="px-2 flex flex-col items-center"
+              // href={`${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`}
+              // download={true}
+              onClick={() => {
+                onView &&
+                  onView(
+                    `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
+                    doc_type
+                  );
+              }}
             >
               <img
                 src="/img/document.svg"
                 alt="Document Preview"
                 className="w-1/2"
               />
-              <p className="w-full text-center font-semibold text-sm line-clamp-2">
+              <p className="w-full text-center font-semibold text-sm">
                 {_doc.type.replaceAll("_", " ")}
               </p>
             </a>

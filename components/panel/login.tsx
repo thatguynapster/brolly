@@ -178,7 +178,7 @@ const Login: FC<{ onLoginComplete: (_status: string) => void }> = ({ onLoginComp
                 className={`appearance-none relative block w-full py-3 px-4 placeholder-[#848484] border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
                 label={{
                   classNames: "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
-                  text: "Pickup Number",
+                  text: "Phone Number",
                 }}
                 name={"pickupNumber"}
                 defaultValue={phone}

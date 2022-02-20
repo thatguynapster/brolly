@@ -1,9 +1,15 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { useRef, FC, Fragment } from 'react'
-import { IModalProps } from '../types'
+import { Dialog, Transition } from "@headlessui/react";
+import { useRef, FC, Fragment } from "react";
+import { IModalProps } from "../types";
 
-export const Modal: FC<IModalProps> = ({ show, onClose, onConfirm, children }) => {
-  let hiddenRef = useRef(null)
+export const Modal: FC<IModalProps> = ({
+  show,
+  onClose,
+  widthClass,
+  onConfirm,
+  children,
+}) => {
+  let hiddenRef = useRef(null);
 
   return (
     <>
@@ -12,7 +18,7 @@ export const Modal: FC<IModalProps> = ({ show, onClose, onConfirm, children }) =
           as="div"
           className="fixed inset-0 z-50 overflow-y-auto"
           onClose={() => {
-            onClose()
+            onClose();
           }}
           initialFocus={hiddenRef}
         >
@@ -30,7 +36,10 @@ export const Modal: FC<IModalProps> = ({ show, onClose, onConfirm, children }) =
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="inline-block h-screen align-middle" aria-hidden="true">
+            <span
+              className="inline-block h-screen align-middle"
+              aria-hidden="true"
+            >
               &#8203;
             </span>
             <Transition.Child
@@ -42,7 +51,11 @@ export const Modal: FC<IModalProps> = ({ show, onClose, onConfirm, children }) =
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md my-8 text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
+              <div
+                className={`inline-block w-full ${
+                  widthClass ?? "max-w-md"
+                } my-8 text-left align-middle transition-all transform bg-white shadow-xl rounded-md`}
+              >
                 <button className="hidden" ref={hiddenRef}></button>
                 {children}
               </div>
@@ -51,5 +64,5 @@ export const Modal: FC<IModalProps> = ({ show, onClose, onConfirm, children }) =
         </Dialog>
       </Transition>
     </>
-  )
-}
+  );
+};
