@@ -2,7 +2,7 @@ import { dataURItoBlob, mkGetReq, mkPostReq, sentenceCase } from "../../utils/fu
 import React, { FC, useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/auth-context";
 import { toast } from "react-toastify";
-import { ChevronLeftIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import FileUpload from "./file-upload";
 
 const SubmitDocumentsView: FC<{
@@ -53,6 +53,8 @@ const SubmitDocumentsView: FC<{
             .then(response => response.json())
             .then((resp)=>{
                 console.log(resp);
+                let filename = docType == "DVLA"? docType: sentenceCase(docType).split('_').join(" ")
+                toast.success(`${filename} uploaded successfully!`)
                 setTimeout(()=>{
                     let temp = {...documents};
                     temp[docType] = resp;
@@ -88,7 +90,7 @@ const SubmitDocumentsView: FC<{
                   } else {
                     // handle success
                     console.log(getDocumentsResponse);
-                    // setDocuments(getDocumentsResponse);
+                    
                     let temp = {...documents};
                     Object.values(getDocumentsResponse).map((document: any) => {                        
                         temp[document["docType"]] = document;
@@ -100,6 +102,29 @@ const SubmitDocumentsView: FC<{
         } catch (error) {
             console.log(error);
         }
+    }
+
+    function handleSubmitOnClick() {
+        
+        if(Object.keys(documents).length != 7){
+            toast.error("All files must be uploaded before submitting")   
+        } else {
+            submitDocuments();
+        }
+
+    }
+
+    const submitDocuments = async () => {
+        await mkGetReq({
+            endpoint: `${process.env.NEXT_PUBLIC_LOCAL_API}/api/insurances/submit-documents/${policy.id}`,
+            queries: "",
+            token: GLOBAL_OBJ.token
+        }).catch(error=>{
+            toast.error(error);
+        }).finally(()=>{
+            toast.success("Documents submitted for verification");
+            onReturn && onReturn();
+        });
     }
 
     useEffect(()=>{
@@ -176,12 +201,17 @@ const SubmitDocumentsView: FC<{
                 </div>
                     )
                 })}
-
           </div>
+            <div className="mt-5">
+                <button className="bg-primary-main rounded-md px-4 py-2 w-full flex justify-center items-center space-x-2 cursor-pointer"
+                onClick={() => handleSubmitOnClick()}>
+                    <span>Submit</span>
+                    <ChevronRightIcon className="w-4 h-4 mt-0.5" />
+                </button>
+            </div>
         </div>
     )
 };
 
 export default SubmitDocumentsView;
-
 
