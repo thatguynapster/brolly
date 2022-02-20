@@ -121,7 +121,7 @@ const QuotesView: FC<{}> = ({}) => {
     return () => {
       mounted = false;
     };
-  }, [GLOBAL_OBJ.data]);
+  }, [GLOBAL_OBJ]);
 
   return (
     <div className="space-y-4">
@@ -139,8 +139,7 @@ const QuotesView: FC<{}> = ({}) => {
       {currentView === "index" && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[calc(100vh-168px)] overflow-auto">
           {currentView === "index" &&
-            policies &&
-            policies.map((_pol: any, i: string) => {
+            policies?.map((_pol: any, i: string) => {
               return (
                 <QuotesCard
                   key={i}

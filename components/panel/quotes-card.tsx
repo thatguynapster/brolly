@@ -1,14 +1,24 @@
-import React, { ChangeEvent, Children, FC, Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  Children,
+  FC,
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useMediaQuery } from "react-responsive";
 import { Navbar } from "./navbar";
 import Sidebar from "./sidebar";
 import SidebarMobile from "./sidebar-mobile";
 import moment from "moment";
+import { sentenceCase } from "../../utils/functions";
 
-const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: string) => void }> = ({
-  policy,
-  showDetails,
-}) => {
+const QuotesCard: FC<{
+  policy: any;
+  view?: string;
+  showDetails: (_pol: string, next_step: string) => void;
+}> = ({ policy, view, showDetails }) => {
   const [nextStep, setNextStep] = useState<string>("");
   useEffect(() => {
     let mounted = true;
@@ -39,9 +49,9 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
         setNextStep("documents_verification");
         break;
       case "DOCUMENTS_VERIFIED":
-        setNextStep("finalize_policy");
+        setNextStep("policy_approval");
         break;
-        
+
       case "POLICY_APPROVED":
         setNextStep("completed");
         break;
@@ -59,17 +69,26 @@ const QuotesCard: FC<{ policy: any; showDetails: (_pol: string, next_step: strin
         showDetails(policy.id, nextStep);
       }}
     >
-      <h1 className="font-semibold">{policy.protectionType}</h1>
+      <h1 className="font-semibold">Brolly Car</h1>
+      <h1 className="">
+        Cover:{" "}
+        <span className="font-semibold">
+          {sentenceCase(policy.protectionType)}
+        </span>
+      </h1>
       <p className="text-gray-700">
-        Premium: <span>GHS {policy.totalPremium?.toFixed(2)}</span>
+        Policy Number:{" "}
+        <span className="font-semibold uppercase">{policy.policyNumber}</span>
       </p>
-      {/* <p className={`w-max rounded-md`}>
-        Renewal Date: {moment(policy.startTime).add("1", "years").subtract("1", "days").format("DD MMM, YYYY")}
-      </p> */}
 
-      <p className="mt-4">
-        Action required: <span className="px-2 py-1 bg-gray-200 rounded-md capitalize">{nextStep.replaceAll("_", " ")}</span>
-      </p>
+      {view !== "policy" && (
+        <p className="mt-4">
+          Action required:{" "}
+          <span className="px-2 py-1 bg-gray-200 rounded-md capitalize">
+            {nextStep.replaceAll("_", " ")}
+          </span>
+        </p>
+      )}
     </div>
   );
 };

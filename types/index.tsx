@@ -93,4 +93,5 @@ export interface IModalProps {
   onConfirm?: Function;
   onClose: Function;
   className?: string;
+  widthClass?: string;
 }

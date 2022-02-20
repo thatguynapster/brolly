@@ -5,9 +5,16 @@ import { mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
 import { Modal } from "../modal";
 import QuotesCard from "./quotes-card";
 import DocumentPreview from "./document-preview";
+import DocumentView from "./document-view";
 
 const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
+
+  const [documentToView, setDocumentToView] = useState<{
+    doc: string;
+    type: string;
+  } | null>(null);
+  const [viewDocument, setViewDocument] = useState<boolean>(false);
 
   const [currentView, setCurrentView] = useState<"index" | "policy_details">(
     "index"
@@ -60,13 +67,13 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
       } else {
         // handle success
 
-        user_policies_response.map((_r: any, i: any) => {
-          console.log(
-            _r.status,
-            statusList.indexOf(_r.status),
-            statusList.indexOf("POLICY_APPROVED")
-          );
-        });
+        // user_policies_response.map((_r: any, i: any) => {
+        //   console.log(
+        //     _r.status,
+        //     statusList.indexOf(_r.status),
+        //     statusList.indexOf("POLICY_APPROVED")
+        //   );
+        // });
 
         let quotes = user_policies_response.filter(
           (_r: any) =>
@@ -84,6 +91,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   };
 
   const _getPolicyDetails = async (policy_id: string) => {
+    setPolicyDetails(null);
     try {
       let policy_details_response = await mkGetReq({
         endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurances/${policy_id}`,
@@ -116,7 +124,17 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
       if (insurance_documents_response.httpStatus) {
         toast.error(insurance_documents_response.title);
       } else {
-        // handle success
+        // filter out unneeded documents
+
+        let display_docs = insurance_documents_response.filter(
+          (_d: any) =>
+            _d.docType === "CERTIFICATE" ||
+            _d.docType === "SUMMARY" ||
+            _d.docType === "CONTRACT" ||
+            _d.docType === "SCHEDULE"
+        );
+        console.log(display_docs);
+
         let temp_docs: { name: string; type: string }[] = [];
         insurance_documents_response.map((_d: any) => {
           temp_docs.push({ name: _d.docURL, type: _d.docType });
@@ -159,52 +177,44 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   useEffect(() => {
     let mounted = true;
 
-    // console.log(GLOBAL_OBJ.data?.user_id);
-    GLOBAL_OBJ.isLoggedIn && GLOBAL_OBJ.data?.user_id && _getUserInsurances();
+    console.log(GLOBAL_OBJ, GLOBAL_OBJ.isLoggedIn && GLOBAL_OBJ.data?.user_id);
+    if (mounted) {
+      if (GLOBAL_OBJ.isLoggedIn) {
+        if (GLOBAL_OBJ.data?.user_id) {
+          _getUserInsurances();
+        }
+      }
+      // GLOBAL_OBJ.isLoggedIn && GLOBAL_OBJ.data?.user_id && _getUserInsurances();
+    }
 
     return () => {
       mounted = false;
     };
-  }, [GLOBAL_OBJ.data]);
+  }, [GLOBAL_OBJ]);
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {currentView === "index" &&
-          policies &&
-          policies.map((_pol: any, i: string) => {
+          policies?.map((_pol: any, i: string) => {
             return (
               <QuotesCard
                 key={i}
                 policy={_pol}
                 showDetails={(policy_id, next_step) => {
-                  // console.log(policy_id, next_step);
+                  console.log(policy_id, next_step);
                   _getPolicyDetails(policy_id);
                   _getInsuranceDocuments(policy_id);
                   //   setCurrentView("policy_details");
                   setShowPolicyDetails(true);
                 }}
+                view="policy"
               />
             );
           })}
       </div>
 
-      {/* progress viewfor forms */}
-
-      {/* {currentView === "policy_details" && (
-        <>
-          <QuoteDetails
-            policy={policyDetails}
-            onClose={_getUserInsurances}
-            onReturn={() => {
-              setCurrentView("index");
-              _getUserInsurances();
-            }}
-          />
-        </>
-      )} */}
-
-      {/* Unconfirmed quote modal */}
+      {/* Policy details modal */}
       <Modal
         show={showPolicyDetails}
         onClose={() => {
@@ -274,7 +284,14 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
                       );
                     })
                   : null} */}
-              <DocumentPreview documents={insuranceDocs} />
+              <DocumentPreview
+                documents={insuranceDocs}
+                onView={(_doc: string, _type: string) => {
+                  setDocumentToView({ doc: _doc, type: _type });
+                  setShowPolicyDetails(false);
+                  setViewDocument(true);
+                }}
+              />
             </div>
             <div className="flex flex-col items-center justify-center space-y-4">
               {(policyDetails.status === "COMPLETED" ||
@@ -298,22 +315,19 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
           </div>
         )}
       </Modal>
-      {/* END Unconfirmed quote modal */}
+      {/* END Policy details modal */}
 
-      {/* Unconfirmed quote modal */}
-      <Modal
-        show={showClaimResponseModal}
+      {/* show document view modal  */}
+      <DocumentView
+        document={documentToView?.doc}
+        show={viewDocument}
+        type={documentToView?.type}
         onClose={() => {
-          setShowClaimResponseModal(false);
+          setViewDocument(false);
+          setShowPolicyDetails(true);
         }}
-      >
-        <div className="p-4 flex items-center justify-center">
-          <p className="font-semibold text-md text-center">
-            {claimResponseText}
-          </p>
-        </div>
-      </Modal>
-      {/* END Unconfirmed quote modal */}
+      />
+      {/* END show document view modal */}
     </div>
   );
 };
