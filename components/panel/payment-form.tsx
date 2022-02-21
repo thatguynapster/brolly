@@ -9,10 +9,11 @@ import {
 } from "../../utils/functions";
 import { Modal } from "../modal";
 
-const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({
-  policy,
-  onReturn,
-}) => {
+const PaymentForm: FC<{
+  policy: any;
+  onReturn?: () => void;
+  onProceed: () => void;
+}> = ({ policy, onReturn, onProceed }) => {
   // console.log(policy);
 
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
@@ -42,6 +43,7 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({
         setShowPaymentModal(false);
         setPaymentSuccessMessage("Payment already made");
         setShowPaymentCompleteModal(true);
+        _finalizePayment(policy.id);
         return;
       }
     }
@@ -103,7 +105,7 @@ const PaymentForm: FC<{ policy: any; onReturn?: () => void }> = ({
     } catch (error) {
       // console.log(error);
     }
-    onReturn && onReturn();
+    onProceed();
   };
 
   useEffect(() => {

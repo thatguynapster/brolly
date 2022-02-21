@@ -131,6 +131,8 @@ const QuoteDetails: FC<{
     { name: string; type: string }[] | null
   >(null);
   const [driverLicence, setDriverLicence] = useState<any>(null);
+  const [driverLicenceFileName, setDriverLicenceFileName] =
+    useState<string>("");
   const [hasLicence, setHasLicence] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
@@ -948,7 +950,9 @@ const QuoteDetails: FC<{
               label="Installment Period"
               placeholder=""
               className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={`${noOfInstallmentIntValue(noOfInstallments.split('_')[0])} months`}
+              value={`${noOfInstallmentIntValue(
+                noOfInstallments.split("_")[0]
+              )} months`}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -965,39 +969,41 @@ const QuoteDetails: FC<{
           </div>
           <div className="grid grid-cols-1 gap-4">
             {driverLicence ? (
-              <li className={`block p-1 w-full h-52`}>
-                <article
-                  tabIndex={0}
-                  className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm"
+              (console.log(driverLicence),
+              (
+                <a
+                  className="flex flex-col w-1/2"
+                  onClick={() => {
+                    // onView &&
+                    //   onView(
+                    //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
+                    //     doc_type
+                    //   );
+                  }}
                 >
                   <img
-                    alt="upload preview"
-                    src={`${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${driverLicence}`}
-                    className="img-preview w-full h-full sticky object-cover rounded-md bg-fixed"
+                    src="/img/document.svg"
+                    alt="Document Preview"
+                    className="w-1/3"
                   />
-
-                  <section className="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                    <h1 className="flex-1">{driverLicence}</h1>
-                    <div className="flex">
-                      <span className="p-1">
-                        <i>
-                          <PhotographIcon className="w-4 h-4" />
-                        </i>
-                      </span>
-                      <button
-                        className="delete ml-auto focus:outline-none group hover:bg-gray-200 p-1 rounded-md"
-                        onClick={(ev) => {
-                          ev.preventDefault();
-                          // remove this image
-                          setDriverLicence(null);
-                        }}
-                      >
-                        <TrashIcon className="w-4 h-4 group-hover:text-danger-main" />
-                      </button>
-                    </div>
-                  </section>
-                </article>
-              </li>
+                  <div className="flex flex-row items-center space-x-4">
+                    <p className="text-dark font-semibold truncate text-sm">
+                      {driverLicenceFileName}
+                    </p>
+                    <button
+                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        // remove this image
+                        setDriverLicence(null);
+                        // setHasStaffId(false);
+                      }}
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </a>
+              ))
             ) : (
               <FileUpload
                 multiple={false}
@@ -1017,9 +1023,10 @@ const QuoteDetails: FC<{
 
                     // Convert it to a blob to upload
                     var blobImage = dataURItoBlob(realData);
-                    // console.log(blobImage);
+                    console.log(blobImage);
 
                     setDriverLicence(blobImage);
+                    setDriverLicenceFileName(image[0].name);
                     return;
                   }
                   setDriverLicence(null);

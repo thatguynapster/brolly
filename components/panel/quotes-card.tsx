@@ -71,6 +71,9 @@ const QuotesCard: FC<{
         Policy Number:{" "}
         <span className="font-semibold uppercase">{policy.policyNumber}</span>
       </p>
+      <p className="text-gray-700">
+        Vehicle Registration: <span className="font-semibold">{policy.registrationNum}</span>
+      </p>
 
       {view !== "policy" && (
         <p className="mt-4">

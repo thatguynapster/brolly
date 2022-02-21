@@ -6,6 +6,7 @@ import { Modal } from "../modal";
 import QuotesCard from "./quotes-card";
 import DocumentPreview from "./document-preview";
 import DocumentView from "./document-view";
+import { CheckCircleIcon } from "@heroicons/react/outline";
 
 const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
   const [policies, setPolicies] = useState<any>(null);
@@ -328,6 +329,31 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
         }}
       />
       {/* END show document view modal */}
+
+      {/* Claim response modal */}
+      <Modal
+        show={showClaimResponseModal}
+        onClose={() => {
+          setShowClaimResponseModal(false);
+        }}
+      >
+        <div className="p-4 flex flex-col items-center justify-center space-y-8">
+          <CheckCircleIcon className="text-success-main w-48 h-48" />
+          <p className="text-lg font-semibold text-center">
+            {claimResponseText}
+          </p>
+
+          <button
+            className="whitespace-nowrap text-base font-medium text-dark bg-primary-main hover:bg-primary-border py-2 px-6 border-0 shadow-sm flex justify-center items-center space-x-4 rounded-lg"
+            onClick={() => {
+              setShowClaimResponseModal(false);
+            }}
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
+      {/* END Claim response modal */}
     </div>
   );
 };
