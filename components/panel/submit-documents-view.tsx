@@ -150,14 +150,14 @@ const SubmitDocumentsView: FC<{
   }, [policy]);
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
+    <div className="w-full bg-white rounded-lg shadow-lg p-4">
       <button
         className="px-3 py-1 text-gray-700 border border-primary-border flex flex-row items-center justify-center space-x-8 hover:bg-primary-main hover:text-dark rounded-md"
         onClick={onReturn}
       >
         <ChevronLeftIcon className="w-4 h-4" /> Back
       </button>
-      <div className="py-4 flex flex-col items justify-center space-y-8">
+      <div className="w-full py-4 flex flex-col items justify-center space-y-8">
         <div className="w-full flex flex-row space-x-4 items-center justify-center">
           <hr className="md:w-full text-gray-700 bg-gray-700" />
           <h1 className="w-max md:whitespace-nowrap text-center font-bold text-lg capitalize">
@@ -173,8 +173,8 @@ const SubmitDocumentsView: FC<{
             console.log(`documents[${doc}]: ${documents[doc]}`);
           }
           return (
-            <div key={doc} className="flex flex-col space-y-4">
-              <div className="flex flex-row space-x-8 items-center">
+            <div key={doc} className="w-full flex flex-col space-y-4">
+              <div className="w-full flex flex-row space-x-8 items-center">
                 <h1 className="w-max whitespace-nowrap text-center font-bold text-md capitalize">
                   {doc == "DVLA" ? doc : sentenceCase(doc).split("_").join(" ")}
                 </h1>

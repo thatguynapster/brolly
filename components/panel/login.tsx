@@ -56,14 +56,14 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
     setDialCode(dial_code);
   }
 
-  const _handleLogin = async () => {
+  const _handleLogin = async (log_dets?: { phone: string; pass: string }) => {
     //check if fields are filled
-    if (!phoneValid) {
+    if (!log_dets && !phoneValid) {
       toast.error("Please provide a valid phone number");
       return;
     }
 
-    if (password === "") {
+    if (!log_dets && password === "") {
       toast.error("Provide your password");
       return;
     }
@@ -72,14 +72,21 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
 
     //hit login api
     try {
+      let some = {
+        password: log_dets?.pass,
+        phoneNumber: log_dets?.phone,
+        rememberMe: false,
+      };
       let login_response = await mkPostReq({
         endpoint: `/api/authenticate`,
         method: "post",
-        data: JSON.stringify({
-          password,
-          phoneNumber: phone.replace(dialCode, ""),
-          rememberMe: false,
-        }),
+        data: log_dets
+          ? JSON.stringify(some)
+          : JSON.stringify({
+              password,
+              phoneNumber: phone.replace(dialCode, ""),
+              rememberMe: false,
+            }),
         isJSON: true,
       });
       // console.log(login_response);
@@ -134,13 +141,12 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
       if (set_password_response.status) {
         toast.error(set_password_response.title);
       } else {
-        setPhone(set_password_response.phoneNumber);
-        setPassword(newPass);
-        setPhoneValid(true);
-
-        setIsNewUser(false);
-
-        _handleLogin();
+        setTimeout(() => {
+          _handleLogin({
+            phone: set_password_response.phoneNumber,
+            pass: newPass,
+          });
+        }, 1000);
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
