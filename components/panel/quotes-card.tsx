@@ -67,9 +67,15 @@ const QuotesCard: FC<{
           {sentenceCase(policy.protectionType)}
         </span>
       </h1>
+      {view === "policy" && (
+        <p className="text-gray-700">
+          Policy Number:{" "}
+          <span className="font-semibold uppercase">{policy.policyNumber}</span>
+        </p>
+      )}
       <p className="text-gray-700">
-        Policy Number:{" "}
-        <span className="font-semibold uppercase">{policy.policyNumber}</span>
+        Vehicle Registration:{" "}
+        <span className="font-semibold">{policy.registrationNum}</span>
       </p>
 
       {view !== "policy" && (

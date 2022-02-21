@@ -230,6 +230,10 @@ const QuotesView: FC<{}> = ({}) => {
             setCurrentView("index");
             _getUserInsurances();
           }}
+          onProceed={() => {
+            setCurrentView("submit_documents");
+            _getUserInsurances();
+          }}
         />
       )}
 

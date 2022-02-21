@@ -360,7 +360,7 @@ const MandateForm: FC<{
           <hr className="md:w-full text-gray-700 bg-gray-700" />
         </div>
 
-        <div className="space-y-4  md:grid md:grid-cols-4 gap-4">
+        <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-4 gap-4">
           <FormGroup
             type="text"
             id="firstName"
@@ -427,7 +427,7 @@ const MandateForm: FC<{
                 id: "0",
               },
               {
-                name: "GRA",
+                name: "VAT",
                 value: "Ghana Revenue Authority",
                 id: "0",
               },

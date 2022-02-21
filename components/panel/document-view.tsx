@@ -11,7 +11,7 @@ const DocumentView: FC<{
   return (
     <Modal
       show={show}
-      widthClass={`${type === "image" ? 'max-w-xl' : "max-w-4xl"}`}
+      widthClass={`${type === "image" ? "max-w-xl" : "max-w-4xl"}`}
       onClose={() => {
         onClose();
       }}
@@ -40,9 +40,11 @@ const DocumentView: FC<{
             // rel="prefetch"
             id="iF"
             title="Main"
-            src={document}
+            src={`${document}#view=fitH`}
             className="iframe"
             onLoad={() => {}}
+            height="100%"
+            width="100%"
             // async
           ></iframe>
         )}

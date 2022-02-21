@@ -136,7 +136,7 @@ const FileUpload: FC<{
                 return (
                   <li
                     className={`block p-1 ${
-                      multiple ? "w-1/2" : "w-max"
+                      multiple ? "w-1/2" : "w-full"
                     } group`}
                     key={i}
                   >
