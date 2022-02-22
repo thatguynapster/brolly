@@ -25,7 +25,7 @@ import { getQuery, mkPostReq } from "../../utils/functions";
 import InternationalInput from "../international-input";
 
 const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
-  const [loginSection, setLoginSection] = useState<string>("login"); // login | reset
+  const [loginSection, setLoginSection] = useState<"login" | "reset" | "">(""); // login | reset
 
   const [showPasss, setShowPass] = useState<boolean>(false); // password | text
   const [showConfPass, setShowConfPass] = useState<boolean>(false);
@@ -160,6 +160,9 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
     setUserKey(String(user_key));
     // console.log(user_key, !(user_key === "" || user_key === null));
     setIsNewUser(!(user_key === "" || user_key === null));
+    setLoginSection(
+      !(user_key === "" || user_key === null) ? "reset" : "login"
+    );
 
     return () => {
       mounted = false;
@@ -175,7 +178,7 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
       {/* Login Section */}
       <Transition
         as={Fragment}
-        show={!isNewUser}
+        show={loginSection === "login"}
         enter="duration-200 ease-out"
         enterFrom="opacity-0 scale-95"
         enterTo="opacity-100 scale-100"
@@ -216,46 +219,25 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
                 readOnly={false}
               />
             </div>
-            {isNewUser ? (
-              <div>
-                <label htmlFor="otpCode" className="sr-only">
-                  One Time Password
-                </label>
-                <input
-                  id="otpCode"
-                  name="otpCode"
-                  type="password"
-                  autoComplete="current-password"
-                  // required
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm"
-                  placeholder="OTP Code"
-                  value={otp}
-                  onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-                    setOTP(ev.currentTarget.value);
-                  }}
-                />
-              </div>
-            ) : (
-              <div>
-                <label htmlFor="userPass" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="userPass"
-                  name="userPass"
-                  type="password"
-                  autoComplete="current-password"
-                  // required
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(ev: ChangeEvent<HTMLInputElement>) => {
-                    // console.log(ev.currentTarget.value);
-                    setPassword(ev.currentTarget.value);
-                  }}
-                />
-              </div>
-            )}
+            <div>
+              <label htmlFor="userPass" className="sr-only">
+                Password
+              </label>
+              <input
+                id="userPass"
+                name="userPass"
+                type="password"
+                autoComplete="current-password"
+                // required
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+                  // console.log(ev.currentTarget.value);
+                  setPassword(ev.currentTarget.value);
+                }}
+              />
+            </div>
           </div>
 
           <div>
@@ -279,7 +261,7 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
       {/* Set New Password Section */}
       <Transition
         as={Fragment}
-        show={isNewUser}
+        show={loginSection === "reset"}
         enter="duration-200 ease-out"
         enterFrom="opacity-0 scale-95"
         enterTo="opacity-100 scale-100"
