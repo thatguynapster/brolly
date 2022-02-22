@@ -25,7 +25,7 @@ const AgreementForm: FC<{
       return;
     }
 
-    toast.info("Updating Quote Information...");
+    // toast.info("Updating Quote Information...");
     let acceptance_data = {
       fullName: `${policy.firstName} ${policy.lastName}`,
       initialDeposit: policy.initialDeposit,

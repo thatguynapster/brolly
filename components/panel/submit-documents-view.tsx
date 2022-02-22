@@ -139,7 +139,9 @@ const SubmitDocumentsView: FC<{
       })
       .finally(() => {
         toast.success("Documents submitted for verification");
-        onProceed();
+        setTimeout(() => {
+          onProceed();
+        }, 2500);
       });
   };
 

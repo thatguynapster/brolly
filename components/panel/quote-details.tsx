@@ -202,7 +202,7 @@ const QuoteDetails: FC<{
   };
 
   const _uploadDocs = async (file?: any) => {
-    toast.info("Uploading licence image");
+    // toast.info("Uploading licence image");
     console.log(file ?? driverLicence);
     let form_data = new FormData();
     form_data.append("file", file ?? driverLicence);
@@ -264,7 +264,7 @@ const QuoteDetails: FC<{
   };
 
   const _updateInsuranceDetails = async (final: boolean = false) => {
-    toast.info("Updating Quote Information...");
+    // toast.info("Updating Quote Information...");
     let update_data = {
       ...policy,
       alterationDetails,
@@ -323,7 +323,9 @@ const QuoteDetails: FC<{
       } else {
         // handle success
         toast.success("Quote Information Updated");
-        onProceed();
+        setTimeout(() => {
+          onProceed();
+        }, 2500);
       }
     } catch (error) {
       // console.log(error);
