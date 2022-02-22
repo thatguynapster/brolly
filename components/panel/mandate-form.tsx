@@ -7,7 +7,12 @@ import moment from "moment";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { dataURItoBlob, mkGetReq, mkPostReq } from "../../utils/functions";
+import {
+  dataURItoBlob,
+  mkGetReq,
+  mkPostReq,
+  noOfInstallmentIntValue,
+} from "../../utils/functions";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
 import DocumentView from "./document-view";
@@ -372,6 +377,11 @@ const MandateForm: FC<{
             (_emp) => _emp.name === user_employment_response.employer
           )[0]
         );
+        setEmployerFull(
+          employerList.filter(
+            (_emp) => _emp.name === user_employment_response.employer
+          )[0].value
+        );
 
         setEmployerAddress(user_employment_response.employerAddress);
 
@@ -439,6 +449,11 @@ const MandateForm: FC<{
       setInitialDeposit(policy.initialDeposit ?? "");
       setMonthlyInstallment(policy.monthlyInstallment ?? "");
       setNoOfInstallments(policy.noOfInstallments ?? "");
+
+      console.log(
+        policy.noOfInstallments,
+        noOfInstallmentIntValue(policy.noOfInstallments.split("_")[0])
+      );
     }
 
     return () => {
@@ -539,7 +554,7 @@ const MandateForm: FC<{
 
           {/* <ListBoxSearch id={""} values={[]} onValueChange={() => {}} /> */}
 
-          <FormGroup
+          {/* <FormGroup
             type="text"
             id="otherName"
             label="Location"
@@ -552,7 +567,7 @@ const MandateForm: FC<{
             onFocusOut={(_val: any) => {
               setAddress(_val.target.value);
             }}
-          />
+          /> */}
 
           <FormGroup
             type="text"
@@ -568,7 +583,7 @@ const MandateForm: FC<{
               setEmployerAddress(_val.target.value);
             }}
           />
-
+          {/* 
           <FormGroup
             type="text"
             id="region"
@@ -582,7 +597,7 @@ const MandateForm: FC<{
             onFocusOut={(_val: any) => {
               setRegion(_val.target.value);
             }}
-          />
+          /> */}
 
           <FormGroup
             type="text"
@@ -694,7 +709,9 @@ const MandateForm: FC<{
             label="Number Of Months"
             placeholder=""
             className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
-            value={noOfInstallments.replace("_", " ")}
+            value={`${noOfInstallmentIntValue(
+              noOfInstallments.split("_")[0]
+            )} Months`}
             onValueChanged={() => {}}
             onFocusOut={() => {}}
             disabled={true}
