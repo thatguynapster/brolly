@@ -200,10 +200,10 @@ const MandateForm: FC<{
     }
   };
 
-  const _uploadPayslip = async () => {
+  const _uploadPayslip = async (file?: File) => {
     // toast.info("Uploading Payslip");
     let form_data = new FormData();
-    form_data.append("file", recentPayslip, recentPayslip.name);
+    form_data.append("file", file ?? recentPayslip);
 
     // for (var entry of form_data.entries()) {
     //   console.log(entry[0] + ": " + entry[1]);
@@ -254,6 +254,7 @@ const MandateForm: FC<{
         toast.error(upload_payslip_response.title);
       } else {
         // handle success
+        setRecentPayslip(upload_payslip_response.docURL);
       }
     } catch (error) {
       // console.log(error);
@@ -804,8 +805,6 @@ const MandateForm: FC<{
 
                     setStaffId(file);
                     _uploadStaffID(file);
-                    // _uploadDocs(file);
-
                     return;
                   }
                   setStaffId(null);
@@ -821,25 +820,22 @@ const MandateForm: FC<{
               </h1>
             </div>
             <div className="grid grid-cols-1 gap-4">
-              {hasPayslip ? (
-                <a
-                  className="flex flex-col w-full"
-                  onClick={() => {
-                    // onView &&
-                    //   onView(
-                    //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                    //     doc_type
-                    //   );
-                  }}
-                >
+              {recentPayslip ? (
+                <a className="flex flex-col w-full">
                   <img
                     src="/img/document.svg"
                     alt="Document Preview"
                     className="w-1/3"
+                    onClick={() => {
+                      setPreviewDoc({
+                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${recentPayslip}`,
+                        type: "image",
+                      });
+                    }}
                   />
                   <div className="flex flex-row items-center space-x-4">
                     <p className="text-dark font-semibold truncate text-sm">
-                      {recentPayslip}
+                      {recentPayslip.name ?? recentPayslip}
                     </p>
                     <button
                       className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
@@ -874,9 +870,15 @@ const MandateForm: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      // console.log(blobImage);
+                      console.log(blobImage);
 
-                      setRecentPayslip(blobImage);
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setRecentPayslip(file);
+                      _uploadPayslip(file);
                       return;
                     }
                     setRecentPayslip(null);
