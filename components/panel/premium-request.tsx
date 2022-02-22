@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import InternationalInput from "../international-input";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
-import { mkPostReq, validateEmail } from "../../utils/functions";
+import { mkGetReq, mkPostReq, validateEmail } from "../../utils/functions";
 import AuthContext from "../../context/auth-context";
 
 const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
@@ -23,6 +23,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   const [referredFrom, setReferredFrom] = useState<string>("");
 
   const [dialCode, setDialCode] = useState<string>("");
+  const [inPanel, setInPanel] = useState<boolean>(false);
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
@@ -102,7 +103,26 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
     }
   };
 
-  const _getUserDetails = async () => {};
+  const _getUserDetails = async () => {
+    try {
+      let set_password_response = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/account`,
+        queries: "",
+        token: GLOBAL_OBJ.token,
+      });
+      // console.log(set_password_response);
+
+      if (set_password_response.status) {
+        toast.error(set_password_response.title);
+      } else {
+        // handle success
+        // TODO: set user details to be prefilled here
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     console.log(window.location.pathname);
