@@ -2,8 +2,8 @@ import React, { useContext, useEffect, FC } from "react";
 import AuthContext from "../../context/auth-context";
 
 const DocumentPreview: FC<{
-  documents: { name: string; type: string }[] | null;
-  onView?: (doc: string, type: string) => void;
+  documents: { name?: string; type?: string }[] | null;
+  onView?: (doc: string, type: "image" | "document" | undefined) => void;
 }> = ({ documents, onView }) => {
   let grid_length: number | undefined = 0;
   if (documents && documents.length <= 4) {
@@ -19,8 +19,8 @@ const DocumentPreview: FC<{
       {documents ? (
         documents.map((_doc, i) => {
           console.log(_doc);
-          let doc_type = "image";
-          if (_doc.name.split(".")[1] == "pdf") {
+          let doc_type: "image" | "document" = "image";
+          if (_doc?.name?.split(".")[1] == "pdf") {
             doc_type = "document";
           }
           return (
@@ -44,7 +44,7 @@ const DocumentPreview: FC<{
                 className="w-1/2"
               />
               <p className="w-full text-center font-semibold text-sm">
-                {_doc.type.replaceAll("_", " ")}
+                {_doc?.type?.replaceAll("_", " ")}
               </p>
             </a>
           );

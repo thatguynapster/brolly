@@ -152,7 +152,7 @@ const SubmitDocumentsView: FC<{
   }, [policy]);
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-lg p-4">
+    <div className="w-full bg-white rounded-lg shadow-lg p-4 max-h-[calc(100vh-168px)] overflow-y-auto">
       <button
         className="px-3 py-1 text-gray-700 border border-primary-border flex flex-row items-center justify-center space-x-8 hover:bg-primary-main hover:text-dark rounded-md"
         onClick={onReturn}

@@ -13,7 +13,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
 
   const [documentToView, setDocumentToView] = useState<{
     doc: string;
-    type: string;
+    type: "image" | "document" | undefined;
   } | null>(null);
   const [viewDocument, setViewDocument] = useState<boolean>(false);
 
@@ -287,7 +287,7 @@ const PoliciesView: FC<{ show?: boolean }> = ({ show }) => {
                   : null} */}
               <DocumentPreview
                 documents={insuranceDocs}
-                onView={(_doc: string, _type: string) => {
+                onView={(_doc: string, _type?: "image" | "document") => {
                   setDocumentToView({ doc: _doc, type: _type });
                   setShowPolicyDetails(false);
                   setViewDocument(true);
