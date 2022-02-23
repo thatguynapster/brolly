@@ -297,37 +297,38 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
 
   useEffect(() => {
     let mounted = true;
+    console.log(policy);
 
     if (policy) {
-      setFirstName(policy.firstName ?? null);
-      setLastName(policy.lastName ?? null);
-      setPhoneNumber(policy.phoneNumber ?? null);
-      setEmail(policy.email ?? null);
-      setUserAddress(policy.userAddress ?? null);
-      setUserOccupation(policy.userOccupation ?? null);
+      setFirstName(policy.firstName ?? "");
+      setLastName(policy.lastName ?? "");
+      setPhoneNumber(policy.phoneNumber ?? "");
+      setEmail(policy.email ?? "");
+      setUserAddress(policy.userAddress ?? "");
+      setUserOccupation(policy.userOccupation ?? "");
 
-      setRegistrationYear(policy.registrationYear ?? null);
-      setVehicleType(policy.vehicleType ?? null);
-      setVehicleUse(policy.vehicleUse ?? null);
-      setVehicleMake(policy.vehicleMake ?? null);
-      setVehicleModel(policy.vehicleModel ?? null);
-      setNumOfPassenger(policy.numOfPassenger ?? null);
-      setChassisNumber(policy.chassisNum ?? null);
-      setVehicleCity(policy.vehicleCity ?? null);
-      setVehiclecubicCap(policy.vehicleCubicCapacity ?? null);
-      setRepairState(policy.repairState ?? null);
-      setVehicleColour(policy.vehicleColour ?? null);
-      setVehicleOwner(policy.vehicleOwner ?? null);
-      setVehicleAlterationDetails(policy.alterationDetails ?? null);
+      setRegistrationYear(policy.registrationYear ?? "");
+      setVehicleType(policy.vehicleType ?? "");
+      setVehicleUse(policy.vehicleUse ?? "");
+      setVehicleMake(policy.vehicleMake ?? "");
+      setVehicleModel(policy.vehicleModel ?? "");
+      setNumOfPassenger(policy.numOfPassenger ?? "");
+      setChassisNumber(policy.chassisNum ?? "");
+      setVehicleCity(policy.vehicleCity ?? "");
+      setVehiclecubicCap(policy.vehicleCubicCapacity ?? "");
+      setRepairState(policy.repairState ?? "");
+      setVehicleColour(policy.vehicleColour ?? "");
+      setVehicleOwner(policy.vehicleOwner ?? "");
+      setVehicleAlterationDetails(policy.alterationDetails ?? "");
 
-      setProtectionType(policy.protectionType ?? null);
-      setExcess(policy.excess ?? null);
-      setVehicleInsuredValue(policy.vehicleInsuredValue ?? null);
+      setProtectionType(policy.protectionType ?? "");
+      setExcess(policy.excess ?? "");
+      setVehicleInsuredValue(policy.vehicleInsuredValue ?? "");
 
-      setHirePurchaseProvider(policy.hirePurchaseProvider ?? null);
+      setHirePurchaseProvider(policy.hirePurchaseProvider ?? "");
 
       setVehicleMainDriver(policy.vehicleMainDriver ?? "");
-      setDiseaseOrComplications(policy.diseaseOrComplications ?? null);
+      setDiseaseOrComplications(policy.diseaseOrComplications ?? "");
 
       setDeclinedByOthernsurer(policy.declinedByOtherInsurer ?? "");
       setPreviouslyIssuedClaim(policy.previouslyIssuedClaim ?? "");
