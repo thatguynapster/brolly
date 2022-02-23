@@ -96,8 +96,26 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
     },
   ];
   const [vehicleType, setVehicleType] = useState<string>("");
+  const [selectedVehicleType, setSelectedVehicleType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Vehicle type",
+    id: "0",
+  });
   const [vehicleMake, setVehicleMake] = useState<string>("");
   const [registrationYear, setRegistrationYear] = useState<string>("");
+  const [selectedRegistrationYear, setSelectedRegistrationYear] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Year of Registration",
+    id: "0",
+  });
   const [vehicleModel, setVehicleModel] = useState<string>("");
   const [numOfPassenger, setNumOfPassenger] = useState<string>("");
   const [chassisNumber, setChassisNumber] = useState<string>("");
@@ -109,6 +127,15 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
     useState<string>("");
   const [vehicleOwner, setVehicleOwner] = useState<string>("");
   const [vehicleUse, setVehicleUse] = useState<string>("");
+  const [selectedVehicleUse, setSelectedVehicleUse] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Type of use",
+    id: "0",
+  });
 
   const [protectionType, setProtectionType] = useState<string>("");
   const [excess, setExcess] = useState<string>("");
@@ -544,13 +571,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "0",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Vehicle type",
-                  id: "0",
-                }}
+                selected={selectedVehicleType}
                 onValueChange={(_type: any) => {
                   // console.log(_type);
+                  setSelectedVehicleType(_type);
                   setVehicleType(_type.value);
                 }}
               />
@@ -631,13 +655,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "9",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Type of use",
-                  id: "0",
-                }}
+                selected={selectedVehicleUse}
                 onValueChange={(_type: any) => {
                   // console.log(_type);
+                  setSelectedVehicleUse(_type);
                   setVehicleUse(_type.value);
                 }}
               />
@@ -855,13 +876,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "1",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Year of Registration",
-                  id: "0",
-                }}
+                selected={selectedRegistrationYear}
                 onValueChange={(_YoR: any) => {
                   // console.log(_YoR);
+                  setSelectedRegistrationYear(_YoR);
                   setRegistrationYear(_YoR.name);
                 }}
               />
