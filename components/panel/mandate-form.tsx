@@ -60,9 +60,7 @@ const MandateForm: FC<{
   const [noOfInstallments, setNoOfInstallments] = useState<string>("");
 
   const [staffId, setStaffId] = useState<any>(null);
-  const [hasStaffId, setHasStaffId] = useState<boolean>(false);
   const [recentPayslip, setRecentPayslip] = useState<any>(null);
-  const [hasPayslip, setHasPayslip] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
@@ -414,7 +412,6 @@ const MandateForm: FC<{
         console.log("staff id found");
         console.log(staff_id[staff_id.length - 1].docURL);
         setStaffId(staff_id[staff_id.length - 1].docURL);
-        setHasStaffId(true);
       } else {
         // console.log("no staff id found");
       }
@@ -427,7 +424,6 @@ const MandateForm: FC<{
         console.log("pay slip found");
         console.log(payslip[payslip.length - 1].docURL);
         setRecentPayslip(staff_id[staff_id.length - 1].docURL);
-        setHasPayslip(true);
       } else {
         // console.log("no pay slip found");
       }
@@ -762,38 +758,34 @@ const MandateForm: FC<{
               </h1>
             </div>
             {staffId ? (
-              (console.log(staffId),
-              (
-                <a className="flex flex-col w-full">
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                    onClick={() => {
-                      setPreviewDoc({
-                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${staffId}`,
-                        type: "image",
-                      });
+              <a className="flex flex-col w-full">
+                <img
+                  src="/img/document.svg"
+                  alt="Document Preview"
+                  className="w-1/3"
+                  onClick={() => {
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${staffId}`,
+                      type: "image",
+                    });
+                  }}
+                />
+                <div className="flex flex-row items-center space-x-4">
+                  <p className="text-dark font-semibold truncate text-sm">
+                    {staffId.name ?? staffId}
+                  </p>
+                  <button
+                    className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+                    onClick={(ev) => {
+                      ev.preventDefault();
+                      // remove this image
+                      setStaffId(null);
                     }}
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {staffId.name ?? staffId}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setStaffId(null);
-                        setHasStaffId(false);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
-              ))
+                  >
+                    <TrashIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              </a>
             ) : (
               <FileUpload
                 multiple={false}
@@ -860,7 +852,6 @@ const MandateForm: FC<{
                         ev.preventDefault();
                         // remove this image
                         setRecentPayslip(null);
-                        setHasPayslip(false);
                       }}
                     >
                       <TrashIcon className="w-5 h-5" />
@@ -991,7 +982,7 @@ const MandateForm: FC<{
                 return;
               }
 
-              if (!hasPayslip) {
+              if (!recentPayslip) {
                 console.log("no payslip, upload new");
                 await _uploadPayslip();
               }

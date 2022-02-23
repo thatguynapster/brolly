@@ -15,7 +15,7 @@ import {
   sentenceCase,
 } from "../../utils/functions";
 import FormGroup from "../form-group";
-import DocumentPreview from "./document-preview";
+import PolicyDocumentsPreview from "./policy-documents-preview";
 import DocumentView from "./document-view";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
@@ -133,9 +133,7 @@ const QuoteDetails: FC<{
   const [monthlyInstallment, setMonthlyInstallment] = useState<string>("");
   const [noOfInstallments, setNoOfInstallments] = useState<string>("");
 
-  const [renewalNotice, setRenewalNotice] = useState<
-    { name: string; type: string }[] | null
-  >(null);
+  const [renewalNotice, setRenewalNotice] = useState<any | null>(null);
   const [driverLicence, setDriverLicence] = useState<any>(null);
   const [driverLicenceFileName, setDriverLicenceFileName] =
     useState<string>("");
@@ -155,19 +153,76 @@ const QuoteDetails: FC<{
       // console.log(policy_docs_response);
 
       // set renewal notice
-      let rn = policy_docs_response.filter(
+      let renewal_notice = policy_docs_response.filter(
         (_doc: any) => _doc.docType === "POLICY_RENEWAL_NOTICE"
       );
 
-      if (rn.length > 0) {
-        // console.log("renewal notices found");
-        // console.log(rn[rn.length - 1].docURL);
-        rn.length > 0 &&
-          setRenewalNotice([
-            { name: rn[rn.length - 1].docURL, type: rn[rn.length - 1].docType },
-          ]);
+      if (renewal_notice.length > 0) {
+        renewal_notice.length > 0 &&
+          setRenewalNotice(renewal_notice[renewal_notice.length - 1].docURL);
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _uploadRenewalNotice = async (file?: File) => {
+    // toast.info("Uploading staff ID");
+    let form_data = new FormData();
+    form_data.append("file", file ?? renewalNotice);
+
+    // for (var entry of form_data.entries()) {
+    //   console.log(entry[0] + ": " + entry[1]);
+    // }
+
+    let insurance_docs = [];
+    try {
+      let uploaded_docs = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
+        token: GLOBAL_OBJ.token,
+        queries: `insuranceId=${policy.id}`,
+      });
+      console.log(uploaded_docs);
+      insurance_docs = uploaded_docs.filter(
+        (_doc: any) => _doc.docType === "POLICY_RENEWAL_NOTICE"
+      );
+      console.log(insurance_docs);
+    } catch (error) {
+      // console.log(error);
+    }
+
+    // delete already existing dvla dov
+    if (insurance_docs.length > 0) {
+      try {
+        let delete_doc = await mkPostReq({
+          endpoint: `/api/insurance-documents/${insurance_docs[0].id}`,
+          isJSON: true,
+          method: "delete",
+          token: GLOBAL_OBJ.token,
+          data: {},
+        });
+        console.log(delete_doc);
+      } catch (error) {
+        // console.log(error);
+      }
+    }
+
+    try {
+      let upload_insurance_doc_response = await mkPostReq({
+        endpoint: `/api/insurance-documents/upload`,
+        queries: `docType=POLICY_RENEWAL_NOTICE&insuranceId=${policy.id}`,
+        method: "post",
+        token: GLOBAL_OBJ.token,
+        isJSON: false,
+        data: form_data,
+      });
+      console.log(upload_insurance_doc_response);
+
+      if (upload_insurance_doc_response.status) {
+        toast.error(upload_insurance_doc_response.title);
       } else {
-        // console.log("no renewal notice found");
+        // handle success
+        setRenewalNotice(upload_insurance_doc_response.docURL);
       }
     } catch (error) {
       // console.log(error);
@@ -427,7 +482,7 @@ const QuoteDetails: FC<{
               label="First Name"
               placeholder="Eg: Jay"
               className="w-full rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={firstName}
+              value={firstName ?? ""}
               onValueChanged={(_val: any) => {
                 setFirstName(_val.target.value);
               }}
@@ -443,7 +498,7 @@ const QuoteDetails: FC<{
               label="Last Name"
               placeholder="Eg: Ford"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={lastName}
+              value={lastName ?? ""}
               onValueChanged={(_val: any) => {
                 setLastName(_val.target.value);
               }}
@@ -458,7 +513,7 @@ const QuoteDetails: FC<{
               label="Phone Number"
               placeholder="Eg: 0231234567"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={`${phoneNumber}`}
+              value={phoneNumber ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -470,7 +525,7 @@ const QuoteDetails: FC<{
               label="Email"
               placeholder="Eg: someone@domain.com"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={email}
+              value={email ?? ""}
               onValueChanged={(_val: any) => {
                 setEmail(_val.target.value);
               }}
@@ -485,7 +540,7 @@ const QuoteDetails: FC<{
               label="Address"
               placeholder="Eg: No. 12 Kpong Street, Achimota"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={userAddress}
+              value={userAddress ?? ""}
               onValueChanged={(_val: any) => {
                 setUserAddress(_val.target.value);
               }}
@@ -500,7 +555,7 @@ const QuoteDetails: FC<{
               label="Occupation"
               placeholder="Eg: Teacher"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
-              value={occupation}
+              value={occupation ?? ""}
               onValueChanged={(_val: any) => {
                 setOccupation(_val.target.value);
               }}
@@ -525,7 +580,7 @@ const QuoteDetails: FC<{
               id="vehicleType"
               label="Vehicle Type"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(vehicleType)}
+              value={sentenceCase(vehicleType ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               editable={false}
@@ -562,7 +617,7 @@ const QuoteDetails: FC<{
               label="Vehicle Cubic Capacity"
               // placeholder="Eg: C350"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={cubicCapacity}
+              value={cubicCapacity ?? ""}
               onValueChanged={(_val: any) => {
                 setCubicCapacity(_val.target.value);
               }}
@@ -579,7 +634,7 @@ const QuoteDetails: FC<{
               label="Vehicle Colour"
               placeholder="Eg: Red"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={colour}
+              value={colour ?? ""}
               onValueChanged={(_val: any) => {
                 setColour(_val.target.value);
               }}
@@ -606,7 +661,7 @@ const QuoteDetails: FC<{
               label="No. of Passengers"
               placeholder="Eg: 5"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={numOfPassenger}
+              value={numOfPassenger ?? ""}
               onValueChanged={(_val: any) => {
                 setNumOfPassenger(_val.target.value);
               }}
@@ -622,7 +677,7 @@ const QuoteDetails: FC<{
               label="Vehicle Repair State"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={repairState}
+              value={repairState ?? ""}
               onValueChanged={(_val: any) => {
                 setRepairState(_val.target.value);
               }}
@@ -637,7 +692,7 @@ const QuoteDetails: FC<{
               label="Vehicle Alteration Details"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={alterationDetails}
+              value={alterationDetails ?? ""}
               onValueChanged={(_val: any) => {
                 setAlterationDetails(_val.target.value);
               }}
@@ -652,7 +707,7 @@ const QuoteDetails: FC<{
               label="Chassis Number"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={chassisNum}
+              value={chassisNum ?? ""}
               onValueChanged={(_val: any) => {
                 setChassisNum(_val.target.value);
               }}
@@ -679,7 +734,7 @@ const QuoteDetails: FC<{
               label="Vehicle City"
               placeholder="Eg: Accra"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleCity}
+              value={vehicleCity ?? ""}
               onValueChanged={(_val: any) => {
                 setVehicleCity(_val.target.value);
               }}
@@ -694,7 +749,7 @@ const QuoteDetails: FC<{
               label="Vehicle Owner"
               placeholder="Eg: Samuel ofori"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={registeredOwner}
+              value={registeredOwner ?? ""}
               onValueChanged={(_val: any) => {
                 setRegisteredOwner(_val.target.value);
               }}
@@ -731,7 +786,7 @@ const QuoteDetails: FC<{
               label="Excess"
               placeholder="Eg: C350"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={excess}
+              value={excess ?? ""}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               disabled
@@ -743,7 +798,7 @@ const QuoteDetails: FC<{
               label="Vehicle Insurance Value"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleInsuredValue}
+              value={vehicleInsuredValue ?? ""}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               disabled
@@ -765,7 +820,7 @@ const QuoteDetails: FC<{
               label="Hire Purchase Provider"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={hirePurchaseProvider}
+              value={hirePurchaseProvider ?? ""}
               onValueChanged={(_val: any) => {
                 setHirePurchaseProvider(_val.target.value);
               }}
@@ -790,7 +845,7 @@ const QuoteDetails: FC<{
               label="Vehicle Main Driver"
               placeholder="Eg: Samuel Ofori"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleMainDriver}
+              value={vehicleMainDriver ?? ""}
               onValueChanged={(_val: any) => {
                 setVehicleMainDriver(_val.target.value);
               }}
@@ -880,7 +935,71 @@ const QuoteDetails: FC<{
                       return <DocumentPreview documents={_ren} key={i} />;
                     })
                   : null} */}
-              <DocumentPreview documents={renewalNotice} />
+              {/* <DocumentPreview documents={renewalNotice} /> */}
+              {renewalNotice ? (
+                <a className="flex flex-col w-full">
+                  <img
+                    src="/img/document.svg"
+                    alt="Document Preview"
+                    className="w-1/3"
+                    onClick={() => {
+                      setPreviewDoc({
+                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${renewalNotice}`,
+                        type: "image",
+                      });
+                    }}
+                  />
+                  <div className="flex flex-row items-center space-x-4">
+                    <p className="text-dark font-semibold truncate text-sm">
+                      {renewalNotice.name ?? renewalNotice}
+                    </p>
+                    <button
+                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+                      onClick={(ev) => {
+                        ev.preventDefault();
+                        // remove this image
+                        setRenewalNotice(null);
+                      }}
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                    </button>
+                  </div>
+                </a>
+              ) : (
+                <FileUpload
+                  allowSelect={!renewalNotice}
+                  multiple={false}
+                  defaultImage={renewalNotice}
+                  onFileLoad={(image: any) => {
+                    console.log(image);
+
+                    if (image) {
+                      //console.log(productImages)
+                      var block = image[0].file?.split(";");
+
+                      // Get the content type of the image
+                      var contentType = block[0].split(":")[1]; // In this case "image/gif"
+
+                      // get the real base64 content of the file
+                      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+
+                      // Convert it to a blob to upload
+                      var blobImage = dataURItoBlob(realData);
+                      console.log(blobImage);
+
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setRenewalNotice(file);
+                      _uploadRenewalNotice(file);
+                      return;
+                    }
+                    setRenewalNotice(null);
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -911,7 +1030,7 @@ const QuoteDetails: FC<{
               label="Out Right Premium"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={outRightPremium}
+              value={outRightPremium ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -923,7 +1042,7 @@ const QuoteDetails: FC<{
               label="Initial Deposit"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={initialDeposit}
+              value={initialDeposit ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -935,7 +1054,7 @@ const QuoteDetails: FC<{
               label="Monthly Installment"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={monthlyInstallment}
+              value={monthlyInstallment ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled

@@ -8,7 +8,7 @@ import { dataURItoBlob, mkPostReq, sentenceCase } from "../../utils/functions";
 import FormGroup from "../form-group";
 import InternationalInput from "../international-input";
 import ListBox from "../list-box";
-import DocumentPreview from "./document-preview";
+import PolicyDocumentsPreview from "./policy-documents-preview";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
 
@@ -1085,7 +1085,7 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
           >
             <p className="text-center font-semibold mb-8">Renewal Notice</p>
             <div className="flex flex-row">
-              <DocumentPreview documents={null} />
+              <PolicyDocumentsPreview documents={null} />
             </div>
           </Transition>
 

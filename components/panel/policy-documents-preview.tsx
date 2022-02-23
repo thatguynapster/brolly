@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, FC } from "react";
 import AuthContext from "../../context/auth-context";
 
-const DocumentsDisplay: FC<{
+const PolicyDocumentsPreview: FC<{
   documents: { name?: string; type?: string }[] | null;
   onView?: (doc: string, type: "image" | "document" | undefined) => void;
 }> = ({ documents, onView }) => {
@@ -63,4 +63,4 @@ const DocumentsDisplay: FC<{
   );
 };
 
-export default DocumentsDisplay;
+export default PolicyDocumentsPreview;
