@@ -4,7 +4,7 @@ import AuthContext from "../../context/auth-context";
 import { mkGetReq, mkPostReq, sentenceCase } from "../../utils/functions";
 import { Modal } from "../modal";
 import QuotesCard from "./quotes-card";
-import DocumentsDisplay from "./document-preview";
+import DocumentsDisplay from "./documents-display";
 import DocumentView from "./document-view";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 

@@ -15,6 +15,7 @@ import {
 } from "../../utils/functions";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
+import DocumentPreview from "./document-preview";
 import DocumentView from "./document-view";
 import FileUpload from "./file-upload";
 
@@ -147,40 +148,6 @@ const MandateForm: FC<{
     let form_data = new FormData();
     form_data.append("file", file ?? staffId);
 
-    // for (var entry of form_data.entries()) {
-    //   console.log(entry[0] + ": " + entry[1]);
-    // }
-
-    let staff_id_docs = [];
-    try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/user-documents/user`,
-        token: GLOBAL_OBJ.token,
-        queries: `userId=${GLOBAL_OBJ.data.user_id}`,
-      });
-      // console.log(uploaded_docs);
-      staff_id_docs = uploaded_docs.filter(
-        (_doc: any) => _doc.docType === "STAFF_ID"
-      );
-      console.log(staff_id_docs);
-    } catch (error) {
-      // console.log(error);
-    }
-
-    // delete already existing dvla dov
-    try {
-      let delete_doc = await mkPostReq({
-        endpoint: `/api/user-documents/${staff_id_docs[0].id}`,
-        isJSON: true,
-        method: "delete",
-        token: GLOBAL_OBJ.token,
-        data: {},
-      });
-      console.log(delete_doc);
-    } catch (error) {
-      // console.log(error);
-    }
-
     try {
       let upload_licence_response = await mkPostReq({
         endpoint: `/api/user-documents/upload`,
@@ -196,11 +163,33 @@ const MandateForm: FC<{
         toast.error(upload_licence_response.title);
       } else {
         // handle success
-        setStaffId(upload_licence_response.docURL);
+        setStaffId({
+          name: upload_licence_response.docURL,
+          id: upload_licence_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
     }
+  };
+
+  const _deleteStaffId = async () => {
+    try {
+      await mkPostReq({
+        endpoint: `/api/user-documents/${staffId.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      }).then(() => {
+        setStaffId(null);
+      });
+      // console.log(delete_doc);
+      toast.success("Driver licence deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+    console.log(staffId);
   };
 
   const _uploadPayslip = async (file?: File) => {
@@ -257,8 +246,28 @@ const MandateForm: FC<{
         toast.error(upload_payslip_response.title);
       } else {
         // handle success
-        setRecentPayslip(upload_payslip_response.docURL);
+        setRecentPayslip({
+          name: upload_payslip_response.docURL,
+          id: upload_payslip_response.id,
+        });
       }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _deletePayslip = async () => {
+    try {
+      let delete_doc = await mkPostReq({
+        endpoint: `/api/user-documents/${recentPayslip.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      });
+      // console.log(delete_doc);
+      toast.success("Payslip deleted.");
+      setRecentPayslip(null);
     } catch (error) {
       // console.log(error);
     }
@@ -282,7 +291,7 @@ const MandateForm: FC<{
       employeeNumber,
       payrollNumber,
       rank,
-      employmentType,
+      employmentType: employmentType.name,
       natureOfEmployment,
       initialDeposit,
       monthlyInstallment,
@@ -402,7 +411,7 @@ const MandateForm: FC<{
         token: GLOBAL_OBJ.token,
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set staff id
       let staff_id = policy_docs_response.filter(
@@ -410,8 +419,11 @@ const MandateForm: FC<{
       );
       if (staff_id.length > 0) {
         console.log("staff id found");
-        console.log(staff_id[staff_id.length - 1].docURL);
-        setStaffId(staff_id[staff_id.length - 1].docURL);
+        console.log(staff_id[staff_id.length - 1]);
+        setStaffId({
+          name: staff_id[staff_id.length - 1].docURL,
+          id: staff_id[staff_id.length - 1].id,
+        });
       } else {
         // console.log("no staff id found");
       }
@@ -422,8 +434,11 @@ const MandateForm: FC<{
       );
       if (payslip.length > 0) {
         console.log("pay slip found");
-        console.log(payslip[payslip.length - 1].docURL);
-        setRecentPayslip(staff_id[staff_id.length - 1].docURL);
+        console.log(payslip[payslip.length - 1]);
+        setRecentPayslip({
+          name: payslip[payslip.length - 1].docURL,
+          id: payslip[payslip.length - 1].id,
+        });
       } else {
         // console.log("no pay slip found");
       }
@@ -758,34 +773,19 @@ const MandateForm: FC<{
               </h1>
             </div>
             {staffId ? (
-              <a className="flex flex-col w-full">
-                <img
-                  src="/img/document.svg"
-                  alt="Document Preview"
-                  className="w-1/3"
-                  onClick={() => {
-                    setPreviewDoc({
-                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${staffId}`,
-                      type: "image",
-                    });
-                  }}
-                />
-                <div className="flex flex-row items-center space-x-4">
-                  <p className="text-dark font-semibold truncate text-sm">
-                    {staffId.name ?? staffId}
-                  </p>
-                  <button
-                    className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      // remove this image
-                      setStaffId(null);
-                    }}
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </a>
+              <DocumentPreview
+                document={staffId.name}
+                onView={(_doc, _type) => {
+                  console.log(_doc, _type);
+                  setPreviewDoc({
+                    doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                    type: _type,
+                  });
+                }}
+                onDelete={() => {
+                  _deleteStaffId();
+                }}
+              />
             ) : (
               <FileUpload
                 multiple={false}
@@ -830,34 +830,47 @@ const MandateForm: FC<{
             </div>
             <div className="grid grid-cols-1 gap-4">
               {recentPayslip ? (
-                <a className="flex flex-col w-full">
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                    onClick={() => {
-                      setPreviewDoc({
-                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${recentPayslip}`,
-                        type: "image",
-                      });
-                    }}
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {recentPayslip.name ?? recentPayslip}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setRecentPayslip(null);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
+                // <a className="flex flex-col w-full">
+                //   <img
+                //     src="/img/document.svg"
+                //     alt="Document Preview"
+                //     className="w-1/3"
+                //     onClick={() => {
+                //       setPreviewDoc({
+                //         doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${recentPayslip}`,
+                //         type: "image",
+                //       });
+                //     }}
+                //   />
+                //   <div className="flex flex-row items-center space-x-4">
+                //     <p className="text-dark font-semibold truncate text-sm">
+                //       {recentPayslip.name ?? recentPayslip}
+                //     </p>
+                //     <button
+                //       className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+                //       onClick={(ev) => {
+                //         ev.preventDefault();
+                //         // remove this image
+                //         setRecentPayslip(null);
+                //       }}
+                //     >
+                //       <TrashIcon className="w-5 h-5" />
+                //     </button>
+                //   </div>
+                // </a>
+                <DocumentPreview
+                  document={recentPayslip.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
+                    });
+                  }}
+                  onDelete={() => {
+                    _deletePayslip();
+                  }}
+                />
               ) : (
                 <FileUpload
                   multiple={false}
@@ -982,15 +995,15 @@ const MandateForm: FC<{
                 return;
               }
 
-              if (!recentPayslip) {
-                console.log("no payslip, upload new");
-                await _uploadPayslip();
-              }
+              // if (!recentPayslip) {
+              //   console.log("no payslip, upload new");
+              //   await _uploadPayslip();
+              // }
 
-              if (!staffId) {
-                console.log("no staff id, upload new");
-                await _uploadStaffID();
-              }
+              // if (!staffId) {
+              //   console.log("no staff id, upload new");
+              //   await _uploadStaffID();
+              // }
               _handleAcceptMandate();
             }}
           >

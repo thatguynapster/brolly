@@ -19,6 +19,7 @@ import PolicyDocumentsPreview from "./policy-documents-preview";
 import DocumentView from "./document-view";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
+import DocumentPreview from "./document-preview";
 
 const QuoteDetails: FC<{
   policy: any;
@@ -135,9 +136,6 @@ const QuoteDetails: FC<{
 
   const [renewalNotice, setRenewalNotice] = useState<any | null>(null);
   const [driverLicence, setDriverLicence] = useState<any>(null);
-  const [driverLicenceFileName, setDriverLicenceFileName] =
-    useState<string>("");
-  const [hasLicence, setHasLicence] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
@@ -150,7 +148,7 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: `insuranceId=${policy.id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set renewal notice
       let renewal_notice = policy_docs_response.filter(
@@ -159,7 +157,10 @@ const QuoteDetails: FC<{
 
       if (renewal_notice.length > 0) {
         renewal_notice.length > 0 &&
-          setRenewalNotice(renewal_notice[renewal_notice.length - 1].docURL);
+          setRenewalNotice({
+            name: renewal_notice[renewal_notice.length - 1].docURL,
+            id: renewal_notice[renewal_notice.length - 1].id,
+          });
       }
     } catch (error) {
       // console.log(error);
@@ -170,42 +171,6 @@ const QuoteDetails: FC<{
     // toast.info("Uploading staff ID");
     let form_data = new FormData();
     form_data.append("file", file ?? renewalNotice);
-
-    // for (var entry of form_data.entries()) {
-    //   console.log(entry[0] + ": " + entry[1]);
-    // }
-
-    let insurance_docs = [];
-    try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/insurance-documents/insurance`,
-        token: GLOBAL_OBJ.token,
-        queries: `insuranceId=${policy.id}`,
-      });
-      console.log(uploaded_docs);
-      insurance_docs = uploaded_docs.filter(
-        (_doc: any) => _doc.docType === "POLICY_RENEWAL_NOTICE"
-      );
-      console.log(insurance_docs);
-    } catch (error) {
-      // console.log(error);
-    }
-
-    // delete already existing dvla dov
-    if (insurance_docs.length > 0) {
-      try {
-        let delete_doc = await mkPostReq({
-          endpoint: `/api/insurance-documents/${insurance_docs[0].id}`,
-          isJSON: true,
-          method: "delete",
-          token: GLOBAL_OBJ.token,
-          data: {},
-        });
-        console.log(delete_doc);
-      } catch (error) {
-        // console.log(error);
-      }
-    }
 
     try {
       let upload_insurance_doc_response = await mkPostReq({
@@ -222,7 +187,10 @@ const QuoteDetails: FC<{
         toast.error(upload_insurance_doc_response.title);
       } else {
         // handle success
-        setRenewalNotice(upload_insurance_doc_response.docURL);
+        setRenewalNotice({
+          name: upload_insurance_doc_response.docURL,
+          id: upload_insurance_doc_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
@@ -236,7 +204,7 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set driver licence
       let dl = policy_docs_response.filter(
@@ -246,8 +214,10 @@ const QuoteDetails: FC<{
       if (dl.length > 0) {
         console.log("driver licence found");
         console.log(dl[dl.length - 1].docURL);
-        setDriverLicence(dl[dl.length - 1].docURL);
-        setHasLicence(true);
+        setDriverLicence({
+          name: dl[dl.length - 1].docURL,
+          id: dl[dl.length - 1].id,
+        });
       } else {
         // console.log("no driver licence found");
       }
@@ -258,43 +228,9 @@ const QuoteDetails: FC<{
 
   const _uploadDocs = async (file?: any) => {
     // toast.info("Uploading licence image");
-    console.log(file ?? driverLicence);
+    console.log(file);
     let form_data = new FormData();
-    form_data.append("file", file ?? driverLicence);
-
-    // for (var entry of form_data.entries()) {
-    //   // console.log(entry[0] + ": " + entry[1]);
-    // }
-
-    let dvla_docs = [];
-    try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/user-documents`,
-        token: GLOBAL_OBJ.token,
-        queries: ``,
-      });
-      // console.log(uploaded_docs);
-      dvla_docs = uploaded_docs.filter(
-        (_doc: any) => _doc.docType === "ID_CARD"
-      );
-      // console.log(dvla_docs);
-    } catch (error) {
-      // console.log(error);
-    }
-
-    // delete already existing dvla dov
-    try {
-      let delete_doc = await mkPostReq({
-        endpoint: `/api/user-documents/${dvla_docs[0].id}`,
-        isJSON: true,
-        method: "delete",
-        token: GLOBAL_OBJ.token,
-        data: {},
-      });
-      // console.log(delete_doc);
-    } catch (error) {
-      // console.log(error);
-    }
+    form_data.append("file", file);
 
     try {
       let upload_licence_response = await mkPostReq({
@@ -311,11 +247,49 @@ const QuoteDetails: FC<{
         toast.error(upload_licence_response.title);
       } else {
         // handle success
-        setDriverLicence(upload_licence_response.docURL);
+        setDriverLicence({
+          name: upload_licence_response.docURL,
+          id: upload_licence_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
     }
+  };
+
+  const _deleteRenewalNotice = async () => {
+    try {
+      let delete_doc = await mkPostReq({
+        endpoint: `/api/insurance-documents/${renewalNotice.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      });
+      // console.log(delete_doc);
+      toast.success("Renewal notice deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _deleteDriverLicence = async (file: any) => {
+    try {
+      await mkPostReq({
+        endpoint: `/api/user-documents/${file.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      }).then(() => {
+        setDriverLicence(null);
+      });
+      // console.log(delete_doc);
+      toast.success("Driver licence deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+    console.log(driverLicence);
   };
 
   const _updateInsuranceDetails = async (final: boolean = false) => {
@@ -928,43 +902,23 @@ const QuoteDetails: FC<{
             </h1>
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-row">
-              {/* {renewalNotice
-                  ? renewalNotice.map((_ren: any, i: any) => {
-                      return <DocumentPreview documents={_ren} key={i} />;
-                    })
-                  : null} */}
-              {/* <DocumentPreview documents={renewalNotice} /> */}
               {renewalNotice ? (
-                <a className="flex flex-col w-full">
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                    onClick={() => {
-                      setPreviewDoc({
-                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${renewalNotice}`,
-                        type: "image",
-                      });
-                    }}
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {renewalNotice.name ?? renewalNotice}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setRenewalNotice(null);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
+                <DocumentPreview
+                  document={renewalNotice.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
+                    });
+                  }}
+                  onDelete={() => {
+                    _deleteRenewalNotice();
+                    setRenewalNotice(null);
+                  }}
+                />
               ) : (
                 <FileUpload
                   allowSelect={!renewalNotice}
@@ -1083,75 +1037,58 @@ const QuoteDetails: FC<{
             </h1>
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
-          <div className="grid grid-cols-1 gap-4">
-            {driverLicence ? (
-              (console.log(driverLicence),
-              (
-                <a className="flex flex-col w-1/2">
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                    onClick={() => {
-                      setPreviewDoc({
-                        doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${driverLicence}`,
-                        type: "image",
-                      });
-                    }}
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {driverLicence.name ?? driverLicence}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setDriverLicence(null);
-                        // setHasStaffId(false);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
-              ))
-            ) : (
-              <FileUpload
-                multiple={false}
-                allowSelect={!driverLicence}
-                onFileLoad={(image: any) => {
-                  console.log(image);
-
-                  if (image) {
-                    //// console.log(productImages)
-                    var block = image[0].file?.split(";");
-
-                    // Get the content type of the image
-                    var contentType = block[0].split(":")[1]; // In this case "image/gif"
-
-                    // get the real base64 content of the file
-                    var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
-
-                    // Convert it to a blob to upload
-                    var blobImage = dataURItoBlob(realData);
-                    console.log(blobImage);
-
-                    let file = new File([blobImage], image[0].name, {
-                      type: contentType,
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex flex-row">
+              {driverLicence ? (
+                <DocumentPreview
+                  document={driverLicence.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
                     });
-                    console.log(file);
+                  }}
+                  onDelete={() => {
+                    _deleteDriverLicence(driverLicence);
+                  }}
+                />
+              ) : (
+                <FileUpload
+                  multiple={false}
+                  allowSelect={!driverLicence}
+                  onFileLoad={(image: any) => {
+                    console.log(image);
 
-                    setDriverLicence(file);
+                    if (image) {
+                      //// console.log(productImages)
+                      var block = image[0].file?.split(";");
 
-                    _uploadDocs(file);
-                    return;
-                  }
-                  setDriverLicence(null);
-                }}
-              />
-            )}
+                      // Get the content type of the image
+                      var contentType = block[0].split(":")[1]; // In this case "image/gif"
+
+                      // get the real base64 content of the file
+                      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+
+                      // Convert it to a blob to upload
+                      var blobImage = dataURItoBlob(realData);
+                      console.log(blobImage);
+
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setDriverLicence(file);
+
+                      _uploadDocs(file);
+                      return;
+                    }
+                    // setDriverLicence(null);
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
 
@@ -1184,17 +1121,16 @@ const QuoteDetails: FC<{
 
               // console.log(allDataValid);
 
-              // if (!driverLicence) {
-              //   toast.error("Attach an image of your ID");
-              //   return;
-              // }
+              if (!driverLicence) {
+                toast.error("Attach an image of your ID");
+                return;
+              }
 
               if (!allDataValid) {
                 toast.error("Confirm all data provided is valid");
                 return;
               }
 
-              // !hasLicence && (await _uploadDocs());
               _updateInsuranceDetails();
             }}
           >

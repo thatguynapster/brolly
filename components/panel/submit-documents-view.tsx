@@ -9,6 +9,8 @@ import AuthContext from "../../context/auth-context";
 import { toast } from "react-toastify";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import FileUpload from "./file-upload";
+import DocumentPreview from "./document-preview";
+import DocumentView from "./document-view";
 
 const SubmitDocumentsView: FC<{
   policy: any;
@@ -19,6 +21,10 @@ const SubmitDocumentsView: FC<{
   const [documents, setDocuments] = useState<any>({});
   const [dvla, setDvla] = useState<any>(null);
   const [carVideo, setCarVideo] = useState<any>(null);
+  const [previewDoc, setPreviewDoc] = useState<{
+    doc: string;
+    type: "image" | "document";
+  } | null>(null);
   const docList = [
     "DVLA",
     "CAR_VIDEO",
@@ -37,9 +43,15 @@ const SubmitDocumentsView: FC<{
       token: GLOBAL_OBJ.token,
       isJSON: true,
       data: "",
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then(() => {
+        let temp = { ...documents };
+        delete temp[doc["docType"]];
+        setDocuments(temp);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const createInsuranceDocument = async (docType: string, file: File) => {
@@ -83,13 +95,13 @@ const SubmitDocumentsView: FC<{
       fileType: "image/jpeg",
     };
     setDocuments(temp);
-    if (documents["docType"]) {
-      await deleteInsuranceDocument(documents["docType"]).then(() => {
-        createInsuranceDocument(docType, file);
-      });
-    } else {
-      createInsuranceDocument(docType, file);
-    }
+    // if (documents["docType"]) {
+    //   await deleteInsuranceDocument(documents["docType"]).then(() => {
+    //     createInsuranceDocument(docType, file);
+    //   });
+    // } else {
+    createInsuranceDocument(docType, file);
+    // }
   };
 
   const getInsuranceDocuments = async () => {
@@ -182,45 +194,62 @@ const SubmitDocumentsView: FC<{
                 </h1>
               </div>
               <div className="grid grid-cols-1 gap-4">
-                <FileUpload
-                  multiple={false}
-                  allowSelect={!documents[doc]}
-                  defaultImage={documents[doc] ? documents[doc] : null}
-                  onFileLoad={(image: any) => {
-                    console.log(image);
-
-                    if (image) {
-                      //console.log(productImages)
-                      var block = image[0].file?.split(";");
-
-                      // Get the content type of the image
-                      var contentType = block[0].split(":")[1]; // In this case "image/gif"
-
-                      // get the real base64 content of the file
-                      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
-
-                      // Convert it to a blob to upload
-                      var blobImage = dataURItoBlob(realData);
-                      console.log(blobImage);
-
-                      let file = new File([blobImage], image[0].name, {
-                        type: contentType,
+                {documents[doc] ? (
+                  <DocumentPreview
+                    document={documents[doc].docURL}
+                    onView={(_doc, _type) => {
+                      console.log(_doc, _type);
+                      setPreviewDoc({
+                        doc: `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc}`,
+                        type: _type,
                       });
-                      console.log(file);
+                    }}
+                    onDelete={() => {
+                      deleteInsuranceDocument(documents[doc]);
+                    }}
+                  />
+                ) : (
+                  <FileUpload
+                    multiple={false}
+                    allowSelect={!documents[doc]}
+                    defaultImage={documents[doc] ? documents[doc] : null}
+                    onFileLoad={(image: any) => {
+                      console.log(image);
 
-                      let temp = { ...documents };
-                      delete temp[doc];
-                      setDocuments(temp);
+                      if (image) {
+                        //console.log(productImages)
+                        var block = image[0].file?.split(";");
 
-                      uploadInsuranceDocument(file, doc);
-                      return;
-                    } else {
-                      let temp = { ...documents };
-                      delete temp[doc];
-                      setDocuments(temp);
-                    }
-                  }}
-                />
+                        // Get the content type of the image
+                        var contentType = block[0].split(":")[1]; // In this case "image/gif"
+
+                        // get the real base64 content of the file
+                        var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+
+                        // Convert it to a blob to upload
+                        var blobImage = dataURItoBlob(realData);
+                        console.log(blobImage);
+
+                        let file = new File([blobImage], image[0].name, {
+                          type: contentType,
+                        });
+                        console.log(file);
+
+                        let temp = { ...documents };
+                        delete temp[doc];
+                        setDocuments(temp);
+
+                        uploadInsuranceDocument(file, doc);
+                        return;
+                      }
+                      // else {
+                      //   let temp = { ...documents };
+                      //   delete temp[doc];
+                      //   setDocuments(temp);
+                      // }
+                    }}
+                  />
+                )}
               </div>
             </div>
           );
@@ -235,6 +264,14 @@ const SubmitDocumentsView: FC<{
           <ChevronRightIcon className="w-4 h-4 mt-0.5" />
         </button>
       </div>
+      <DocumentView
+        document={previewDoc?.doc}
+        show={previewDoc ? true : false}
+        type={previewDoc?.type}
+        onClose={() => {
+          setPreviewDoc(null);
+        }}
+      />
     </div>
   );
 };

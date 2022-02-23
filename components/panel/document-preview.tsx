@@ -1,54 +1,45 @@
-import React, { useContext, useEffect, FC } from "react";
-import AuthContext from "../../context/auth-context";
+import { TrashIcon } from "@heroicons/react/outline";
+import React, { FC } from "react";
 
-const DocumentsDisplay: FC<{
-  documents: { name?: string; type?: string }[] | null;
-  onView?: (doc: string, type: "image" | "document" | undefined) => void;
-}> = ({ documents, onView }) => {
-  let grid_length: number | undefined = 0;
-  if (documents && documents.length <= 4) {
-    grid_length = documents?.length;
-  }
-
-  if (documents && documents.length > 4) {
-    grid_length = 4;
+const DocumentPreview: FC<{
+  document: string | null;
+  onDelete: () => void;
+  onView: (doc: string, type: "image" | "document") => void;
+}> = ({ document, onView, onDelete }) => {
+  let img_types = ["jpg", "jpeg", "png", "gif", "webp"];
+  let doc_type: "image" | "document" = "image";
+  if (!img_types.includes(String(document?.split(".")[1]))) {
+    doc_type = "document";
   }
 
   return (
-    <div className={`grid grid-cols-2 md:grid-cols-${grid_length} gap-4`}>
-      {documents ? (
-        documents.map((_doc, i) => {
-          console.log(_doc);
-          let doc_type: "image" | "document" = "image";
-          if (_doc?.name?.split(".")[1] == "pdf") {
-            doc_type = "document";
-          }
-          return (
-            <a
-              key={i}
-              // target="_blank"
-              className="px-2 flex flex-col items-center"
-              // href={`${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`}
-              // download={true}
-              onClick={() => {
-                onView &&
-                  onView(
-                    `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                    doc_type
-                  );
+    <div className={`w-full`}>
+      {document ? (
+        <a className="flex flex-col w-full">
+          <img
+            src="/img/document.svg"
+            alt="Document Preview"
+            className="w-1/3"
+            onClick={() => {
+              onView(document, doc_type);
+            }}
+          />
+          <div className="flex flex-row items-center space-x-4">
+            <p className="text-dark font-semibold truncate text-sm">
+              {document}
+            </p>
+            <button
+              className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+              onClick={(ev) => {
+                ev.preventDefault();
+                // remove this image
+                onDelete();
               }}
             >
-              <img
-                src="/img/document.svg"
-                alt="Document Preview"
-                className="w-1/2"
-              />
-              <p className="w-full text-center font-semibold text-sm">
-                {_doc?.type?.replaceAll("_", " ")}
-              </p>
-            </a>
-          );
-        })
+              <TrashIcon className="w-5 h-5" />
+            </button>
+          </div>
+        </a>
       ) : (
         <div className="w-full flex flex-col items-center">
           <img
@@ -63,4 +54,4 @@ const DocumentsDisplay: FC<{
   );
 };
 
-export default DocumentsDisplay;
+export default DocumentPreview;
