@@ -96,8 +96,26 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
     },
   ];
   const [vehicleType, setVehicleType] = useState<string>("");
+  const [selectedVehicleType, setSelectedVehicleType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Vehicle type",
+    id: "0",
+  });
   const [vehicleMake, setVehicleMake] = useState<string>("");
   const [registrationYear, setRegistrationYear] = useState<string>("");
+  const [selectedRegistrationYear, setSelectedRegistrationYear] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Year of Registration",
+    id: "0",
+  });
   const [vehicleModel, setVehicleModel] = useState<string>("");
   const [numOfPassenger, setNumOfPassenger] = useState<string>("");
   const [chassisNumber, setChassisNumber] = useState<string>("");
@@ -109,6 +127,15 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
     useState<string>("");
   const [vehicleOwner, setVehicleOwner] = useState<string>("");
   const [vehicleUse, setVehicleUse] = useState<string>("");
+  const [selectedVehicleUse, setSelectedVehicleUse] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Type of use",
+    id: "0",
+  });
 
   const [protectionType, setProtectionType] = useState<string>("");
   const [excess, setExcess] = useState<string>("");
@@ -270,37 +297,38 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
 
   useEffect(() => {
     let mounted = true;
+    console.log(policy);
 
     if (policy) {
-      setFirstName(policy.firstName ?? null);
-      setLastName(policy.lastName ?? null);
-      setPhoneNumber(policy.phoneNumber ?? null);
-      setEmail(policy.email ?? null);
-      setUserAddress(policy.userAddress ?? null);
-      setUserOccupation(policy.userOccupation ?? null);
+      setFirstName(policy.firstName ?? "");
+      setLastName(policy.lastName ?? "");
+      setPhoneNumber(policy.phoneNumber ?? "");
+      setEmail(policy.email ?? "");
+      setUserAddress(policy.userAddress ?? "");
+      setUserOccupation(policy.userOccupation ?? "");
 
-      setRegistrationYear(policy.registrationYear ?? null);
-      setVehicleType(policy.vehicleType ?? null);
-      setVehicleUse(policy.vehicleUse ?? null);
-      setVehicleMake(policy.vehicleMake ?? null);
-      setVehicleModel(policy.vehicleModel ?? null);
-      setNumOfPassenger(policy.numOfPassenger ?? null);
-      setChassisNumber(policy.chassisNum ?? null);
-      setVehicleCity(policy.vehicleCity ?? null);
-      setVehiclecubicCap(policy.vehicleCubicCapacity ?? null);
-      setRepairState(policy.repairState ?? null);
-      setVehicleColour(policy.vehicleColour ?? null);
-      setVehicleOwner(policy.vehicleOwner ?? null);
-      setVehicleAlterationDetails(policy.alterationDetails ?? null);
+      setRegistrationYear(policy.registrationYear ?? "");
+      setVehicleType(policy.vehicleType ?? "");
+      setVehicleUse(policy.vehicleUse ?? "");
+      setVehicleMake(policy.vehicleMake ?? "");
+      setVehicleModel(policy.vehicleModel ?? "");
+      setNumOfPassenger(policy.numOfPassenger ?? "");
+      setChassisNumber(policy.chassisNum ?? "");
+      setVehicleCity(policy.vehicleCity ?? "");
+      setVehiclecubicCap(policy.vehicleCubicCapacity ?? "");
+      setRepairState(policy.repairState ?? "");
+      setVehicleColour(policy.vehicleColour ?? "");
+      setVehicleOwner(policy.vehicleOwner ?? "");
+      setVehicleAlterationDetails(policy.alterationDetails ?? "");
 
-      setProtectionType(policy.protectionType ?? null);
-      setExcess(policy.excess ?? null);
-      setVehicleInsuredValue(policy.vehicleInsuredValue ?? null);
+      setProtectionType(policy.protectionType ?? "");
+      setExcess(policy.excess ?? "");
+      setVehicleInsuredValue(policy.vehicleInsuredValue ?? "");
 
-      setHirePurchaseProvider(policy.hirePurchaseProvider ?? null);
+      setHirePurchaseProvider(policy.hirePurchaseProvider ?? "");
 
       setVehicleMainDriver(policy.vehicleMainDriver ?? "");
-      setDiseaseOrComplications(policy.diseaseOrComplications ?? null);
+      setDiseaseOrComplications(policy.diseaseOrComplications ?? "");
 
       setDeclinedByOthernsurer(policy.declinedByOtherInsurer ?? "");
       setPreviouslyIssuedClaim(policy.previouslyIssuedClaim ?? "");
@@ -544,13 +572,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "0",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Vehicle type",
-                  id: "0",
-                }}
+                selected={selectedVehicleType}
                 onValueChange={(_type: any) => {
                   // console.log(_type);
+                  setSelectedVehicleType(_type);
                   setVehicleType(_type.value);
                 }}
               />
@@ -631,13 +656,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "9",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Type of use",
-                  id: "0",
-                }}
+                selected={selectedVehicleUse}
                 onValueChange={(_type: any) => {
                   // console.log(_type);
+                  setSelectedVehicleUse(_type);
                   setVehicleUse(_type.value);
                 }}
               />
@@ -855,13 +877,10 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                     id: "1",
                   },
                 ]}
-                selected={{
-                  name: "",
-                  value: "Year of Registration",
-                  id: "0",
-                }}
+                selected={selectedRegistrationYear}
                 onValueChange={(_YoR: any) => {
                   // console.log(_YoR);
+                  setSelectedRegistrationYear(_YoR);
                   setRegistrationYear(_YoR.name);
                 }}
               />

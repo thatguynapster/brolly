@@ -3,10 +3,15 @@ import type { NextPage } from "next";
 import FormGroup from "../components/form-group";
 import ListBox from "../components/list-box";
 import { TypeOfUseProps } from "../types";
-import { mkGetReq, mkPostReq, noOfInstallmentIntValue } from "../utils/functions";
+import {
+  mkGetReq,
+  mkPostReq,
+  noOfInstallmentIntValue,
+} from "../utils/functions";
 import checkPremium from "../utils/check-premium";
 import { toast } from "react-toastify";
 import AuthContext from "../context/auth-context";
+import { stringify } from "querystring";
 
 const CheckPremium: FC<{
   onRequestCover?: (request_data: any) => void;
@@ -18,14 +23,50 @@ const CheckPremium: FC<{
   // premium calculation params
 
   const [typeOfQuote, setTypeOfQuote] = useState<string>("");
-  const [vehicleType, setTypeOfCar] = useState<string>("");
+  const [vehicleType, setVehicleType] = useState<string>("");
+  const [selectedTypeOfCar, setSelectedTypeOfCar] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Type of Car",
+    id: "0",
+  });
   const [registrationYear, setYearOfRegistration] = useState<any>("");
+  const [selectedRegistrationYear, setSelectedRegistrationYear] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Year of Registration",
+    id: "0",
+  });
   const [vehicleInsuredValue, setVehicleValue] = useState<any>("");
   const [vehicleUse, setVehicleUse] = useState<string>("");
+  const [selectedVehicleUseType, setSelectedVehicleUseType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Type of use",
+    id: "0",
+  });
   const [numOfPassenger, setPassengerCount] = useState<number | "">("");
   const [whatsappNumber, setWhatsappNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const [noOfInstallments, setInstallmentCount] = useState<string>("");
+  const [noOfInstallments, setNoOfInstallments] = useState<string>("");
+  const [selectedNoOfInstallments, setSelectedNoOfInstallments] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "No. of Installments",
+    id: "0",
+  });
   const [employerType, setEmployerType] = useState<string>("");
   const [referredFrom, setReferredFrom] = useState<string>("");
 
@@ -38,6 +79,112 @@ const CheckPremium: FC<{
   const [installmentOptions, setInstallmentOptions] = useState<
     { name: string; value: string; id: string }[]
   >([]);
+
+  const registrationYearList = [
+    {
+      name: "Y2022",
+      value: "2022",
+      id: "1",
+    },
+    {
+      name: "Y2021",
+      value: "2021",
+      id: "1",
+    },
+    {
+      name: "Y2020",
+      value: "2020",
+      id: "1",
+    },
+    {
+      name: "Y2019",
+      value: "2019",
+      id: "1",
+    },
+    {
+      name: "Y2018",
+      value: "2018",
+      id: "1",
+    },
+    {
+      name: "Y2017",
+      value: "2017",
+      id: "1",
+    },
+    {
+      name: "BEFORE_2017",
+      value: "Before 2017",
+      id: "1",
+    },
+  ];
+
+  const vehicleUseTypeList = [
+    {
+      name: "PRIVATE_USE_OWN_VEHICLE",
+      value: "Private Use (Individul Owned)",
+      id: "1",
+    },
+    {
+      name: "PRIVATE_USE_COMPANY_OWNED",
+      value: "Private Use (Company Owned)",
+      id: "2",
+    },
+    {
+      name: "UBER_BOLT_TANGO_ETC",
+      value: "Uber/Bolt/Yango/Etc",
+      id: "3",
+    },
+    {
+      name: "TAXI",
+      value: "Taxi",
+      id: "4",
+    },
+    {
+      name: "HIRING_CAR",
+      value: "Hiring Car",
+      id: "5",
+    },
+    {
+      name: "BUS",
+      value: "Omni Bus",
+      id: "6",
+    },
+    {
+      name: "OWN_GOODS_CARRYING_VEHICLE",
+      value: "Own Goods Carrying Vehicle",
+      id: "7",
+    },
+    {
+      name: "GENERAL_CARTAGE_ABOVE_3000",
+      value: "General Cartage (Above 3000kg)",
+      id: "8",
+    },
+    {
+      name: "GENERAL_CARTAGE_BELOW_3000",
+      value: "General Cartage (Below 3000kg)",
+      id: "9",
+    },
+    {
+      name: "ARTICULATOR_HEAD",
+      value: "Articulated Truck Head",
+      id: "9",
+    },
+    {
+      name: "SPECIAL_TYPE_SITE",
+      value: "Special Type (Site use only)",
+      id: "9",
+    },
+    {
+      name: "SPECIAL_TYPE_SITE_ROAD",
+      value: "Special Type (Site and Road use)",
+      id: "9",
+    },
+    {
+      name: "TRADE_PLATE",
+      value: "Trade Plate (Personal Use only)",
+      id: "9",
+    },
+  ];
 
   const _handleCheckPremium = async () => {
     if (vehicleType === "") {
@@ -128,7 +275,7 @@ const CheckPremium: FC<{
         id: "0",
       },
     ];
-    
+
     switch (employerType) {
       case "STATE_OR_GOVT":
         installment_options.push(
@@ -320,11 +467,6 @@ const CheckPremium: FC<{
             id="type_of_car"
             values={[
               {
-                name: "",
-                value: "Type of Car",
-                id: "0",
-              },
-              {
                 name: "SEDAN",
                 value: "Saloon/Sedan",
                 id: "1",
@@ -380,14 +522,11 @@ const CheckPremium: FC<{
                 id: "0",
               },
             ]}
-            selected={{
-              name: "",
-              value: "Type of Car",
-              id: "0",
-            }}
+            selected={selectedTypeOfCar}
             onValueChange={(_type: any) => {
               // console.log(_type);
-              setTypeOfCar(_type.name);
+              setSelectedTypeOfCar(_type);
+              setVehicleType(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
@@ -396,55 +535,11 @@ const CheckPremium: FC<{
           <ListBox
             className="bg-[#101d490d] border-none"
             id="year_of_registration"
-            values={[
-              {
-                name: "",
-                value: "Year of Registration",
-                id: "0",
-              },
-              {
-                name: "Y2022",
-                value: "2022",
-                id: "1",
-              },
-              {
-                name: "Y2021",
-                value: "2021",
-                id: "1",
-              },
-              {
-                name: "Y2020",
-                value: "2020",
-                id: "1",
-              },
-              {
-                name: "Y2019",
-                value: "2019",
-                id: "1",
-              },
-              {
-                name: "Y2018",
-                value: "2018",
-                id: "1",
-              },
-              {
-                name: "Y2017",
-                value: "2017",
-                id: "1",
-              },
-              {
-                name: "BEFORE_2017",
-                value: "Before 2017",
-                id: "1",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Year of Registration",
-              id: "0",
-            }}
+            values={registrationYearList}
+            selected={selectedRegistrationYear}
             onValueChange={(_YoR: any) => {
-              // console.log(_YoR);
+              console.log(_YoR);
+              setSelectedRegistrationYear(_YoR);
               setYearOfRegistration(_YoR.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -474,85 +569,11 @@ const CheckPremium: FC<{
           <ListBox
             className="bg-[#101d490d] border-none"
             id="vehicle_type_of_use"
-            values={[
-              {
-                name: "",
-                value: "Type of use",
-                id: "0",
-              },
-              {
-                name: "PRIVATE_USE_OWN_VEHICLE",
-                value: "Private Use (Individul Owned)",
-                id: "1",
-              },
-              {
-                name: "PRIVATE_USE_COMPANY_OWNED",
-                value: "Private Use (Company Owned)",
-                id: "2",
-              },
-              {
-                name: "UBER_BOLT_TANGO_ETC",
-                value: "Uber/Bolt/Yango/Etc",
-                id: "3",
-              },
-              {
-                name: "TAXI",
-                value: "Taxi",
-                id: "4",
-              },
-              {
-                name: "HIRING_CAR",
-                value: "Hiring Car",
-                id: "5",
-              },
-              {
-                name: "BUS",
-                value: "Omni Bus",
-                id: "6",
-              },
-              {
-                name: "OWN_GOODS_CARRYING_VEHICLE",
-                value: "Own Goods Carrying Vehicle",
-                id: "7",
-              },
-              {
-                name: "GENERAL_CARTAGE_ABOVE_3000",
-                value: "General Cartage (Above 3000kg)",
-                id: "8",
-              },
-              {
-                name: "GENERAL_CARTAGE_BELOW_3000",
-                value: "General Cartage (Below 3000kg)",
-                id: "9",
-              },
-              {
-                name: "ARTICULATOR_HEAD",
-                value: "Articulated Truck Head",
-                id: "9",
-              },
-              {
-                name: "SPECIAL_TYPE_SITE",
-                value: "Special Type (Site use only)",
-                id: "9",
-              },
-              {
-                name: "SPECIAL_TYPE_SITE_ROAD",
-                value: "Special Type (Site and Road use)",
-                id: "9",
-              },
-              {
-                name: "TRADE_PLATE",
-                value: "Trade Plate (Personal Use only)",
-                id: "9",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Type of use",
-              id: "0",
-            }}
+            values={vehicleUseTypeList}
+            selected={selectedVehicleUseType}
             onValueChange={(_type: any) => {
               // console.log(_type);
+              setSelectedVehicleUseType(_type);
               setVehicleUse(_type.name);
               setPremiumDue(null);
               setInitialPremium(null);
@@ -644,14 +665,11 @@ const CheckPremium: FC<{
             className="bg-[#101d490d] border-none"
             id="number_of_installments"
             values={installmentOptions}
-            selected={{
-              name: "",
-              value: "No. of Installments",
-              id: "0",
-            }}
+            selected={selectedNoOfInstallments}
             onValueChange={(_IstCnt: any) => {
               // console.log(_IstCnt);
-              setInstallmentCount(_IstCnt.name);
+              setSelectedNoOfInstallments(_IstCnt);
+              setNoOfInstallments(_IstCnt.name);
               setPremiumDue(null);
               setInitialPremium(null);
             }}
@@ -660,7 +678,7 @@ const CheckPremium: FC<{
           {noOfInstallments === "FULL_PAYMENT"
             ? initialPremium && (
                 <p>
-                  One Time Payment: {" "}
+                  One Time Payment:{" "}
                   <span className="w-max mx-auto text-lg font-bold">
                     &#8373;{initialPremium}
                   </span>
@@ -682,9 +700,9 @@ const CheckPremium: FC<{
                     <span>
                       {noOfInstallments === "FULL_PAYMENT"
                         ? ""
-                        : `/m for ${
-                            noOfInstallmentIntValue(String(noOfInstallments).split("_")[0])
-                          } months`}
+                        : `/m for ${noOfInstallmentIntValue(
+                            String(noOfInstallments).split("_")[0]
+                          )} months`}
                     </span>
                   </p>
                 </div>
