@@ -144,21 +144,12 @@ const FileUpload: FC<{
                       tabIndex={0}
                       className="hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline cursor-pointer relative text-transparent hover:text-white"
                     >
-                      <a
-                        key={i}
-                        className="p-2 flex flex-col"
-                        onClick={() => {
-                          // onView &&
-                          //   onView(
-                          //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                          //     doc_type
-                          //   );
-                        }}
-                      >
+                      <a key={i} className="p-2 flex flex-col">
                         <img
                           src="/img/document.svg"
                           alt="Document Preview"
                           className="w-1/3"
+                          onClick={() => {}}
                         />
                         <div className="flex flex-row items-center space-x-4">
                           <p className="text-dark font-semibold text-sm">

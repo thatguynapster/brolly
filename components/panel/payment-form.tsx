@@ -94,7 +94,7 @@ const PaymentForm: FC<{
   };
 
   const _finalizePayment = async (policy_id: string) => {
-    toast.info("Finalizing payment...");
+    // toast.info("Finalizing payment...");
 
     try {
       await mkGetReq({

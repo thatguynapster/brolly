@@ -7,9 +7,16 @@ import moment from "moment";
 import React, { FC, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AuthContext from "../../context/auth-context";
-import { dataURItoBlob, mkGetReq, mkPostReq } from "../../utils/functions";
+import {
+  dataURItoBlob,
+  mkGetReq,
+  mkPostReq,
+  noOfInstallmentIntValue,
+} from "../../utils/functions";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
+import DocumentPreview from "./document-preview";
+import DocumentView from "./document-view";
 import FileUpload from "./file-upload";
 
 const MandateForm: FC<{
@@ -32,65 +39,114 @@ const MandateForm: FC<{
 
   const [address, setAddress] = useState<string>("");
   const [employer, setEmployer] = useState<string>("");
+  const [selectedEmployer, setSelectedEmployer] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({ name: "", value: "Select Employer", id: "" });
   const [employerFull, setEmployerFull] = useState<string>("");
   const [employerAddress, setEmployerAddress] = useState<string>("");
   const [region, setRegion] = useState<string>("");
   const [employeeNumber, setEmployeeNumber] = useState<string>("");
   const [payrollNumber, setPayrollNumber] = useState<string>("");
   const [rank, setRank] = useState<string>("");
-  const [employmentType, setEmploymentType] = useState<string>("");
+  const [employmentType, setEmploymentType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({ name: "", value: "Nature Of Employment", id: "" });
   const [natureOfEmployment, setNatureOfEmployment] = useState<string>("");
   const [initialDeposit, setInitialDeposit] = useState<string>("");
   const [monthlyInstallment, setMonthlyInstallment] = useState<string>("");
   const [noOfInstallments, setNoOfInstallments] = useState<string>("");
 
   const [staffId, setStaffId] = useState<any>(null);
-  const [hasStaffId, setHasStaffId] = useState<boolean>(false);
   const [recentPayslip, setRecentPayslip] = useState<any>(null);
-  const [hasPayslip, setHasPayslip] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
+  const [previewDoc, setPreviewDoc] = useState<{
+    doc: string;
+    type: "image" | "document";
+  } | null>(null);
+
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
-  const _uploadStaffID = async () => {
-    toast.info("Uploading staff ID");
+  const employerList = [
+    {
+      name: "GHANA_POLICE_SERVICE",
+      value: "Ghana Police Service",
+      id: "0",
+    },
+    {
+      name: "GHANA_ARMED_FORCES",
+      value: "Ghana Armed Forces",
+      id: "0",
+    },
+    {
+      name: "VAT",
+      value: "Ghana Revenue Authority",
+      id: "0",
+    },
+    {
+      name: "CEPS",
+      value: "CEPS",
+      id: "0",
+    },
+    {
+      name: "IRS",
+      value: "Internal Revenue Service",
+      id: "0",
+    },
+    {
+      name: "HEALTH_SERVICE",
+      value: "Health Service",
+      id: "0",
+    },
+    {
+      name: "EDUCATION_SERVICE",
+      value: "Education Service",
+      id: "0",
+    },
+    {
+      name: "IMMIGRATION",
+      value: "Ghana Immigration Service",
+      id: "0",
+    },
+    {
+      name: "GHAPOHA",
+      value: "Ghana Ports And Harbours Authority",
+      id: "0",
+    },
+    {
+      name: "OTHER",
+      value: "Other",
+      id: "0",
+    },
+  ];
+
+  const employmentTypeList = [
+    {
+      name: "PERMANENT_FULL_TIME",
+      value: "Permanent Full Time",
+      id: "1",
+    },
+    {
+      name: "CONTRACT",
+      value: "Contract",
+      id: "2",
+    },
+    {
+      name: "PROBATIONARY",
+      value: "Probationary",
+      id: "3",
+    },
+  ];
+
+  const _uploadStaffID = async (file?: File) => {
+    // toast.info("Uploading staff ID");
     let form_data = new FormData();
-    form_data.append("file", staffId);
-
-    // for (var entry of form_data.entries()) {
-    //   console.log(entry[0] + ": " + entry[1]);
-    // }
-
-    let staff_id_docs = [];
-    try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/user-documents`,
-        token: GLOBAL_OBJ.token,
-        queries: ``,
-      });
-      // console.log(uploaded_docs);
-      staff_id_docs = uploaded_docs.filter(
-        (_doc: any) => _doc.docType === "STAFF_ID"
-      );
-      // console.log(staff_id_docs);
-    } catch (error) {
-      // console.log(error);
-    }
-
-    // delete already existing dvla dov
-    try {
-      let delete_doc = await mkPostReq({
-        endpoint: `/api/user-documents/${staff_id_docs[0].id}`,
-        isJSON: true,
-        method: "delete",
-        token: GLOBAL_OBJ.token,
-        data: {},
-      });
-      // console.log(delete_doc);
-    } catch (error) {
-      // console.log(error);
-    }
+    form_data.append("file", file ?? staffId);
 
     try {
       let upload_licence_response = await mkPostReq({
@@ -101,22 +157,45 @@ const MandateForm: FC<{
         isJSON: false,
         data: form_data,
       });
-      // console.log(upload_licence_response);
+      console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
       } else {
         // handle success
+        setStaffId({
+          name: upload_licence_response.docURL,
+          id: upload_licence_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
     }
   };
 
-  const _uploadPayslip = async () => {
-    toast.info("Uploading Payslip");
+  const _deleteStaffId = async () => {
+    try {
+      await mkPostReq({
+        endpoint: `/api/user-documents/${staffId.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      }).then(() => {
+        setStaffId(null);
+      });
+      // console.log(delete_doc);
+      toast.success("Driver licence deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+    console.log(staffId);
+  };
+
+  const _uploadPayslip = async (file?: File) => {
+    // toast.info("Uploading Payslip");
     let form_data = new FormData();
-    form_data.append("file", recentPayslip, recentPayslip.name);
+    form_data.append("file", file ?? recentPayslip);
 
     // for (var entry of form_data.entries()) {
     //   console.log(entry[0] + ": " + entry[1]);
@@ -167,7 +246,28 @@ const MandateForm: FC<{
         toast.error(upload_payslip_response.title);
       } else {
         // handle success
+        setRecentPayslip({
+          name: upload_payslip_response.docURL,
+          id: upload_payslip_response.id,
+        });
       }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _deletePayslip = async () => {
+    try {
+      let delete_doc = await mkPostReq({
+        endpoint: `/api/user-documents/${recentPayslip.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      });
+      // console.log(delete_doc);
+      toast.success("Payslip deleted.");
+      setRecentPayslip(null);
     } catch (error) {
       // console.log(error);
     }
@@ -179,7 +279,7 @@ const MandateForm: FC<{
       return;
     }
 
-    toast.info("Updating Quote Information...");
+    // toast.info("Updating Quote Information...");
     let update_data = {
       firstName,
       lastName: surname,
@@ -191,7 +291,7 @@ const MandateForm: FC<{
       employeeNumber,
       payrollNumber,
       rank,
-      employmentType,
+      employmentType: employmentType.name,
       natureOfEmployment,
       initialDeposit,
       monthlyInstallment,
@@ -200,6 +300,7 @@ const MandateForm: FC<{
         name: `${firstName} ${surname} ${otherNames}`,
         institution: employer,
       },
+      state: region,
       sign: confirmFullName,
       date: moment().format("DD-MM-YYYY"),
     };
@@ -241,7 +342,7 @@ const MandateForm: FC<{
       } else {
         // handle success
         setAddress(user_details_response.address);
-        // setEmploymentType(user_details_response.employerType);
+        setRegion(user_details_response.state);
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -261,8 +362,41 @@ const MandateForm: FC<{
       if (user_employment_response.status) {
         toast.error(user_employment_response.title);
       } else {
-        // handle success
-        setEmploymentType(user_employment_response.employmentType);
+        // handle
+        setEmployeeNumber(user_employment_response.employeeNumber);
+        setPayrollNumber(user_employment_response.payrollNumber);
+        setRank(user_employment_response.rank);
+
+        console.log(
+          employerList.filter(
+            (_emp) => _emp.name === user_employment_response.employer
+          )[0]
+        );
+
+        setEmployer(user_employment_response.employer);
+
+        let temp_sel_emp = employerList.filter(
+          (_emp) => _emp.name === user_employment_response.employer
+        )[0];
+        console.log(temp_sel_emp);
+        setSelectedEmployer(
+          employerList.filter(
+            (_emp) => _emp.name === user_employment_response.employer
+          )[0]
+        );
+        setEmployerFull(
+          employerList.filter(
+            (_emp) => _emp.name === user_employment_response.employer
+          )[0].value
+        );
+
+        setEmployerAddress(user_employment_response.employerAddress);
+
+        setEmploymentType(
+          employmentTypeList.filter(
+            (_emp) => _emp.name === user_employment_response.employmentType
+          )[0]
+        );
       }
     } catch (error) {
       toast.error("Unexpected Error Occurred");
@@ -277,7 +411,7 @@ const MandateForm: FC<{
         token: GLOBAL_OBJ.token,
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set staff id
       let staff_id = policy_docs_response.filter(
@@ -285,9 +419,11 @@ const MandateForm: FC<{
       );
       if (staff_id.length > 0) {
         console.log("staff id found");
-        console.log(staff_id[staff_id.length - 1].docURL);
-        setStaffId(staff_id[staff_id.length - 1].docURL);
-        setHasStaffId(true);
+        console.log(staff_id[staff_id.length - 1]);
+        setStaffId({
+          name: staff_id[staff_id.length - 1].docURL,
+          id: staff_id[staff_id.length - 1].id,
+        });
       } else {
         // console.log("no staff id found");
       }
@@ -298,9 +434,11 @@ const MandateForm: FC<{
       );
       if (payslip.length > 0) {
         console.log("pay slip found");
-        console.log(payslip[payslip.length - 1].docURL);
-        setRecentPayslip(staff_id[staff_id.length - 1].docURL);
-        setHasPayslip(true);
+        console.log(payslip[payslip.length - 1]);
+        setRecentPayslip({
+          name: payslip[payslip.length - 1].docURL,
+          id: payslip[payslip.length - 1].id,
+        });
       } else {
         // console.log("no pay slip found");
       }
@@ -322,6 +460,11 @@ const MandateForm: FC<{
       setInitialDeposit(policy.initialDeposit ?? "");
       setMonthlyInstallment(policy.monthlyInstallment ?? "");
       setNoOfInstallments(policy.noOfInstallments ?? "");
+
+      console.log(
+        policy.noOfInstallments,
+        noOfInstallmentIntValue(policy.noOfInstallments.split("_")[0])
+      );
     }
 
     return () => {
@@ -410,70 +553,11 @@ const MandateForm: FC<{
             id={""}
             label="Employer"
             search={true}
-            values={[
-              {
-                name: "",
-                value: "Employer",
-                id: "0",
-              },
-              {
-                name: "GHANA_POLICE_SERVICE",
-                value: "Ghana Police Service",
-                id: "0",
-              },
-              {
-                name: "GHANA_ARMED_FORCES",
-                value: "Ghana Armed Forces",
-                id: "0",
-              },
-              {
-                name: "VAT",
-                value: "Ghana Revenue Authority",
-                id: "0",
-              },
-              {
-                name: "CEPS",
-                value: "CEPS",
-                id: "0",
-              },
-              {
-                name: "IRS",
-                value: "Internal Revenue Service",
-                id: "0",
-              },
-              {
-                name: "HEALTH_SERVICE",
-                value: "Health Service",
-                id: "0",
-              },
-              {
-                name: "EDUCATION_SERVICE",
-                value: "Education Service",
-                id: "0",
-              },
-              {
-                name: "IMMIGRATION",
-                value: "Ghana Immigration Service",
-                id: "0",
-              },
-              {
-                name: "GHAPOHA",
-                value: "Ghana Ports And Harbours Authority",
-                id: "0",
-              },
-              {
-                name: "OTHER",
-                value: "Other",
-                id: "0",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Employer",
-              id: "0",
-            }}
+            values={employerList}
+            selected={selectedEmployer}
             onValueChange={(_type: any) => {
               console.log(_type);
+              setSelectedEmployer(_type);
               setEmployer(_type.name);
               setEmployerFull(_type.value);
             }}
@@ -481,7 +565,7 @@ const MandateForm: FC<{
 
           {/* <ListBoxSearch id={""} values={[]} onValueChange={() => {}} /> */}
 
-          <FormGroup
+          {/* <FormGroup
             type="text"
             id="otherName"
             label="Location"
@@ -494,7 +578,7 @@ const MandateForm: FC<{
             onFocusOut={(_val: any) => {
               setAddress(_val.target.value);
             }}
-          />
+          /> */}
 
           <FormGroup
             type="text"
@@ -510,7 +594,7 @@ const MandateForm: FC<{
               setEmployerAddress(_val.target.value);
             }}
           />
-
+          {/* 
           <FormGroup
             type="text"
             id="region"
@@ -524,7 +608,7 @@ const MandateForm: FC<{
             onFocusOut={(_val: any) => {
               setRegion(_val.target.value);
             }}
-          />
+          /> */}
 
           <FormGroup
             type="text"
@@ -586,36 +670,11 @@ const MandateForm: FC<{
           <ListBox
             label="Nature of Employment"
             id="natureOfEmployment"
-            values={[
-              {
-                name: "",
-                value: "Nature Of Employment",
-                id: "0",
-              },
-              {
-                name: "PERMANENT_FULL_TIME",
-                value: "Permanent Full Time",
-                id: "1",
-              },
-              {
-                name: "CONTRACT",
-                value: "Contract",
-                id: "2",
-              },
-              {
-                name: "PROBATIONARY",
-                value: "Probationary",
-                id: "3",
-              },
-            ]}
-            selected={{
-              name: "",
-              value: "Nature Of Employment",
-              id: "0",
-            }}
+            values={employmentTypeList}
+            selected={employmentType}
             onValueChange={(_type: any) => {
               console.log(_type);
-              setEmploymentType(_type.name);
+              setEmploymentType(_type);
             }}
           />
 
@@ -661,7 +720,9 @@ const MandateForm: FC<{
             label="Number Of Months"
             placeholder=""
             className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
-            value={noOfInstallments.replace("_", " ")}
+            value={`${noOfInstallmentIntValue(
+              noOfInstallments.split("_")[0]
+            )} Months`}
             onValueChanged={() => {}}
             onFocusOut={() => {}}
             disabled={true}
@@ -711,39 +772,20 @@ const MandateForm: FC<{
                 staff ID
               </h1>
             </div>
-            {hasStaffId ? (
-              <a
-                className="flex flex-col w-full"
-                onClick={() => {
-                  // onView &&
-                  //   onView(
-                  //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                  //     doc_type
-                  //   );
+            {staffId ? (
+              <DocumentPreview
+                document={staffId.name}
+                onView={(_doc, _type) => {
+                  console.log(_doc, _type);
+                  setPreviewDoc({
+                    doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                    type: _type,
+                  });
                 }}
-              >
-                <img
-                  src="/img/document.svg"
-                  alt="Document Preview"
-                  className="w-1/3"
-                />
-                <div className="flex flex-row items-center space-x-4">
-                  <p className="text-dark font-semibold truncate text-sm">
-                    {staffId}
-                  </p>
-                  <button
-                    className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                    onClick={(ev) => {
-                      ev.preventDefault();
-                      // remove this image
-                      setStaffId(null);
-                      setHasStaffId(false);
-                    }}
-                  >
-                    <TrashIcon className="w-5 h-5" />
-                  </button>
-                </div>
-              </a>
+                onDelete={() => {
+                  _deleteStaffId();
+                }}
+              />
             ) : (
               <FileUpload
                 multiple={false}
@@ -765,7 +807,13 @@ const MandateForm: FC<{
                     var blobImage = dataURItoBlob(realData);
                     console.log(blobImage);
 
-                    setStaffId(blobImage);
+                    let file = new File([blobImage], image[0].name, {
+                      type: contentType,
+                    });
+                    console.log(file);
+
+                    setStaffId(file);
+                    _uploadStaffID(file);
                     return;
                   }
                   setStaffId(null);
@@ -781,39 +829,48 @@ const MandateForm: FC<{
               </h1>
             </div>
             <div className="grid grid-cols-1 gap-4">
-              {hasPayslip ? (
-                <a
-                  className="flex flex-col w-full"
-                  onClick={() => {
-                    // onView &&
-                    //   onView(
-                    //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                    //     doc_type
-                    //   );
+              {recentPayslip ? (
+                // <a className="flex flex-col w-full">
+                //   <img
+                //     src="/img/document.svg"
+                //     alt="Document Preview"
+                //     className="w-1/3"
+                //     onClick={() => {
+                //       setPreviewDoc({
+                //         doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${recentPayslip}`,
+                //         type: "image",
+                //       });
+                //     }}
+                //   />
+                //   <div className="flex flex-row items-center space-x-4">
+                //     <p className="text-dark font-semibold truncate text-sm">
+                //       {recentPayslip.name ?? recentPayslip}
+                //     </p>
+                //     <button
+                //       className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
+                //       onClick={(ev) => {
+                //         ev.preventDefault();
+                //         // remove this image
+                //         setRecentPayslip(null);
+                //       }}
+                //     >
+                //       <TrashIcon className="w-5 h-5" />
+                //     </button>
+                //   </div>
+                // </a>
+                <DocumentPreview
+                  document={recentPayslip.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
+                    });
                   }}
-                >
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {recentPayslip}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setRecentPayslip(null);
-                        setHasPayslip(false);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
+                  onDelete={() => {
+                    _deletePayslip();
+                  }}
+                />
               ) : (
                 <FileUpload
                   multiple={false}
@@ -834,9 +891,15 @@ const MandateForm: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      // console.log(blobImage);
+                      console.log(blobImage);
 
-                      setRecentPayslip(blobImage);
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setRecentPayslip(file);
+                      _uploadPayslip(file);
                       return;
                     }
                     setRecentPayslip(null);
@@ -912,7 +975,7 @@ const MandateForm: FC<{
                 return;
               }
 
-              if (employmentType === "") {
+              if (employmentType.name === "") {
                 toast.error("Select employment type");
                 return;
               }
@@ -932,17 +995,15 @@ const MandateForm: FC<{
                 return;
               }
 
-              if (!hasPayslip) {
-                console.log("no payslip, upload new");
-                await _uploadPayslip();
-              }
+              // if (!recentPayslip) {
+              //   console.log("no payslip, upload new");
+              //   await _uploadPayslip();
+              // }
 
-              if (!staffId) {
-                console.log("no staff id, upload new");
-                await _uploadStaffID();
-              }
-              // !hasPayslip && (await _uploadPayslip());
-              // !hasStaffId && (await _uploadStaffID());
+              // if (!staffId) {
+              //   console.log("no staff id, upload new");
+              //   await _uploadStaffID();
+              // }
               _handleAcceptMandate();
             }}
           >
@@ -950,6 +1011,14 @@ const MandateForm: FC<{
           </button>
         </div>
       </div>
+      <DocumentView
+        document={previewDoc?.doc}
+        show={previewDoc ? true : false}
+        type={previewDoc?.type}
+        onClose={() => {
+          setPreviewDoc(null);
+        }}
+      />
     </div>
   );
 };

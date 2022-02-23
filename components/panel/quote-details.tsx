@@ -15,9 +15,11 @@ import {
   sentenceCase,
 } from "../../utils/functions";
 import FormGroup from "../form-group";
-import DocumentPreview from "./document-preview";
+import PolicyDocumentsPreview from "./policy-documents-preview";
+import DocumentView from "./document-view";
 import FileUpload from "./file-upload";
 import SwitchButton from "./switch-button";
+import DocumentPreview from "./document-preview";
 
 const QuoteDetails: FC<{
   policy: any;
@@ -119,6 +121,11 @@ const QuoteDetails: FC<{
   const [previouslyIssuedClaim, setPreviouslyIssuedClaim] =
     useState<string>("");
 
+  const [previewDoc, setPreviewDoc] = useState<{
+    doc: string;
+    type: "image" | "document";
+  } | null>(null);
+
   const [NCDRenewalNotice, setNCDRenewalNotice] = useState<File | null>(null);
 
   const [startDate, setStartDate] = useState<string>("");
@@ -127,13 +134,8 @@ const QuoteDetails: FC<{
   const [monthlyInstallment, setMonthlyInstallment] = useState<string>("");
   const [noOfInstallments, setNoOfInstallments] = useState<string>("");
 
-  const [renewalNotice, setRenewalNotice] = useState<
-    { name: string; type: string }[] | null
-  >(null);
+  const [renewalNotice, setRenewalNotice] = useState<any | null>(null);
   const [driverLicence, setDriverLicence] = useState<any>(null);
-  const [driverLicenceFileName, setDriverLicenceFileName] =
-    useState<string>("");
-  const [hasLicence, setHasLicence] = useState<boolean>(false);
 
   const [allDataValid, setAllDataValid] = useState<boolean>(false);
 
@@ -146,22 +148,49 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: `insuranceId=${policy.id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set renewal notice
-      let rn = policy_docs_response.filter(
+      let renewal_notice = policy_docs_response.filter(
         (_doc: any) => _doc.docType === "POLICY_RENEWAL_NOTICE"
       );
 
-      if (rn.length > 0) {
-        // console.log("renewal notices found");
-        // console.log(rn[rn.length - 1].docURL);
-        rn.length > 0 &&
-          setRenewalNotice([
-            { name: rn[rn.length - 1].docURL, type: rn[rn.length - 1].docType },
-          ]);
+      if (renewal_notice.length > 0) {
+        renewal_notice.length > 0 &&
+          setRenewalNotice({
+            name: renewal_notice[renewal_notice.length - 1].docURL,
+            id: renewal_notice[renewal_notice.length - 1].id,
+          });
+      }
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _uploadRenewalNotice = async (file?: File) => {
+    // toast.info("Uploading staff ID");
+    let form_data = new FormData();
+    form_data.append("file", file ?? renewalNotice);
+
+    try {
+      let upload_insurance_doc_response = await mkPostReq({
+        endpoint: `/api/insurance-documents/upload`,
+        queries: `docType=POLICY_RENEWAL_NOTICE&insuranceId=${policy.id}`,
+        method: "post",
+        token: GLOBAL_OBJ.token,
+        isJSON: false,
+        data: form_data,
+      });
+      console.log(upload_insurance_doc_response);
+
+      if (upload_insurance_doc_response.status) {
+        toast.error(upload_insurance_doc_response.title);
       } else {
-        // console.log("no renewal notice found");
+        // handle success
+        setRenewalNotice({
+          name: upload_insurance_doc_response.docURL,
+          id: upload_insurance_doc_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
@@ -175,7 +204,7 @@ const QuoteDetails: FC<{
         token: GLOBAL_OBJ.token,
         queries: `userId=${GLOBAL_OBJ.data.user_id}`,
       });
-      // console.log(policy_docs_response);
+      console.log(policy_docs_response);
 
       // set driver licence
       let dl = policy_docs_response.filter(
@@ -185,8 +214,10 @@ const QuoteDetails: FC<{
       if (dl.length > 0) {
         console.log("driver licence found");
         console.log(dl[dl.length - 1].docURL);
-        setDriverLicence(dl[dl.length - 1].docURL);
-        setHasLicence(true);
+        setDriverLicence({
+          name: dl[dl.length - 1].docURL,
+          id: dl[dl.length - 1].id,
+        });
       } else {
         // console.log("no driver licence found");
       }
@@ -195,44 +226,11 @@ const QuoteDetails: FC<{
     }
   };
 
-  const _uploadDocs = async () => {
-    toast.info("Uploading licence image");
+  const _uploadDocs = async (file?: any) => {
+    // toast.info("Uploading licence image");
+    console.log(file);
     let form_data = new FormData();
-    form_data.append("file", driverLicence);
-
-    // for (var entry of form_data.entries()) {
-    //   // console.log(entry[0] + ": " + entry[1]);
-    // }
-
-    let dvla_docs = [];
-    try {
-      let uploaded_docs = await mkGetReq({
-        endpoint: `${process.env.NEXT_PUBLIC_API}/api/user-documents`,
-        token: GLOBAL_OBJ.token,
-        queries: ``,
-      });
-      // console.log(uploaded_docs);
-      dvla_docs = uploaded_docs.filter(
-        (_doc: any) => _doc.docType === "ID_CARD"
-      );
-      // console.log(dvla_docs);
-    } catch (error) {
-      // console.log(error);
-    }
-
-    // delete already existing dvla dov
-    try {
-      let delete_doc = await mkPostReq({
-        endpoint: `/api/user-documents/${dvla_docs[0].id}`,
-        isJSON: true,
-        method: "delete",
-        token: GLOBAL_OBJ.token,
-        data: {},
-      });
-      // console.log(delete_doc);
-    } catch (error) {
-      // console.log(error);
-    }
+    form_data.append("file", file);
 
     try {
       let upload_licence_response = await mkPostReq({
@@ -243,20 +241,59 @@ const QuoteDetails: FC<{
         isJSON: false,
         data: form_data,
       });
-      // console.log(upload_licence_response);
+      console.log(upload_licence_response);
 
       if (upload_licence_response.status) {
         toast.error(upload_licence_response.title);
       } else {
         // handle success
+        setDriverLicence({
+          name: upload_licence_response.docURL,
+          id: upload_licence_response.id,
+        });
       }
     } catch (error) {
       // console.log(error);
     }
   };
 
+  const _deleteRenewalNotice = async () => {
+    try {
+      let delete_doc = await mkPostReq({
+        endpoint: `/api/insurance-documents/${renewalNotice.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      });
+      // console.log(delete_doc);
+      toast.success("Renewal notice deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const _deleteDriverLicence = async (file: any) => {
+    try {
+      await mkPostReq({
+        endpoint: `/api/user-documents/${file.id}`,
+        isJSON: true,
+        method: "delete",
+        token: GLOBAL_OBJ.token,
+        data: {},
+      }).then(() => {
+        setDriverLicence(null);
+      });
+      // console.log(delete_doc);
+      toast.success("Driver licence deleted.");
+    } catch (error) {
+      // console.log(error);
+    }
+    console.log(driverLicence);
+  };
+
   const _updateInsuranceDetails = async (final: boolean = false) => {
-    toast.info("Updating Quote Information...");
+    // toast.info("Updating Quote Information...");
     let update_data = {
       ...policy,
       alterationDetails,
@@ -315,7 +352,9 @@ const QuoteDetails: FC<{
       } else {
         // handle success
         toast.success("Quote Information Updated");
-        onProceed();
+        setTimeout(() => {
+          onProceed();
+        }, 2500);
       }
     } catch (error) {
       // console.log(error);
@@ -416,15 +455,14 @@ const QuoteDetails: FC<{
               id="firstName"
               label="First Name"
               placeholder="Eg: Jay"
-              className="w-full rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={firstName}
+              className="w-full rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={firstName ?? ""}
               onValueChanged={(_val: any) => {
                 setFirstName(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setFirstName(_val.target.value);
               }}
-              editable={true}
               isRequired
             />
 
@@ -433,15 +471,14 @@ const QuoteDetails: FC<{
               id="lastName"
               label="Last Name"
               placeholder="Eg: Ford"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={lastName}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={lastName ?? ""}
               onValueChanged={(_val: any) => {
                 setLastName(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setLastName(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -449,8 +486,8 @@ const QuoteDetails: FC<{
               id="lastName"
               label="Phone Number"
               placeholder="Eg: 0231234567"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={`${phoneNumber}`}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={phoneNumber ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -461,15 +498,14 @@ const QuoteDetails: FC<{
               id="email"
               label="Email"
               placeholder="Eg: someone@domain.com"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={email}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={email ?? ""}
               onValueChanged={(_val: any) => {
                 setEmail(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setEmail(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -477,15 +513,14 @@ const QuoteDetails: FC<{
               id="userAddress"
               label="Address"
               placeholder="Eg: No. 12 Kpong Street, Achimota"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={userAddress}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={userAddress ?? ""}
               onValueChanged={(_val: any) => {
                 setUserAddress(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setUserAddress(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -493,15 +528,14 @@ const QuoteDetails: FC<{
               id="occupation"
               label="Occupation"
               placeholder="Eg: Teacher"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-              value={occupation}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border"
+              value={occupation ?? ""}
               onValueChanged={(_val: any) => {
                 setOccupation(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setOccupation(_val.target.value);
               }}
-              editable={true}
             />
           </div>
         </div>
@@ -519,8 +553,8 @@ const QuoteDetails: FC<{
               type="text"
               id="vehicleType"
               label="Vehicle Type"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(vehicleType)}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={sentenceCase(vehicleType ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               editable={false}
@@ -531,7 +565,7 @@ const QuoteDetails: FC<{
               type="text"
               id="vehicleMake"
               label="Vehicle Make"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={sentenceCase(vehicleMake ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
@@ -543,7 +577,7 @@ const QuoteDetails: FC<{
               type="text"
               id="vehicleModel"
               label="Vehicle Model"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={sentenceCase(vehicleModel ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
@@ -556,15 +590,15 @@ const QuoteDetails: FC<{
               id="vehicleCubicCap"
               label="Vehicle Cubic Capacity"
               // placeholder="Eg: C350"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={cubicCapacity}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={cubicCapacity ?? ""}
               onValueChanged={(_val: any) => {
                 setCubicCapacity(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setCubicCapacity(_val.target.value);
               }}
-              // editable={true}
+              //
               disabled={true}
             />
 
@@ -573,22 +607,21 @@ const QuoteDetails: FC<{
               id="vehicleColour"
               label="Vehicle Colour"
               placeholder="Eg: Red"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={colour}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={colour ?? ""}
               onValueChanged={(_val: any) => {
                 setColour(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setColour(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
               type="text"
               id="vehicleCity"
               label="Vehicle Use"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={sentenceCase(vehicleUse.replaceAll("_", " ") ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
@@ -601,8 +634,8 @@ const QuoteDetails: FC<{
               id="passengerCount"
               label="No. of Passengers"
               placeholder="Eg: 5"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={numOfPassenger}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={numOfPassenger ?? ""}
               onValueChanged={(_val: any) => {
                 setNumOfPassenger(_val.target.value);
               }}
@@ -617,15 +650,14 @@ const QuoteDetails: FC<{
               id="vehicleRepairState"
               label="Vehicle Repair State"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={repairState}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={repairState ?? ""}
               onValueChanged={(_val: any) => {
                 setRepairState(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setRepairState(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -633,15 +665,14 @@ const QuoteDetails: FC<{
               id="vehicleAlterationDets"
               label="Vehicle Alteration Details"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={alterationDetails}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={alterationDetails ?? ""}
               onValueChanged={(_val: any) => {
                 setAlterationDetails(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setAlterationDetails(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -649,15 +680,14 @@ const QuoteDetails: FC<{
               id="chassisNumber"
               label="Chassis Number"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={chassisNum}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={chassisNum ?? ""}
               onValueChanged={(_val: any) => {
                 setChassisNum(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setChassisNum(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -665,7 +695,7 @@ const QuoteDetails: FC<{
               id="passengerCount"
               label="Registration Year"
               placeholder="Eg: 5"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={registrationYear.substring(1) ?? ""}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
@@ -677,15 +707,14 @@ const QuoteDetails: FC<{
               id="vehicleCity"
               label="Vehicle City"
               placeholder="Eg: Accra"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleCity}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={vehicleCity ?? ""}
               onValueChanged={(_val: any) => {
                 setVehicleCity(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setVehicleCity(_val.target.value);
               }}
-              editable={true}
             />
 
             <FormGroup
@@ -693,15 +722,14 @@ const QuoteDetails: FC<{
               id="registeredOwner"
               label="Vehicle Owner"
               placeholder="Eg: Samuel ofori"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={registeredOwner}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={registeredOwner ?? ""}
               onValueChanged={(_val: any) => {
                 setRegisteredOwner(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setRegisteredOwner(_val.target.value);
               }}
-              editable={true}
             />
           </div>
         </div>
@@ -719,7 +747,7 @@ const QuoteDetails: FC<{
               id="protectionType"
               label="Protection Type"
               placeholder="Eg: Mercedes"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={sentenceCase(protectionType ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
@@ -731,8 +759,8 @@ const QuoteDetails: FC<{
               id="excess"
               label="Excess"
               placeholder="Eg: C350"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={excess}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={excess ?? ""}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               disabled
@@ -743,8 +771,8 @@ const QuoteDetails: FC<{
               id="vehicleInsuranceValue"
               label="Vehicle Insurance Value"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleInsuredValue}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={vehicleInsuredValue ?? ""}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               disabled
@@ -765,15 +793,14 @@ const QuoteDetails: FC<{
               id="hirePurchaseProvider"
               label="Hire Purchase Provider"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={hirePurchaseProvider}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={hirePurchaseProvider ?? ""}
               onValueChanged={(_val: any) => {
                 setHirePurchaseProvider(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setHirePurchaseProvider(_val.target.value);
               }}
-              editable={true}
             />
           </div>
         </div>
@@ -791,15 +818,14 @@ const QuoteDetails: FC<{
               id="vehicleMainDriver"
               label="Vehicle Main Driver"
               placeholder="Eg: Samuel Ofori"
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={vehicleMainDriver}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={vehicleMainDriver ?? ""}
               onValueChanged={(_val: any) => {
                 setVehicleMainDriver(_val.target.value);
               }}
               onFocusOut={(_val: any) => {
                 setVehicleMainDriver(_val.target.value);
               }}
-              editable={true}
             />
 
             <div className="col-span-2 cursor-pointer">
@@ -876,14 +902,58 @@ const QuoteDetails: FC<{
             </h1>
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-row">
-              {/* {renewalNotice
-                  ? renewalNotice.map((_ren: any, i: any) => {
-                      return <DocumentPreview documents={_ren} key={i} />;
-                    })
-                  : null} */}
-              <DocumentPreview documents={renewalNotice} />
+              {renewalNotice ? (
+                <DocumentPreview
+                  document={renewalNotice.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
+                    });
+                  }}
+                  onDelete={() => {
+                    _deleteRenewalNotice();
+                    setRenewalNotice(null);
+                  }}
+                />
+              ) : (
+                <FileUpload
+                  allowSelect={!renewalNotice}
+                  multiple={false}
+                  defaultImage={renewalNotice}
+                  onFileLoad={(image: any) => {
+                    console.log(image);
+
+                    if (image) {
+                      //console.log(productImages)
+                      var block = image[0].file?.split(";");
+
+                      // Get the content type of the image
+                      var contentType = block[0].split(":")[1]; // In this case "image/gif"
+
+                      // get the real base64 content of the file
+                      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+
+                      // Convert it to a blob to upload
+                      var blobImage = dataURItoBlob(realData);
+                      console.log(blobImage);
+
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setRenewalNotice(file);
+                      _uploadRenewalNotice(file);
+                      return;
+                    }
+                    setRenewalNotice(null);
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -901,7 +971,7 @@ const QuoteDetails: FC<{
               id="startDate"
               label="Premium Start Date"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={moment(startDate).format("DD MMM YYYY")}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
@@ -913,8 +983,8 @@ const QuoteDetails: FC<{
               id="outRightPremium"
               label="Out Right Premium"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={outRightPremium}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={outRightPremium ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -925,8 +995,8 @@ const QuoteDetails: FC<{
               id="initialDeposit"
               label="Initial Deposit"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={initialDeposit}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={initialDeposit ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -937,8 +1007,8 @@ const QuoteDetails: FC<{
               id="monthlyInstallment"
               label="Monthly Installment"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
-              value={monthlyInstallment}
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+              value={monthlyInstallment ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -949,7 +1019,7 @@ const QuoteDetails: FC<{
               id="noOfInstallments"
               label="Installment Period"
               placeholder=""
-              className="rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border px-3"
+              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
               value={`${noOfInstallmentIntValue(
                 noOfInstallments.split("_")[0]
               )} months`}
@@ -967,72 +1037,58 @@ const QuoteDetails: FC<{
             </h1>
             <hr className="w-full text-gray-700 bg-gray-700" />
           </div>
-          <div className="grid grid-cols-1 gap-4">
-            {driverLicence ? (
-              (console.log(driverLicence),
-              (
-                <a
-                  className="flex flex-col w-1/2"
-                  onClick={() => {
-                    // onView &&
-                    //   onView(
-                    //     `${process.env.NEXT_PUBLIC_INSURANCE_DOCS_STORAGE_LINK}${_doc.name}`,
-                    //     doc_type
-                    //   );
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex flex-row">
+              {driverLicence ? (
+                <DocumentPreview
+                  document={driverLicence.name}
+                  onView={(_doc, _type) => {
+                    console.log(_doc, _type);
+                    setPreviewDoc({
+                      doc: `${process.env.NEXT_PUBLIC_USER_DOCS_STORAGE_LINK}${_doc}`,
+                      type: _type,
+                    });
                   }}
-                >
-                  <img
-                    src="/img/document.svg"
-                    alt="Document Preview"
-                    className="w-1/3"
-                  />
-                  <div className="flex flex-row items-center space-x-4">
-                    <p className="text-dark font-semibold truncate text-sm">
-                      {driverLicenceFileName}
-                    </p>
-                    <button
-                      className="delete focus:outline-none text-danger-main hover:bg-gray-200 p-1 rounded-md"
-                      onClick={(ev) => {
-                        ev.preventDefault();
-                        // remove this image
-                        setDriverLicence(null);
-                        // setHasStaffId(false);
-                      }}
-                    >
-                      <TrashIcon className="w-5 h-5" />
-                    </button>
-                  </div>
-                </a>
-              ))
-            ) : (
-              <FileUpload
-                multiple={false}
-                allowSelect={!driverLicence}
-                onFileLoad={(image: any) => {
-                  console.log(image);
+                  onDelete={() => {
+                    _deleteDriverLicence(driverLicence);
+                  }}
+                />
+              ) : (
+                <FileUpload
+                  multiple={false}
+                  allowSelect={!driverLicence}
+                  onFileLoad={(image: any) => {
+                    console.log(image);
 
-                  if (image) {
-                    //// console.log(productImages)
-                    var block = image[0].file?.split(";");
+                    if (image) {
+                      //// console.log(productImages)
+                      var block = image[0].file?.split(";");
 
-                    // Get the content type of the image
-                    var contentType = block[0].split(":")[1]; // In this case "image/gif"
+                      // Get the content type of the image
+                      var contentType = block[0].split(":")[1]; // In this case "image/gif"
 
-                    // get the real base64 content of the file
-                    var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
+                      // get the real base64 content of the file
+                      var realData = block[1].split(",")[1]; // In this case "R0lGODlhPQBEAPeoAJosM...."
 
-                    // Convert it to a blob to upload
-                    var blobImage = dataURItoBlob(realData);
-                    console.log(blobImage);
+                      // Convert it to a blob to upload
+                      var blobImage = dataURItoBlob(realData);
+                      console.log(blobImage);
 
-                    setDriverLicence(blobImage);
-                    setDriverLicenceFileName(image[0].name);
-                    return;
-                  }
-                  setDriverLicence(null);
-                }}
-              />
-            )}
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setDriverLicence(file);
+
+                      _uploadDocs(file);
+                      return;
+                    }
+                    // setDriverLicence(null);
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
 
@@ -1075,7 +1131,6 @@ const QuoteDetails: FC<{
                 return;
               }
 
-              !hasLicence && (await _uploadDocs());
               _updateInsuranceDetails();
             }}
           >
@@ -1083,6 +1138,14 @@ const QuoteDetails: FC<{
           </button>
         </div>
       </div>
+      <DocumentView
+        document={previewDoc?.doc}
+        show={previewDoc ? true : false}
+        type={previewDoc?.type}
+        onClose={() => {
+          setPreviewDoc(null);
+        }}
+      />
     </div>
   );
 };

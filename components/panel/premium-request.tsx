@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import InternationalInput from "../international-input";
 import FormGroup from "../form-group";
 import ListBox from "../list-box";
-import { mkPostReq, validateEmail } from "../../utils/functions";
+import { mkGetReq, mkPostReq, validateEmail } from "../../utils/functions";
 import AuthContext from "../../context/auth-context";
 
 const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   data,
   onClose,
 }) => {
+  const [userDetails, setUserDetails] = useState<any>({});
   const [premiumData, setPremiumData] = useState<any>({});
   const [firstname, setFirstname] = useState<string>("");
   const [lastname, setLastName] = useState<string>("");
@@ -23,6 +24,7 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   const [referredFrom, setReferredFrom] = useState<string>("");
 
   const [dialCode, setDialCode] = useState<string>("");
+  const [inPanel, setInPanel] = useState<boolean>(false);
 
   const { GLOBAL_OBJ } = useContext(AuthContext);
 
@@ -39,22 +41,25 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   }
 
   const _handleCoverRequest = async () => {
-    if (firstname === "") {
-      toast.error("Enter your first name");
-      return;
+    if (!inPanel) {
+      if (firstname === "") {
+        toast.error("Enter your first name");
+        return;
+      }
+      if (lastname === "") {
+        toast.error("Enter your last name");
+        return;
+      }
+      if (!whatsappNumberValid) {
+        toast.error("Provide a valid phone number");
+        return;
+      }
+      if (!validateEmail(email)) {
+        toast.error("Enter a valid email");
+        return;
+      }
     }
-    if (lastname === "") {
-      toast.error("Enter your last name");
-      return;
-    }
-    if (!whatsappNumberValid) {
-      toast.error("Provide a valid phone number");
-      return;
-    }
-    if (!validateEmail(email)) {
-      toast.error("Enter a valid email");
-      return;
-    }
+
     if (vehicleMake === "") {
       toast.error("Provide your vehicle make");
       return;
@@ -75,6 +80,17 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
       countryInfoId: 1,
       referredFrom,
     };
+
+    if (inPanel) {
+      premium_request_data = {
+        ...premium_request_data,
+        email: userDetails.email,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
+        referredFrom: userDetails.referredFrom,
+        phoneNumber: userDetails.phoneNumber,
+      };
+    }
 
     // console.log(premiumData);
     // console.log(premium_request_data);
@@ -102,18 +118,32 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
     }
   };
 
-  const _getUserDetails = async () => {};
+  const _getUserDetails = async () => {
+    try {
+      let user_details_response = await mkGetReq({
+        endpoint: `${process.env.NEXT_PUBLIC_API}/api/account`,
+        queries: "",
+        token: GLOBAL_OBJ.token,
+      });
+      console.log(user_details_response);
+
+      if (user_details_response.status) {
+        toast.error(user_details_response.title);
+      } else {
+        // handle success
+        // TODO: set user details to be prefilled here
+        setUserDetails(user_details_response);
+      }
+    } catch (error) {
+      toast.error("Unexpected Error Occurred");
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    console.log(window.location.pathname);
-
-    // get page endpoint
-    // console.log(endpoint);
-
-    // setInPanel(window.location.pathname === "/panel");
-
     if (window.location.pathname === "/panel") {
-      let user_details = _getUserDetails();
+      setInPanel(true);
+      _getUserDetails();
     }
   }, []);
 
@@ -123,147 +153,151 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
         Please provide these details to complete your request.
       </h1>
 
-      <div className="flex flex-row items-center md:space-x-8">
-        <hr className="md:w-full" />
-        <h2 className="w-full font-medium">Personal Details</h2>
-        <hr className="w-full" />
-      </div>
+      {!inPanel && (
+        <>
+          <div className="flex flex-row items-center md:space-x-8">
+            <hr className="md:w-full" />
+            <h2 className="w-full font-medium">Personal Details</h2>
+            <hr className="w-full" />
+          </div>
 
-      <div className="space-y-4">
-        <div className="flex flex-row space-x-4">
-          <FormGroup
-            type="text"
-            id="firstName"
-            label="First Name"
-            placeholder="First Name"
-            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={firstname}
-            onValueChanged={(_val: any) => {
-              setFirstname(_val.target.value);
+          <div className="space-y-4">
+            <div className="flex flex-row space-x-4">
+              <FormGroup
+                type="text"
+                id="firstName"
+                label="First Name"
+                placeholder="First Name"
+                className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+                value={firstname}
+                onValueChanged={(_val: any) => {
+                  setFirstname(_val.target.value);
+                }}
+                onFocusOut={(_val: any) => {
+                  setFirstname(_val.target.value);
+                }}
+              />
+
+              <FormGroup
+                type="text"
+                id="lastName"
+                label="Last Name"
+                placeholder="Last Name"
+                className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+                value={lastname}
+                onValueChanged={(_val: any) => {
+                  setLastName(_val.target.value);
+                }}
+                onFocusOut={(_val: any) => {
+                  setLastName(_val.target.value);
+                }}
+              />
+            </div>
+
+            <InternationalInput
+              firstLoad
+              className={`appearance-none relative block w-full py-3 px-4 border placeholder-[#848484] bg-gray-100 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
+              label={{
+                classNames:
+                  "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
+                text: "Whatsapp Number",
+              }}
+              name={"phoneNumber"}
+              defaultValue={whatsappNumber}
+              defaultCountry={"gh"}
+              onValueChange={_handlePhoneNumber}
+              disabled={false}
+              autoFocus={false}
+              readOnly={false}
+            />
+
+            <FormGroup
+              type="email"
+              id="email"
+              label="Email"
+              placeholder="Eg: someone@mail.com"
+              className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
+              value={email}
+              onValueChanged={(_val: any) => {
+                setEmail(_val.target.value);
+              }}
+              onFocusOut={(_val: any) => {
+                setEmail(_val.target.value);
+              }}
+            />
+          </div>
+
+          <div className="flex flex-row items-center space-x-8">
+            <hr className="w-full" />
+          </div>
+
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="how_you_heard"
+            values={[
+              {
+                name: "",
+                value: "How did you hear about us?",
+                id: "0",
+              },
+              {
+                name: "FACEBOOK_INSTAGRAM",
+                value: "Facebook/Instagram",
+                id: "1",
+              },
+              {
+                name: "GOOGLE_WEB",
+                value: "Google/Web",
+                id: "2",
+              },
+              {
+                name: "LINKEDIN",
+                value: "LinkedIn",
+                id: "3",
+              },
+              {
+                name: "TWITTER",
+                value: "Twitter",
+                id: "4",
+              },
+              {
+                name: "Word_of_mouth",
+                value: "Word of Mouth",
+                id: "5",
+              },
+              {
+                name: "FLIER",
+                value: "Flier",
+                id: "6",
+              },
+              {
+                name: "BILLBOARD",
+                value: "Billboard",
+                id: "7",
+              },
+              {
+                name: "NEWSPAPER_AD",
+                value: "Newspaper Ad",
+                id: "8",
+              },
+              {
+                name: "RADIO",
+                value: "Radio",
+                id: "9",
+              },
+            ]}
+            selected={{
+              name: "",
+              value: "How did you hear about us?",
+              id: "0",
             }}
-            onFocusOut={(_val: any) => {
-              setFirstname(_val.target.value);
+            onValueChange={(_type: any) => {
+              // // console.log(_type);
+              setReferredFrom(_type.name);
             }}
           />
-
-          <FormGroup
-            type="text"
-            id="lastName"
-            label="Last Name"
-            placeholder="Last Name"
-            className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-            value={lastname}
-            onValueChanged={(_val: any) => {
-              setLastName(_val.target.value);
-            }}
-            onFocusOut={(_val: any) => {
-              setLastName(_val.target.value);
-            }}
-          />
-        </div>
-
-        <InternationalInput
-          firstLoad
-          className={`appearance-none relative block w-full py-3 px-4 border placeholder-[#848484] bg-gray-100 text-gray-900 rounded-md focus:outline-none focus:ring-primary-border focus:border-primary-border focus:z-10 sm:text-sm`}
-          label={{
-            classNames:
-              "w-full text-swooveGray-caption p-0 mb-1 font-medium text-xs",
-            text: "Whatsapp Number",
-          }}
-          name={"phoneNumber"}
-          defaultValue={whatsappNumber}
-          defaultCountry={"gh"}
-          onValueChange={_handlePhoneNumber}
-          disabled={false}
-          autoFocus={false}
-          readOnly={false}
-        />
-
-        <FormGroup
-          type="email"
-          id="email"
-          label="Email"
-          placeholder="Eg: someone@mail.com"
-          className="bg-[#101d490d] rounded-[0px] border-none placeholder-[#848484] focus:ring-primary-border"
-          value={email}
-          onValueChanged={(_val: any) => {
-            setEmail(_val.target.value);
-          }}
-          onFocusOut={(_val: any) => {
-            setEmail(_val.target.value);
-          }}
-        />
-      </div>
-
-      <div className="flex flex-row items-center space-x-8">
-        <hr className="w-full" />
-      </div>
-
-      <ListBox
-        className="bg-[#101d490d] border-none"
-        id="how_you_heard"
-        values={[
-          {
-            name: "",
-            value: "How did you hear about us?",
-            id: "0",
-          },
-          {
-            name: "FACEBOOK_INSTAGRAM",
-            value: "Facebook/Instagram",
-            id: "1",
-          },
-          {
-            name: "GOOGLE_WEB",
-            value: "Google/Web",
-            id: "2",
-          },
-          {
-            name: "LINKEDIN",
-            value: "LinkedIn",
-            id: "3",
-          },
-          {
-            name: "TWITTER",
-            value: "Twitter",
-            id: "4",
-          },
-          {
-            name: "Word_of_mouth",
-            value: "Word of Mouth",
-            id: "5",
-          },
-          {
-            name: "FLIER",
-            value: "Flier",
-            id: "6",
-          },
-          {
-            name: "BILLBOARD",
-            value: "Billboard",
-            id: "7",
-          },
-          {
-            name: "NEWSPAPER_AD",
-            value: "Newspaper Ad",
-            id: "8",
-          },
-          {
-            name: "RADIO",
-            value: "Radio",
-            id: "9",
-          },
-        ]}
-        selected={{
-          name: "",
-          value: "How did you hear about us?",
-          id: "0",
-        }}
-        onValueChange={(_type: any) => {
-          // // console.log(_type);
-          setReferredFrom(_type.name);
-        }}
-      />
+        </>
+      )}
 
       <div className="flex flex-row items-center md:space-x-8">
         <hr className="md:w-full" />

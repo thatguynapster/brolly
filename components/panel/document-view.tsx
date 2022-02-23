@@ -5,9 +5,10 @@ import { Modal } from "../modal";
 const DocumentView: FC<{
   document: string | undefined;
   show: boolean;
-  type: string | undefined;
+  type: "image" | "document" | undefined;
   onClose: () => void;
 }> = ({ document, type, show, onClose }) => {
+  console.log(document, type);
   return (
     <Modal
       show={show}
