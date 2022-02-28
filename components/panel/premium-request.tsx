@@ -22,6 +22,15 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
   const [vehicleMake, setVehicleMake] = useState<string>("");
   const [vehicleModel, setVehicleModel] = useState<string>("");
   const [referredFrom, setReferredFrom] = useState<string>("");
+  const [selectReferredFrom, setSelectReferredFrom] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Referred From",
+    id: "0",
+  });
 
   const [dialCode, setDialCode] = useState<string>("");
   const [inPanel, setInPanel] = useState<boolean>(false);
@@ -286,13 +295,10 @@ const PremiumRequest: FC<{ data: any; onClose: () => void }> = ({
                 id: "9",
               },
             ]}
-            selected={{
-              name: "",
-              value: "How did you hear about us?",
-              id: "0",
-            }}
+            selected={selectReferredFrom}
             onValueChange={(_type: any) => {
               // // console.log(_type);
+              setSelectReferredFrom(_type);
               setReferredFrom(_type.name);
             }}
           />

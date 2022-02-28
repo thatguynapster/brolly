@@ -68,8 +68,25 @@ const CheckPremium: FC<{
     id: "0",
   });
   const [employerType, setEmployerType] = useState<string>("");
+  const [selectEmployerType, setSelectEmployerType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Select Employer Type",
+    id: "0",
+  });
   const [referredFrom, setReferredFrom] = useState<string>("");
-
+  const [selectReferredFrom, setSelectReferredFrom] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Referred From",
+    id: "0",
+  });
   const [premiumCheckData, setPremiumCheckData] = useState<any>({});
   const [premiumCheckResponse, setPremiumCheckResponse] = useState<any>({});
 
@@ -647,13 +664,10 @@ const CheckPremium: FC<{
                   id: "4",
                 },
               ]}
-              selected={{
-                name: "",
-                value: "Employer type",
-                id: "0",
-              }}
+              selected={selectEmployerType}
               onValueChange={(_type: any) => {
                 // console.log(_type);
+                setSelectEmployerType(_type);
                 setEmployerType(_type.name);
                 setPremiumDue(null);
                 setInitialPremium(null);
