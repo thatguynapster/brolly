@@ -52,15 +52,16 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
           </div>
 
           <p className="text-small mt-8 hidden md:flex"> &copy; 2021 Brolly. All rights reserved</p>
+          <p className="text-small mt-8 hidden md:flex" style={{marginTop:"10px"}}> Brolly is a trade name for Brolly F&amp;T Limited</p>
         </div>
 
         <div className="w-full md:w-1/3 text-white flex flex-col space-y-6">
           <h4 className="text-[20px] leading-[30px] text-white">Reach us</h4>
 
-          <Link href="mailto:team@brollyinsurance.com" passHref>
+          <Link href="mailto:team@brolly.africa" passHref>
             <a className="flex flex-row items-center space-x-4 text-white">
               <img className="w-5" src="/icons/mail.svg" alt="Message" />
-              <p className="font-semibold font-headings">team@brollyinsurance.com</p>
+              <p className="font-semibold font-headings">team@brolly.africa</p>
             </a>
           </Link>
 
@@ -133,8 +134,10 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
         <div className="flex flex-row items-center space-x-4 text-white">
           <p className="text-small md:hidden flex"> &copy; 2021 Brolly. All rights reserved</p>
         </div>
-      </div>
-
+        <div className="flex flex-row items-center space-x-4 text-white" style={{marginTop:"10px"}}>
+          <p className="text-small md:hidden flex"> Brolly is a trade name for Brolly F&amp;T Limited</p>
+        </div>
+      </div>  
       {/* should stick to bottom of page in mobile */}
       <div className="fixed bottom-0 left-0 right-0 md:hidden">
         <a

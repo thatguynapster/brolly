@@ -23,16 +23,16 @@ const TOS: FC = () => {
           versions, can be reviewed by clicking on the “Terms of Use” hyperlink and may be accessed anytime by visiting{" "}
           <Link href="/legal?section=tos" passHref>
             <a href="#" className="text-dark font-semibold">
-              www.brollyinsurance.com/legal
+              www.brolly.africa/legal
             </a>
           </Link>
         </p>
 
         <h2 className="text-xl font-bold text-dark text-left">About Brolly</h2>
         <p>
-          “Brolly” is a registered trademark owned by Brolly Insurance Limited which is registered by the Registrar
-          General’s Department of Ghana with Number XYZ1234. You may not use the mark and any designs on our web app
-          without the written permission of Brolly Insurance Limited. Brolly operates as a Corporate Agent of Allianz
+          “Brolly” is a registered trademark owned by Brolly F&amp;T Limited which is registered by the Registrar
+          General’s Department of Ghana with Number CS031310222. You may not use the mark and any designs on our web app
+          without the written permission of Brolly F&amp;T Limited. Brolly operates as a Corporate Agent of Allianz
           Insurance Ghana Limited. All policies sold are therefore underwritten by Allianz Insurance Ghana Limited.
           Allianz Insurance Ghana Limited is therefore directly and ultimately responsible for settling all claims
           incurred on policies purchased through the Brolly website. Brolly will however be the contact for all dealings
@@ -60,7 +60,7 @@ const TOS: FC = () => {
         <p>
           The contract of insurance purchased on the Brolly website is between yourself and Allianz Insurance Ghana
           Limited. If you choose to pay the price of your insurance on installment, you enter an additional contract for
-          insurance price pre-finance between yourself and Brolly Insurance Limited. The terms of the contract of
+          insurance price pre-finance between yourself and Brolly F&amp;T Limited. The terms of the contract of
           insurance and the contract of insurance price pre-finance are contained in the policy pack sent to your on
           whatsapp and through your email immediately after you sign both contracts. Copies of both contracts are
           additionally stored in your user account on the Brolly web app.
@@ -127,9 +127,9 @@ const TOS: FC = () => {
         <p>The user agreement is for an indefinite term.</p>
         <p>
           A User may terminate the user agreement at any time without a period of notice by email to{" "}
-          <Link href="mailto:hello@brollyinsurance.com" passHref>
+          <Link href="mailto:hello@brolly.africa" passHref>
             <a href="#" className="text-dark font-semibold">
-              hello@brollyinsurance.com
+              hello@brolly.africa
             </a>
           </Link>{" "}
           with the subject line as “Termination of Terms of Use”. Brolly is entitled to terminate the user agreement
@@ -181,8 +181,8 @@ const TOS: FC = () => {
           <b>Whatsapp</b>: +233 201 335 141 (24/7, 365)
           <br />
           <b>Email</b>:{" "}
-          <Link href="mailto:hello@brollyinsurance.com" passHref>
-            <a href="#"> hello@brollyinsurance.com</a>
+          <Link href="mailto:hello@brolly.africa" passHref>
+            <a href="#"> hello@brolly.africa</a>
           </Link>{" "}
           (24/7,365)
           <br />

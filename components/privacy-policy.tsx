@@ -11,18 +11,18 @@ const PrivacyPolicy: FC = () => {
       </div>
       <div className="space-y-8">
         <p>
-          Brolly Insurance Limited (“Brolly”) values and respects your privacy. This notice explains what personal
-          information we collect, and how and why we use this information when you visit and use our web app at the url
-          <Link href="https://www.brollyinsurance.com" passHref>
+          Brolly F&amp;T Limited (“Brolly”) values and respects your privacy. This notice explains what personal
+          information we collect, and how and why we use this information when you visit and use our web app at the url{" "}
+          <Link href="https://www.brolly.africa" passHref>
             <a href="#" className="text-dark font-semibold">
-              https://www.brollyinsurance.com
+              https://www.brolly.africa
             </a>
           </Link>
           , and interact with it in any way, including passively. You can reach us with any questions or complaints
           about this notice through email to{" "}
-          <Link href="mailto:help@brollyinsurance.com" passHref>
+          <Link href="mailto:help@brolly.africa" passHref>
             <a href="#" className="text-dark font-semibold">
-              help@brollyinsurance.com
+              help@brolly.africa
             </a>
           </Link>
           .
@@ -35,7 +35,7 @@ const PrivacyPolicy: FC = () => {
         </p>
         <p>b) EFFECTIVE DATE: &quot;Effective Date&quot; means the date this Privacy Policy comes into force and effect.</p>
         <p>
-          c) PARTIES: The parties to this privacy policy are the following data controller: Brolly Insurance Limited
+          c) PARTIES: The parties to this privacy policy are the following data controller: Brolly F&amp;T Limited
           (&quot;Data Controller&quot;) and you, as the user of the web app or website. Hereinafter, the parties will individually
           be referred to as &quot;Party&quot; and collectively as &quot;Parties.&quot;
         </p>
@@ -72,7 +72,7 @@ const PrivacyPolicy: FC = () => {
 
         <h2 className="text-xl font-bold text-dark text-left">CONTACT AND DATA PROTECTION OFFICER:</h2>
         <p>
-          The Party responsible for the processing of your personal data is as follows: Brolly Insurance Limited. The
+          The Party responsible for the processing of your personal data is as follows: Brolly F&amp;T Limited. The
           Data Controller may be contacted as follows:
           <br />
           <b>
@@ -421,7 +421,7 @@ const PrivacyPolicy: FC = () => {
         <p>
           From time to time, we may send you informational or marketing communications related to our Web App such as
           announcements or other information. If you wish to opt-out of such communications, you may contact the
-          following email: hello@brollyinsurance.com. You may also click the opt-out link which will be provided at the
+          following email: hello@brolly.africa. You may also click the opt-out link which will be provided at the
           bottom of any and all such communications.
         </p>
         <p>
