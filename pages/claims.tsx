@@ -55,7 +55,7 @@ const Network: NextPage = () => {
             <div className="w-full flex flex-col">
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 2</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
-                Provide us details of your incident and the type of claimProvide us details of your incident and the
+                Provide us details of your incident and the type of claim. Provide us details of your incident and the
                 type of claim
               </p>
             </div>
@@ -86,7 +86,7 @@ const Network: NextPage = () => {
               <p className="text-center md:text-left text-[#848484] font-paragraphs text-base leading-tight">
                 This refers to the time it takes us to settle a claim from the time we receive notification complete
                 with all required information and supporting documents. You can find the required documents for
-                different types of claims at the section of thys page titled “Requirements”.
+                different types of claims at the section of this page titled “Requirements”.
               </p>
 
               <div className="flex space-x-4 items-start">
