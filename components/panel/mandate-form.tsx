@@ -459,7 +459,7 @@ const MandateForm: FC<{
 
       setInitialDeposit(policy.initialDeposit ?? "");
       setMonthlyInstallment(policy.monthlyInstallment ?? "");
-      setNoOfInstallments(policy.noOfInstallments ?? "");
+      setNoOfInstallments(policy.noOfInstallments);
 
       console.log(
         policy.noOfInstallments,
@@ -696,37 +696,40 @@ const MandateForm: FC<{
             label="Initial Deposit"
             placeholder=""
             className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
-            value={initialDeposit}
+            value={policy?.initialDeposit.toFixed(2)}
             onValueChanged={() => {}}
             onFocusOut={() => {}}
             disabled={true}
           />
+          {noOfInstallments !== "FULL_PAYMENT" && (
+            <>
+              <FormGroup
+                type="text"
+                id="monthlyInstallment"
+                label="Monthly Installment"
+                placeholder=""
+                className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
+                value={policy?.monthlyInstallment.toFixed(2)}
+                onValueChanged={() => {}}
+                onFocusOut={() => {}}
+                disabled={true}
+              />
 
-          <FormGroup
-            type="text"
-            id="monthlyInstallment"
-            label="Monthly Installment"
-            placeholder=""
-            className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
-            value={monthlyInstallment}
-            onValueChanged={() => {}}
-            onFocusOut={() => {}}
-            disabled={true}
-          />
-
-          <FormGroup
-            type="text"
-            id="numberOfMonths"
-            label="Number Of Months"
-            placeholder=""
-            className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
-            value={`${noOfInstallmentIntValue(
-              noOfInstallments.split("_")[0]
-            )} Months`}
-            onValueChanged={() => {}}
-            onFocusOut={() => {}}
-            disabled={true}
-          />
+              <FormGroup
+                type="text"
+                id="numberOfMonths"
+                label="Number Of Months"
+                placeholder=""
+                className="rounded-[0px] border placeholder-[#848484] focus:ring-primary-border"
+                value={`${noOfInstallmentIntValue(
+                  noOfInstallments.split("_")[0]
+                )} Months`}
+                onValueChanged={() => {}}
+                onFocusOut={() => {}}
+                disabled={true}
+              />
+            </>
+          )}
         </div>
 
         <div className="flex flex-col space-y-4">

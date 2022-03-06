@@ -323,7 +323,11 @@ const QuoteDetails: FC<{
       registeredOwner,
       registrationYear,
       repairState,
-      status: "DETAILS_VERIFIED",
+      status:
+        policy.protectionType === "THIRD_PARTY" ||
+        policy.protectionType === "THIRD_PARTY_FIRE_THEFT"
+          ? "AGREEMENT_SIGNED"
+          : "DETAILS_VERIFIED",
       userAddress,
       userId: GLOBAL_OBJ.data.user_id,
       vehicleCity,
@@ -334,7 +338,7 @@ const QuoteDetails: FC<{
       vehicleMake,
       vehicleModel,
     };
-    // console.log(update_data);
+    console.log(update_data);
 
     try {
       let update_insurance_response = await mkPostReq({
@@ -387,7 +391,18 @@ const QuoteDetails: FC<{
       setRegisteredOwner(policy.registeredOwner ?? "");
       setVehicleUse(policy.vehicleUse ?? "");
 
-      setProtectionType(policy.protectionType ?? "");
+      if (policy?.protectionType === "COMPREHENSIVE_100") {
+        setProtectionType("100% Comprehensive");
+        return;
+      }
+      if (policy?.protectionType === "COMPREHENSIVE") {
+        setProtectionType("90% Comprehensive");
+        return;
+      }
+      setProtectionType(
+        sentenceCase(policy?.protectionType.replaceAll("_", " ") ?? "")
+      );
+
       setExcess(policy.excess ?? "");
       setVehicleInsuredValue(policy.vehicleInsuredValue ?? "");
 
@@ -417,6 +432,7 @@ const QuoteDetails: FC<{
 
   useEffect(() => {
     let mounted = true;
+    console.log(policy);
     mounted && _getUserDocuments();
     return () => {
       mounted = false;
@@ -566,7 +582,7 @@ const QuoteDetails: FC<{
               id="vehicleMake"
               label="Vehicle Make"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(vehicleMake ?? "")}
+              value={sentenceCase(policy?.makeOfVehicle ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               editable={false}
@@ -578,7 +594,7 @@ const QuoteDetails: FC<{
               id="vehicleModel"
               label="Vehicle Model"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(vehicleModel ?? "")}
+              value={sentenceCase(policy?.vehicleModel ?? "")}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               editable={false}
@@ -748,7 +764,7 @@ const QuoteDetails: FC<{
               label="Protection Type"
               placeholder="Eg: Mercedes"
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={sentenceCase(protectionType ?? "")}
+              value={protectionType}
               onValueChanged={(_val: any) => {}}
               onFocusOut={(_val: any) => {}}
               disabled
@@ -984,7 +1000,7 @@ const QuoteDetails: FC<{
               label="Out Right Premium"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={outRightPremium ?? ""}
+              value={policy?.outRightPremium.toFixed(2) ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
@@ -996,37 +1012,42 @@ const QuoteDetails: FC<{
               label="Initial Deposit"
               placeholder=""
               className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={initialDeposit ?? ""}
+              value={policy?.initialDeposit.toFixed(2) ?? ""}
               onValueChanged={() => {}}
               onFocusOut={() => {}}
               disabled
             />
+            {noOfInstallments !== "FULL_PAYMENT" && (
+              <>
+                <FormGroup
+                  type="text"
+                  id="monthlyInstallment"
+                  label="Monthly Installment"
+                  placeholder=""
+                  className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+                  value={policy?.monthlyInstallment.toFixed(2) ?? ""}
+                  onValueChanged={() => {}}
+                  onFocusOut={() => {}}
+                  disabled
+                />
 
-            <FormGroup
-              type="text"
-              id="monthlyInstallment"
-              label="Monthly Installment"
-              placeholder=""
-              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={monthlyInstallment ?? ""}
-              onValueChanged={() => {}}
-              onFocusOut={() => {}}
-              disabled
-            />
-
-            <FormGroup
-              type="text"
-              id="noOfInstallments"
-              label="Installment Period"
-              placeholder=""
-              className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
-              value={`${noOfInstallmentIntValue(
-                noOfInstallments.split("_")[0]
-              )} months`}
-              onValueChanged={() => {}}
-              onFocusOut={() => {}}
-              disabled
-            />
+                <FormGroup
+                  type="text"
+                  id="noOfInstallments"
+                  label="Installment Period"
+                  placeholder=""
+                  className="rounded-[0px] placeholder-[#848484] focus:ring-primary-border px-3"
+                  value={`${noOfInstallmentIntValue(
+                    policy?.noOfInstallments.split("_")[0]
+                  )} ${sentenceCase(
+                    policy?.noOfInstallments.split("_")[1] ?? ""
+                  )}`}
+                  onValueChanged={() => {}}
+                  onFocusOut={() => {}}
+                  disabled
+                />
+              </>
+            )}
           </div>
         </div>
 

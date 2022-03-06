@@ -68,13 +68,23 @@ const CheckPremium: FC<{
     id: "0",
   });
   const [employerType, setEmployerType] = useState<string>("");
-  const [selectEmployerType, setSelectEmployerType] = useState<{
+  const [selectedEmployerType, setSelectedEmployerType] = useState<{
     name: string;
     value: string;
     id: string;
   }>({
     name: "",
     value: "Select Employer Type",
+    id: "0",
+  });
+  const [protectionType, setProtectionType] = useState<string>("");
+  const [selectedProtectionType, setSelectedProtectionType] = useState<{
+    name: string;
+    value: string;
+    id: string;
+  }>({
+    name: "",
+    value: "Select Protection Type",
     id: "0",
   });
   const [referredFrom, setReferredFrom] = useState<string>("");
@@ -236,7 +246,7 @@ const CheckPremium: FC<{
     let premium_check_data = {
       noOfInstallments,
       numOfPassenger,
-      protectionType: "COMPREHENSIVE",
+      protectionType,
       registrationYear,
       vehicleUse,
       vehicleInsuredValue,
@@ -285,13 +295,7 @@ const CheckPremium: FC<{
   };
 
   useEffect(() => {
-    let installment_options = [
-      {
-        name: "",
-        value: "No. of Installments",
-        id: "0",
-      },
-    ];
+    let installment_options = [];
 
     switch (employerType) {
       case "STATE_OR_GOVT":
@@ -434,8 +438,18 @@ const CheckPremium: FC<{
         break;
     }
 
+    if (protectionType === "THIRD_PARTY"||protectionType === "THIRD_PARTY_FIRE_THEFT") {
+      installment_options = [
+        {
+          name: "FULL_PAYMENT",
+          value: "Full Payment",
+          id: "1",
+        },
+      ];
+    }
+
     setInstallmentOptions(installment_options);
-  }, [employerType]);
+  }, [employerType, protectionType]);
 
   useEffect(() => {
     console.log(window.location.pathname);
@@ -618,16 +632,46 @@ const CheckPremium: FC<{
             }}
           />
 
+          <ListBox
+            className="bg-[#101d490d] border-none"
+            id="protection_type"
+            values={[
+              {
+                name: "COMPREHENSIVE",
+                value: "90% Comprehensive",
+                id: "1",
+              },
+              {
+                name: "COMPREHENSIVE_100",
+                value: "100% Comprehensive",
+                id: "1",
+              },
+              {
+                name: "THIRD_PARTY_FIRE_THEFT",
+                value: "Third Party Fire/Theft",
+                id: "2",
+              },
+              {
+                name: "THIRD_PARTY",
+                value: "Third Party",
+                id: "3",
+              },
+            ]}
+            selected={selectedProtectionType}
+            onValueChange={(_type: any) => {
+              // console.log(_type);
+              setSelectedProtectionType(_type);
+              setProtectionType(_type.name);
+              setPremiumDue(null);
+              setInitialPremium(null);
+            }}
+          />
+
           {!inPanel && (
             <ListBox
               className="bg-[#101d490d] border-none"
               id="employer_type"
               values={[
-                {
-                  name: "",
-                  value: "Employer type",
-                  id: "0",
-                },
                 {
                   name: "STATE_OR_GOVT",
                   value: "State or Government Organisation",
@@ -664,10 +708,10 @@ const CheckPremium: FC<{
                   id: "4",
                 },
               ]}
-              selected={selectEmployerType}
+              selected={selectedEmployerType}
               onValueChange={(_type: any) => {
                 // console.log(_type);
-                setSelectEmployerType(_type);
+                setSelectedEmployerType(_type);
                 setEmployerType(_type.name);
                 setPremiumDue(null);
                 setInitialPremium(null);

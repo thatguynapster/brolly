@@ -9,6 +9,8 @@ const QuotesCard: FC<{
   const [isAdminAction, setIsAdminAction] = useState<boolean>(false);
   const [nextStep, setNextStep] = useState<string>("");
 
+  const [policyCover, setPolicyCover] = useState<string>("");
+
   useEffect(() => {
     let mounted = true;
 
@@ -48,6 +50,16 @@ const QuotesCard: FC<{
         break;
     }
 
+    if (policy.protectionType === "COMPREHENSIVE_100") {
+      setPolicyCover("100% Comprehensive");
+      return;
+    }
+    if (policy.protectionType === "COMPREHENSIVE") {
+      setPolicyCover("90% Comprehensive");
+      return;
+    }
+    setPolicyCover(sentenceCase(policy.protectionType.replaceAll("_", " ")));
+
     return () => {
       mounted = false;
     };
@@ -63,8 +75,9 @@ const QuotesCard: FC<{
       <h1 className="font-semibold">Brolly Car</h1>
       <h1 className="">
         Cover:{" "}
-        <span className="font-semibold">
-          {sentenceCase(policy.protectionType)}
+        <span className="font-semibold capitalize">
+          {/* {sentenceCase(policy.protectionType.replaceAll("_", " "))} */}
+          {policyCover}
         </span>
       </h1>
       {view === "policy" && (

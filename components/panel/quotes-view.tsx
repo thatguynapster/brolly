@@ -18,7 +18,12 @@ const QuotesView: FC<{}> = ({}) => {
   const [policies, setPolicies] = useState<any>(null);
 
   const [currentView, setCurrentView] = useState<
-    "index" | "quote_details" | "mandate_form" | "agreement_form" | "payment" | "submit_documents"
+    | "index"
+    | "quote_details"
+    | "mandate_form"
+    | "agreement_form"
+    | "payment"
+    | "submit_documents"
   >("index");
 
   const statusList = [
@@ -34,7 +39,6 @@ const QuotesView: FC<{}> = ({}) => {
   ];
 
   const [policyDetails, setPolicyDetails] = useState<any>(null);
-  const [showPolicyDetails, setShowPolicyDetails] = useState<boolean>(false);
   const [showPendingPaymentModal, setShowPendingPaymentModal] =
     useState<boolean>(false);
   const [showPaymentCompleteModal, setShowPaymentCompleteModal] =
@@ -145,7 +149,7 @@ const QuotesView: FC<{}> = ({}) => {
                   key={i}
                   policy={_pol}
                   showDetails={(policy_id, next_step) => {
-                    console.log(policy_id, next_step);
+                    console.log(_pol, policy_id, next_step);
                     _getQuoteDetails(policy_id);
                     switch (next_step) {
                       case "quote_confirmation":
@@ -164,7 +168,7 @@ const QuotesView: FC<{}> = ({}) => {
                         setCurrentView("payment");
                         break;
                       case "submit_documents":
-                        console.log("submit_documents")
+                        console.log("submit_documents");
                         setCurrentView("submit_documents");
                         break;
                     }
@@ -188,8 +192,15 @@ const QuotesView: FC<{}> = ({}) => {
               _getUserInsurances();
             }}
             onProceed={() => {
-              setCurrentView("mandate_form");
               _getUserInsurances();
+              if (
+                policyDetails.protectionType === "THIRD_PARTY" ||
+                policyDetails.protectionType === "THIRD_PARTY_FIRE_THEFT"
+              ) {
+                setCurrentView("payment");
+                return;
+              }
+              setCurrentView("mandate_form");
             }}
           />
         </>
@@ -244,7 +255,7 @@ const QuotesView: FC<{}> = ({}) => {
             setCurrentView("index");
             _getUserInsurances();
           }}
-          onProceed={()=>{
+          onProceed={() => {
             setCurrentView("index");
             _getUserInsurances();
           }}
@@ -358,7 +369,7 @@ const QuotesView: FC<{}> = ({}) => {
         <div className="flex flex-col px-4 py-8 space-y-8 items-center">
           <CheckCircleIcon className="text-success-main w-48 h-48" />
           <h2 className="text-center font-semibold text-md">
-            Insurance premium successfully requested. A representative will be
+            Insurance cover successfully requested. A representative will be
             in touch soon.
           </h2>
           <button

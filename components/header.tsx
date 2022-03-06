@@ -241,7 +241,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
         <div className="flex flex-col px-4 py-8 space-y-8 items-center">
           <CheckCircleIcon className="text-success-main w-48 h-48" />
           <h2 className="text-center font-semibold text-md">
-            Insurance premium successfully requested. A representative will be
+            Insurance cover successfully requested. A representative will be
             in touch soon.
           </h2>
           <button
