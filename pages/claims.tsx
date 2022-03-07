@@ -37,9 +37,9 @@ const Network: NextPage = () => {
               <h4 className="font-headings font-semibold text-lg leading-[25px]">Step 1</h4>
               <p className="text-base text-[#848484] leading-[20px] md:leading-[24px] font-paragraphs">
                 Login to your Brolly account on{" "}
-                <Link href="https://brollyinsurance.com" passHref>
+                <Link href="https://brolly.africa" passHref>
                   <a className="font-bold" href="#">
-                    brollyinsurance.com
+                    brolly.africa
                   </a>
                 </Link>
                 . Alternatively, you could initiate a whatsapp chat with us on{" "}

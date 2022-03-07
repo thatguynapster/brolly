@@ -11,6 +11,7 @@ import { Modal } from "./modal";
 import router from "next/router";
 import CheckPremium from "./check-premium";
 import PremiumRequest from "./panel/premium-request";
+import Login from "./panel/login";
 
 const Header: FC<{ pagename: string }> = ({ pagename }) => {
   const [showQuoteForm, setShowQuoteForm] = useState<boolean>(false);
@@ -19,6 +20,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
     useState<boolean>(false);
   const [showPremiumRequestResponseModal, setShowPremiumRequestResponseModal] =
     useState<boolean>(false);
+  const [showLoginModal, setShowLoginModal] = useState<boolean>(false);
 
   return (
     <header className="relative bg-white max-w-7xl mx-auto px-4 sm:px-6">
@@ -90,12 +92,15 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                   <ArrowRightIcon className="w-4 h-4 animate-bounceX" />
                 </a>
                 <a
-                  href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
-                  target="_blank"
+                  href="#"
                   rel="noreferrer"
-                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-2 px-4 border-0 shadow-sm"
+                  className="whitespace-nowrap text-base font-medium hover:text-gray-900 bg-background py-2 px-4 border-0 shadow-sm capitalize"
+                  onClick={(ev) => {
+                    ev.preventDefault();
+                    setShowLoginModal(true);
+                  }}
                 >
-                  24/7 support
+                  my account
                 </a>
               </div>
             </div>
@@ -172,12 +177,15 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                     Get a Quote
                   </a>
                   <a
-                    href="https://4ifqm26fj86.typeform.com/to/sNbgn03w"
-                    target="_blank"
+                    href="#"
                     rel="noreferrer"
-                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 py-2 px-4 border-0 shadow-sm bg-background"
+                    className="w-full flex items-center justify-center whitespace-nowrap text-base font-medium hover:text-gray-900 py-2 px-4 border-0 shadow-sm bg-background capitalize"
+                    onClick={(ev) => {
+                      ev.preventDefault();
+                      setShowLoginModal(true);
+                    }}
                   >
-                    24/7 support
+                    my account
                   </a>
                 </div>
               </div>
@@ -241,8 +249,8 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
         <div className="flex flex-col px-4 py-8 space-y-8 items-center">
           <CheckCircleIcon className="text-success-main w-48 h-48" />
           <h2 className="text-center font-semibold text-md">
-            Insurance cover successfully requested. A representative will be
-            in touch soon.
+            Insurance cover successfully requested. A representative will be in
+            touch soon.
           </h2>
           <button
             className="bg-primary-main px-4 py-2"
@@ -253,6 +261,19 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
             Close
           </button>
         </div>
+      </Modal>
+      <Modal
+        show={showLoginModal}
+        onClose={(ev: any) => {
+          setShowLoginModal(false);
+        }}
+        className="z-50"
+      >
+        <Login
+          onLoginComplete={() => {
+            router.push("./panel");
+          }}
+        />
       </Modal>
     </header>
   );
