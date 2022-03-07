@@ -170,7 +170,7 @@ const Login: FC<{ onLoginComplete: () => void }> = ({ onLoginComplete }) => {
   }, []);
 
   return (
-    <div className="w-full space-y-8 py-12 px-4 sm:px-6 lg:px-8 mx-4 border border-gray-300 rounded-xl">
+    <div className="w-full space-y-8 py-12 px-4 sm:px-6 lg:px-8 border border-gray-300 rounded-md">
       <div>
         <img className=" h-12 w-auto" src="/img/logo.svg" alt="Brolly Logo" />
       </div>

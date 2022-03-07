@@ -356,9 +356,9 @@ const Home: NextPage = () => {
 
             <div className="flex flex-row justify-center md:justify-start items-center space-x-4 text-black">
               <img className="w-5" src="/icons/message.svg" alt="Message" />
-              <Link href="mailto:team@brollyinsurance.com">
+              <Link href="mailto:team@brolly.africa">
                 <p className="text-center md:text-left font-semibold font-headings text-md cursor-pointer">
-                  team@brollyinsurance.com
+                  team@brolly.africa
                 </p>
               </Link>
             </div>

@@ -235,8 +235,8 @@ const FAQ: FC = () => {
                 Customers can choose to send a text or voice note. <br />
                 <br />
                 In addition to whatsapp, customers can send emails to{" "}
-                <a className="text-dark font-semibold" href="mailto:hello@brollyinsurance.com">
-                  hello@brollyinsurance.com
+                <a className="text-dark font-semibold" href="mailto:hello@brolly.africa">
+                  hello@brolly.africa
                 </a>
                 . We respond to all emails within 30 minutes from the time they hit our inbox. <br />
                 <br />
@@ -282,8 +282,8 @@ const FAQ: FC = () => {
               <Disclosure.Panel className="px-4 pt-4 pb-2 text-base text-gray-500">
                 We serve our customers more efficiently through our digital channels. Clients can book walk-in
                 appointments by emailing to{" "}
-                <a className="text-dark font-semibold" href="mailto:hello@brollyinsurance.com">
-                  hello@brollyinsurance.com
+                <a className="text-dark font-semibold" href="mailto:hello@brolly.africa">
+                  hello@brolly.africa
                 </a>
                 . Please note that you can always get help quicker through whatsapp, email, or a phone call than through
                 a walk-in appointment.

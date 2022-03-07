@@ -259,9 +259,9 @@ const AgreementForm: FC<{
               have the option to restore the protection under the originally
               selected cover. A subscriber who desires to restore cover would be
               assisted to do so by email to
-              <Link href="mailto:hello@brollyinsurance.com" passHref>
+              <Link href="mailto:hello@brolly.africa" passHref>
                 <a href="#" className="font-semibold">
-                  hello@brollyinsurance.com
+                  hello@brolly.africa
                 </a>
               </Link>
               or by call or through any of our other contact methods provided in
@@ -283,9 +283,9 @@ const AgreementForm: FC<{
               their account to end the Pay Monthly Insurance Scheme on their
               account. Where a subscriber so decides, they may contact us by
               email at{" "}
-              <Link href="mailto:hello@brollyinsurance.com" passHref>
+              <Link href="mailto:hello@brolly.africa" passHref>
                 <a href="#" className="font-semibold">
-                  hello@brollyinsurance.com
+                  hello@brolly.africa
                 </a>
               </Link>
               or through any of our other contact methods.
