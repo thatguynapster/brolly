@@ -91,7 +91,7 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
             <img className="w-5" src="/icons/location.svg" alt="Message" />
             <p className="font-semibold font-headings w-3/5">
               No. 19, Airport Residential Area,
-              Kofi Annan Street, Accra, GA1538934
+              Kofi Atta Annan Street, Accra, GA1538934
             </p>
           </div>
 
