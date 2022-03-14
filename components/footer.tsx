@@ -80,10 +80,10 @@ const Footer: FC<{ pagename: string }> = ({ pagename }) => {
             </a>
           </Link>
 
-          <Link href="tel:+233 201 335 141" passHref>
+          <Link href="tel:+233 201 819 581" passHref>
             <a className="flex flex-row items-center space-x-4 text-white">
               <img className="w-5" src="/icons/phone.svg" alt="Message" />
-              <p className="font-semibold font-headings">+233 201 335 141</p>
+              <p className="font-semibold font-headings">+233 201 819 581</p>
             </a>
           </Link>
 
