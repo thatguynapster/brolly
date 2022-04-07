@@ -13,8 +13,8 @@ const Footer_New: FC<{}> = ({}) => {
 
   return (
     <footer className={`bg-dark px-7 py-16`}>
-      <div className="max-w-xs mx-auto flex flex-col md:flex-row space-y-28 md:space-y-0">
-        <div className="w-full md:w-1/3 text-white flex flex-col space-y-6">
+      <div className="flex flex-col md:flex-row-reverse space-y-28 md:space-y-0 md:w-3/4 mx-auto justify-between">
+        <div className="w- text-white flex flex-col space-y-6">
           <h4 className="text-[20px] leading-[30px] text-primary-main">
             Reach us
           </h4>
@@ -36,12 +36,12 @@ const Footer_New: FC<{}> = ({}) => {
           </div>
         </div>
 
-        <div className="w-full md:w-2/3 text-white flex flex-col space-y-6">
-          <div className="flex flex-col items-center justify-center">
+        <div className="w- text-white flex flex-col space-y-6">
+          <div className="flex flex-col items-center md:items-start justify-center">
             <Link href="/" passHref>
               <a>
                 <img
-                  className="md:w-1/12"
+                  className=""
                   src="/img/logo-white.svg"
                   alt="Logo Footer"
                 />
@@ -130,8 +130,8 @@ const Footer_New: FC<{}> = ({}) => {
             </div> */}
             </div>
 
-            <div className="flex flex-row items-center justify-center space-x-4 text-white">
-              <p className="text-small md:hidden flex">
+            <div className="flex flex-row items-center md:justify-start justify-center space-x-4 text-white">
+              <p className="text-xs flex">
                 &copy; 2022 Brolly. All rights reserved
               </p>
             </div>

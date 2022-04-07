@@ -98,7 +98,7 @@ const JoinWaitlist_New: FC<{
         />
       </div>
       <button
-        className="w-1/2 rounded-full bg-primary-main py-3 px-4 font-semibold flex items-center justify-center space-x-4"
+        className="w-1/2 md:w-1/4 rounded-full bg-primary-main py-3 px-4 font-semibold flex items-center justify-center space-x-4"
         type="submit"
         onClick={(ev) => {
           ev.preventDefault();
