@@ -65,7 +65,7 @@ const JoinWaitlist_New: FC<{
       className="flex flex-col items-center justify-center w-full space-y-10"
       method="POST"
     >
-      <div className="w-full space-y-6">
+      <div className="w-full md:w-2/3 space-y-6">
         <FormGroup
           type="email"
           id="waitlistEmailInput"

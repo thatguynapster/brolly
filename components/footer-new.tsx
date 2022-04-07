@@ -15,7 +15,7 @@ const Footer_New: FC<{}> = ({}) => {
     <footer className={`bg-dark px-7 py-16`}>
       <div className="flex flex-col md:flex-row-reverse space-y-28 md:space-y-0 md:w-3/4 mx-auto justify-between">
         <div className="w- text-white flex flex-col space-y-6">
-          <h4 className="text-[20px] leading-[30px] text-primary-main">
+          <h4 className="text-[20px] text-center leading-[30px] text-primary-main">
             Reach us
           </h4>
 
