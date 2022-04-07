@@ -84,7 +84,7 @@ const SubmitDocumentsView: FC<{
       });
   };
 
-  const uploadInsuranceDocument = async (file: File, docType: any) => {
+  const uploadInsuranceDocument = async (file: any, docType: any) => {
     console.log(file.name);
     // TODO: use loader until image is done uploading
     let temp = { ...documents };
@@ -230,16 +230,11 @@ const SubmitDocumentsView: FC<{
                         var blobImage = dataURItoBlob(realData);
                         console.log(blobImage);
 
-                        let file = new File([blobImage], image[0].name, {
-                          type: contentType,
-                        });
-                        console.log(file);
-
                         let temp = { ...documents };
                         delete temp[doc];
                         setDocuments(temp);
 
-                        uploadInsuranceDocument(file, doc);
+                        uploadInsuranceDocument(blobImage, doc);
                         return;
                       }
                       // else {

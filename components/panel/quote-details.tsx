@@ -167,7 +167,7 @@ const QuoteDetails: FC<{
     }
   };
 
-  const _uploadRenewalNotice = async (file?: File) => {
+  const _uploadRenewalNotice = async (file?: any) => {
     // toast.info("Uploading staff ID");
     let form_data = new FormData();
     form_data.append("file", file ?? renewalNotice);
@@ -955,15 +955,9 @@ const QuoteDetails: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      console.log(blobImage);
-
-                      let file = new File([blobImage], image[0].name, {
-                        type: contentType,
-                      });
-                      console.log(file);
-
-                      setRenewalNotice(file);
-                      _uploadRenewalNotice(file);
+                      
+                      setRenewalNotice(blobImage);
+                      _uploadRenewalNotice(blobImage);
                       return;
                     }
                     setRenewalNotice(null);
@@ -1093,16 +1087,10 @@ const QuoteDetails: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      console.log(blobImage);
+                      
+                      setDriverLicence(blobImage);
 
-                      let file = new File([blobImage], image[0].name, {
-                        type: contentType,
-                      });
-                      console.log(file);
-
-                      setDriverLicence(file);
-
-                      _uploadDocs(file);
+                      _uploadDocs(blobImage);
                       return;
                     }
                     // setDriverLicence(null);

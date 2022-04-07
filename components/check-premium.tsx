@@ -104,7 +104,7 @@ const CheckPremium: FC<{
   const [initialPremium, setInitialPremium] = useState<string | null>(null);
 
   const [installmentOptions, setInstallmentOptions] = useState<
-    { name: string; value: string; id: string }[]
+    { name: string; value: string; id: string }[] 
   >([]);
 
   const registrationYearList = [
