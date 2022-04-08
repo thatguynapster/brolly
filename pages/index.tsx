@@ -66,7 +66,7 @@ const Home: NextPage = () => {
           <OwlCarousel
             name="carousel"
             showDots={true}
-            autoplay={true}
+            autoplay={false}
             autoplayTimeout={3000}
             autoplaySpeed={1000}
             loop={true}
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
               </h2>
               <InformationCircleIcon
                 className="w-4 h-4 cursor-pointer"
-                data-tip="Your GHS200 fuel token is sent to your email and whatsapp as soon as we receive your email and whatsapp number. <br/> Your token is redeemable when you insure your car or you refer 1 person who insures with us."
+                data-tip="Your GHS200 fuel token is sent to you as soon as we receive your email and whatsapp number. <br/> Your token is redeemable when you insure your car or you refer 1 person who insures with us."
               />
               {/* <p data-tip={"some content"}>
                 <InformationCircleIcon className="w-4 h-4" />
