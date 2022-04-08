@@ -52,7 +52,7 @@ const Footer_New: FC<{}> = ({}) => {
           <div className="space-y-16">
             <div className="flex flex-row items-center justify-center space-x-2">
               <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
-                <Link href="https://www.facebook.com/Brolly.insure/" passHref>
+                <Link href="https://www.facebook.com/brolly.africa" passHref>
                   <a target="_blank">
                     <img
                       className=""
@@ -79,7 +79,7 @@ const Footer_New: FC<{}> = ({}) => {
               </div>
 
               <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
-                <Link href="https://twitter.com/Brolly_insure" passHref>
+                <Link href="https://twitter.com/brolly_africa" passHref>
                   <a target="_blank">
                     <img
                       className=""
@@ -91,7 +91,7 @@ const Footer_New: FC<{}> = ({}) => {
               </div>
 
               <div className="rounded-full p-2 bg-gray-800 w-10 h-10">
-                <Link href="https://instagram.com/brolly_insure" passHref>
+                <Link href="https://instagram.com/brolly.africa" passHref>
                   <a target="_blank">
                     <img
                       className=""

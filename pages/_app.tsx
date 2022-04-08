@@ -11,6 +11,10 @@ import '../public/css/intlTelInput.css'
 
 import 'intl-tel-input/build/css/intlTelInput.css';
 
+import '../public/css/owl.carousel.css';
+import '../public/css/owl.theme.default.css';
+import '../public/css/carousel.css';
+
 /** dependency styles */
 import "react-toastify/dist/ReactToastify.css";
 
