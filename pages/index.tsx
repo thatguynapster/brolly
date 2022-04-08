@@ -44,9 +44,9 @@ const Home: NextPage = () => {
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}`} />
       <Header pagename="home" />
-      <main className="bg-white flex flex-col justify-center items-center space-y-20 mt-12">
+      <main className="bg-white flex flex-col justify-center items-center space-y-20">
         {/* landing area */}
-        <section className="md:h-screen max-w-7xl mx-auto mt-[20px] md:mt-[-88px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
+        <section className="h-screen max-w-7xl mx-auto md:mt-[-88px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
           <div className="w-full md:w-1/2 flex flex-col space-y-4">
             <h1 className="text-center md:text-left text-[42px] md:text-7xl font-headings font-bold leading-[40px] md:leading-[80px]">
               Stress-free <br /> Car Insurance <br /> for 500m Africans
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
         </section>
         {/* END landing area */}
 
-        <section className="w-full max-w-7xl mx-auto px-4 sm:px-12 my-12 md:my-24 justify-around md:space-x-24 flex flex-col-reverse space-y-10 space-y-reverse md:flex-row md:space-y-0">
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-12 my-12 md:my-24 justify-around md:space-x-24 flex space-y-10 md:flex-row md:space-y-0">
           <OwlCarousel
             name="carousel"
             showDots={true}
