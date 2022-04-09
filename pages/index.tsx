@@ -46,7 +46,7 @@ const Home: NextPage = () => {
       <Header pagename="home" />
       <main className="bg-white flex flex-col justify-center items-center space-y-20">
         {/* landing area */}
-        <section className="h-screen max-w-7xl mx-auto md:mt-[-88px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0">
+        <section className="h-screen max-w-7xl mx-auto mt-[-80px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-16 md:space-y-0">
           <div className="w-full md:w-1/2 flex flex-col space-y-4">
             <h1 className="text-center md:text-left text-[42px] md:text-7xl font-headings font-bold leading-[40px] md:leading-[80px]">
               Stress-free <br /> Car Insurance <br /> for 500m Africans
