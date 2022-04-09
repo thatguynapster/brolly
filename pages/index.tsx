@@ -44,7 +44,7 @@ const Home: NextPage = () => {
     <>
       <HeadFile title={SEOConfig.title} canonical={`${basePath}`} />
       <Header pagename="home" />
-      <main className="bg-white flex flex-col justify-center items-center space-y-20">
+      <main className="bg-white flex flex-col justify-center items-center space-y-16">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-80px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-16 md:space-y-0">
           <div className="w-full md:w-1/2 flex flex-col space-y-4">
