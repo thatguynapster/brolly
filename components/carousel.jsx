@@ -35,11 +35,11 @@ const OwlCarousel = ({
       margin: 15,
       dots: showDots,
       nav: showNavs,
-      autoplay: autoplay,
+      // autoplay: autoplay,
       loop: loop,
-      autoplayTimeout: autoplayTimeout,
-      autoplaySpeed: autoplaySpeed,
-      autoplayHoverPause: autoplayHoverPause,
+      // autoplayTimeout: autoplayTimeout,
+      // autoplaySpeed: autoplaySpeed,
+      // autoplayHoverPause: autoplayHoverPause,
       responsive: responsive
         ? responsive_points
         : {

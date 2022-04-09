@@ -41,7 +41,7 @@ const Footer_New: FC<{}> = ({}) => {
             <Link href="/" passHref>
               <a>
                 <img
-                  className=""
+                  className="w-1/2 mx-auto"
                   src="/img/logo-white.svg"
                   alt="Logo Footer"
                 />

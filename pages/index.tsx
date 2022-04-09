@@ -67,8 +67,8 @@ const Home: NextPage = () => {
             name="carousel"
             showDots={true}
             autoplay={false}
-            autoplayTimeout={3000}
-            autoplaySpeed={1000}
+            autoplayTimeout={0}
+            autoplaySpeed={0}
             loop={true}
             responsive={{
               0: {
@@ -113,13 +113,13 @@ const Home: NextPage = () => {
         <section className="w-full max-w-7xl mx-auto px-8 sm:px-12 md:space-x-24 items-center justify-center flex flex-col md:flex-row md:space-y-0">
           <div className="flex flex-col space-y-12 md:space-y-16 mb-20">
             <div className="flex flex-row items-center justify-center space-x-2">
-              <h2 className="font-paragraph font-light text-center md:text-left text-[30px] md:text-4xl leading-[42px] md:leading-[56px]">
+              <h2 className="font-paragraph font-light text-center md:text-left text-[24px] md:text-4xl leading-[34px] md:leading-[56px]">
                 Free <span className="">GHS200</span> fuel for{" "}
                 <br className="flex md:hidden" /> first 10,000 sign-ups{" "}
               </h2>
               <InformationCircleIcon
                 className="w-4 h-4 cursor-pointer"
-                data-tip="Your GHS200 fuel token is sent to you as soon as we receive your email and whatsapp number. <br/> Your token is redeemable when you insure your car or you refer 1 person who insures with us."
+                data-tip="Terms and conditions apply"
               />
               {/* <p data-tip={"some content"}>
                 <InformationCircleIcon className="w-4 h-4" />
@@ -146,7 +146,6 @@ const Home: NextPage = () => {
       <ReactTooltip
         place="right"
         multiline={true}
-        className="w-1/2 md:w-1/4"
         type="dark"
         backgroundColor="#000"
       />
