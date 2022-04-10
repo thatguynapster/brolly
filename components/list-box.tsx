@@ -34,7 +34,6 @@ const ListBox: FC<IListBoxProps> = ({
         value={selected?.value}
         onChange={(ev) => {
           setSelectedValue(values.filter((_v) => _v.value === ev)[0]);
-          onValueChange(values.filter((_v) => _v.value === ev)[0]);
         }}
       >
         <div className="relative">

@@ -1,7 +1,7 @@
 export const SEOConfig = {
   site_name: 'Brolly',
   title: 'Brolly',
-  description: 'No need to empty your bank account. Live life fully, pay your insurance monthly, get claims paid at lightning speed.',
+  description: 'Making car insurance stress-free for 500m Africans',
   locale: 'en',
   canonical: ''
 };
