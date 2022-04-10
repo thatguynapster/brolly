@@ -37,9 +37,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                   />
                 </a>
               </Link>
-              <nav className="hidden space-x-8">
-                {" "}
-                {/* //TODO: add md:flex */}
+              <nav className="hidden md:flex space-x-8">
                 <Link href="/how-it-works" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">
                     How it works
@@ -62,18 +60,14 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                 </Link>
               </nav>
             </div>
-            <div className="-mr-2 -my-2 hidden">
-              {" "}
-              {/* //TODO change hidden to md:hidden */}
+            <div className="-mr-2 -my-2 md:hidden">
               <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-border">
                 <span className="sr-only">Open menu</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
             </div>
 
-            <div className="hidden items-center justify-end md:flex-1 lg:w-0 space-x-8">
-              {" "}
-              {/* //TODO: add md:flex */}
+            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0 space-x-8">
               {/* <nav className="hidden md:flex space-x-10">
                 <Link href="/who-we-are" passHref>
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">Who we are</a>
@@ -82,6 +76,7 @@ const Header: FC<{ pagename: string }> = ({ pagename }) => {
                   <a className="text-base font-medium text-gray-500 hover:text-gray-900">How it works</a>
                 </Link>
               </nav> */}
+
               <div className="flex z-50">
                 <a
                   href="#"
