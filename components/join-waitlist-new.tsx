@@ -44,20 +44,18 @@ const JoinWaitlist_New: FC<{
       case "error":
         toast.error("Failed to join waitlist");
         setButtonText("Failed to join waitlist");
-        setTimeout(() => {
-          setButtonText("I'm In");
-        }, 3000);
         break;
       case "success":
         toast.success("Added To Waitlist");
         setButtonText("Added To Waitlist");
-        setTimeout(() => {
-          setButtonText("I'm In");
-        }, 3000);
         break;
       default:
         setButtonText("I'm In");
     }
+    setTimeout(() => {
+      setButtonText("I'm In");
+      setFormStatus(null);
+    }, 3000);
   }, [status]);
 
   return (

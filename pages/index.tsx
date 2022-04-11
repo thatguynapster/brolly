@@ -47,12 +47,15 @@ const Home: NextPage = () => {
       <main className="bg-white flex flex-col justify-center items-center space-y-16">
         {/* landing area */}
         <section className="h-screen max-w-7xl mx-auto mt-[-80px] px-8 sm:px-12 flex flex-col md:flex-row items-center justify-center space-y-16 md:space-y-0">
-          <div className="w-full md:w-1/2 flex flex-col space-y-4">
+          <div
+            className="w-full md:w-1/2 flex flex-col space-y-4"
+            data-aos="fade-right"
+          >
             <h1 className="text-center md:text-left text-[42px] md:text-7xl font-headings font-bold leading-[40px] md:leading-[80px]">
               Stress-free <br /> Car Insurance <br /> for 500m Africans
             </h1>
           </div>
-          <div className="w-full md:w-1/2 flex justify-center md:-z-0">
+          <div className="w-full md:w-1/2 flex justify-center md:-z-0"data-aos="fade-left">
             <img
               className="animate-swell"
               src="/img/coming-soon-illustration.svg"
