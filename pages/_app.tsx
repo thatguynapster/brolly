@@ -49,10 +49,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       {process.env.NEXT_PUBLIC_ENVIRONMENT === "production" && (
         <>
           <Script
+            id="g-tag-manager"
             strategy="lazyOnload"
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
           />
-          <Script strategy="lazyOnload">
+          <Script strategy="lazyOnload" id="googleAnalytics">
             {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
