@@ -94,6 +94,16 @@ const JoinWaitlist_New: FC<{
             setPhone(ev.currentTarget.value);
           }}
         />
+        <em className="text-gray-600 text-sm text-center italic mt-0">
+          <input
+            type="checkbox"
+            checked
+            onClick={(ev) => {
+              ev.preventDefault();
+            }}
+          />{" "}
+          I agree to receive messages from Brolly through Email and Whatsapp
+        </em>
       </div>
       <button
         className="w-1/2 md:w-1/4 rounded-full bg-primary-main py-3 px-4 font-semibold flex items-center justify-center space-x-4"
