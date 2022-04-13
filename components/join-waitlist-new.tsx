@@ -97,6 +97,7 @@ const JoinWaitlist_New: FC<{
         <em className="text-gray-600 text-sm text-center italic mt-0">
           <input
             type="checkbox"
+            className="accent-gray-900"
             checked
             onClick={(ev) => {
               ev.preventDefault();
