@@ -955,9 +955,16 @@ const QuoteDetails: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      
-                      setRenewalNotice(blobImage);
-                      _uploadRenewalNotice(blobImage);
+
+                      console.log(blobImage);
+
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setRenewalNotice(file);
+                      _uploadRenewalNotice(file);
                       return;
                     }
                     setRenewalNotice(null);
@@ -1087,10 +1094,16 @@ const QuoteDetails: FC<{
 
                       // Convert it to a blob to upload
                       var blobImage = dataURItoBlob(realData);
-                      
-                      setDriverLicence(blobImage);
+                      console.log(blobImage);
 
-                      _uploadDocs(blobImage);
+                      let file = new File([blobImage], image[0].name, {
+                        type: contentType,
+                      });
+                      console.log(file);
+
+                      setDriverLicence(file);
+
+                      _uploadDocs(file);
                       return;
                     }
                     // setDriverLicence(null);

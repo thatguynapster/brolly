@@ -17,7 +17,7 @@ const ListBox: FC<IListBoxProps> = ({
 
   useEffect(() => {
     console.log(selected);
-    console.log(selectedValue)
+    console.log(selectedValue);
   }, [selected]);
 
   return (
@@ -34,6 +34,7 @@ const ListBox: FC<IListBoxProps> = ({
         value={selected?.value}
         onChange={(ev) => {
           setSelectedValue(values.filter((_v) => _v.value === ev)[0]);
+          onValueChange(values.filter((_v) => _v.value === ev)[0]);
         }}
       >
         <div className="relative">

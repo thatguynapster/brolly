@@ -1222,7 +1222,14 @@ const VerifyPolicyDetails: FC<{ policy: any; onClose?: () => void }> = ({
                   // Convert it to a blob to upload
                   var blobImage = dataURItoBlob(realData);
 
-                  setDriverLicence(blobImage);
+                  console.log(blobImage);
+
+                  let file = new File([blobImage], image[0].name, {
+                    type: contentType,
+                  });
+                  console.log(file);
+
+                  setDriverLicence(file);
                 }}
               />
             </div>

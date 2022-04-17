@@ -360,7 +360,7 @@ const MandateForm: FC<{
       console.log(user_employment_response);
 
       if (user_employment_response.status) {
-        toast.error(user_employment_response.title);
+        // toast.error(user_employment_response.title);
       } else {
         // handle
         setEmployeeNumber(user_employment_response.employeeNumber);
